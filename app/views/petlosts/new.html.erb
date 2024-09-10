@@ -1,7 +1,4 @@
+<h1>Mascota perdida</h1>
 
-<%= simple_form_for(@petlost) do |f| %>
-  <%= f.input :name %>
-  <%= f.input :address %>
-  <%= f.input :rating %>
-  <%= f.submit %>
-<% end %>
+<h5>Por favor, completa los datos de tu mascota perdida</h5>
+<%= render "form", petlost: @petlost %>
