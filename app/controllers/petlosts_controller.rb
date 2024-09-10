@@ -20,6 +20,8 @@ class PetlostsController < ApplicationController
     @petlost = Petlost.find(params[:id])
     @petlost.update(petlost_params)
     redirect_to petlost_path(@petlost)
+  end
+
   def index
     @petlosts = Petlost.all
   end
@@ -39,4 +41,5 @@ class PetlostsController < ApplicationController
   def petlost_params
     params.require(:petlost).permit(:name, :breed, :color, :signs, :day_lost, :user_id, :finded, photos: [])
   end
+
 end
