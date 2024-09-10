@@ -6,7 +6,7 @@ class PetlostsController < ApplicationController
   def create
     @petlost = Petlost.new(petlost_params)
     if @petlost.save
-      redirect_to service_path(@petlost)
+      redirect_to petlost_path(@petlost)
     else
       render :new, status: :unprocessable_entity
     end
@@ -20,5 +20,11 @@ class PetlostsController < ApplicationController
     @petlost = Petlost.find(params[:id])
     @petlost.update(petlost_params)
     redirect_to petlost_path(@petlost)
+  end
+
+  private
+
+  def petlost_params
+    params.require(:petlost).permit(:name, :breed, :color, :signs, :day_lost, :user_id, :finded, photos: [])
   end
 end
