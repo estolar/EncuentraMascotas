@@ -20,6 +20,18 @@ class PetlostsController < ApplicationController
     @petlost = Petlost.find(params[:id])
     @petlost.update(petlost_params)
     redirect_to petlost_path(@petlost)
+  def index
+    @petlosts = Petlost.all
+  end
+
+  def show
+    @petlost = Petlost.find(params[:id])
+  end
+
+  def destroy
+    @petlost = Petlost.find(params[:id])
+    @petlost.destroy
+    redirect_to petlosts_path, status: :see_other
   end
 
   private
