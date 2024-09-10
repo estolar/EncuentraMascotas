@@ -1,0 +1,15 @@
+<h1>Listado de Mascotas Perdidas</h1>
+
+<% @petlosts.each do |petlost| %>
+  <h2><%= petlost.name %></h2>
+  <p>Raza: <%= petlost.breed %></p>
+  <p>Color: <%= petlost.color %></p>
+  <p>Señas particulares: <%= petlost.signs %></p>
+  <p>Perdido el: <%= petlost.day_lost %></p>
+
+  <%= link_to 'Ver detalles', petlost_path(petlost) %>
+  <%= link_to 'Eliminar', petlost_path(petlost), method: :delete, data: { confirm: '¿Estás seguro de que quieres eliminar este registro?' } %>
+  <hr>
+<% end %>
+
+<%= link_to 'Crear nueva mascota perdida', new_petlost_path, class: "btn btn-primary" %>
