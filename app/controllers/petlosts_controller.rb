@@ -28,6 +28,11 @@ class PetlostsController < ApplicationController
 
   def show
     @petlost = Petlost.find(params[:id])
+    @marker = {
+      lat: @petlost.latitude,
+      lng: @petlost.longitude,
+      info_window_html: render_to_string(partial: "info_window", locals: { petlost: @petlost })
+    }
   end
 
   def destroy
@@ -39,7 +44,7 @@ class PetlostsController < ApplicationController
   private
 
   def petlost_params
-    params.require(:petlost).permit(:name, :breed, :color, :signs, :day_lost, :user_id, :finded, photos: [])
+    params.require(:petlost).permit(:name, :breed, :color, :signs, :day_lost, :user_id, :finded, :address, photos: [])
   end
 
 end
