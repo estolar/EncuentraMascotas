@@ -68,4 +68,5 @@ group :test do
   gem "selenium-webdriver"
 end
 
-gem "geocoder"
+# Image storage
+gem 'cloudinary'
