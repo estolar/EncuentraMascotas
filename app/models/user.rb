@@ -5,4 +5,5 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable
   has_many :petlost
   has_many :petfound
+  has_one_attached :photo
 end

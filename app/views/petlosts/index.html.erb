@@ -2,10 +2,14 @@
 
 <% @petlosts.each do |petlost| %>
   <h2><%= petlost.name %></h2>
+  <% petlost.photos.each do |photo| %>
+    <%= cl_image_tag photo.key, height: 300, width: 400, crop: :fill %>
+  <% end %>
   <p>Raza: <%= petlost.breed %></p>
   <p>Color: <%= petlost.color %></p>
   <p>Señas particulares: <%= petlost.signs %></p>
   <p>Perdido el: <%= petlost.day_lost %></p>
+  <p>Dirección donde se perdió: <%= petlost.address %></p>
 
   <%= link_to 'Ver detalles', petlost_path(petlost) %>
   <hr>
