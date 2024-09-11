@@ -16,4 +16,7 @@ Rails.application.routes.draw do
   # , only: [:create, :new, :index, :destroy, :edit, :update, :show]
   # Defines the root path route ("/")
   # root "posts#index"
+  get 'terms', to: 'pages#terms', as: :terms
+  get 'privacy', to: 'pages#privacy', as: :privacy
+
 end
