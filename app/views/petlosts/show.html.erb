@@ -1,4 +1,11 @@
 <h1><%= @petlost.name %></h1>
+
+
+  <% @petlost.photos.each do |photo| %>
+    <%= cl_image_tag photo.key, height: 300, width: 400, crop: :fill %>
+  <% end %>
+
+
 <p>Raza: <%= @petlost.breed %></p>
 <p>Color: <%= @petlost.color %></p>
 <p>Señas particulares: <%= @petlost.signs %></p>
@@ -6,6 +13,7 @@
 <p>Dirección donde se perdió: <%= @petlost.address %></p>
 
 <%= link_to 'Volver a la lista', petlosts_path, class: "btn btn-primary" %>
+<%= link_to 'Editar', edit_petlost_path, class: "btn btn-primary" %>
 <%= link_to 'Eliminar', petlost_path(@petlost), class: "btn btn-danger", data: { turbo_method: :delete, turbo_confirm: "¿Seguro que quieres eliminar?" } %>
 
 
@@ -26,7 +34,7 @@
       bearing: -17.6
     });
 
-    
+
     const el = document.createElement('div');
     el.className = 'marker';
     el.style.backgroundImage = 'url(<%= asset_path("heart.png") %>)';
