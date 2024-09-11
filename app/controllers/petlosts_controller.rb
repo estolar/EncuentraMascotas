@@ -1,12 +1,13 @@
 class PetlostsController < ApplicationController
   def new
     @petlost = Petlost.new
+    @address = Address.new
   end
 
   def create
     @petlost = Petlost.new(petlost_params)
     if @petlost.save
-      redirect_to petlost_path(@petlost)
+      redirect_to new_petlost_address_path(@petlost)
     else
       render :new, status: :unprocessable_entity
     end
