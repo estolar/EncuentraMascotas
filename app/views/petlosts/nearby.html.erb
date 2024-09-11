@@ -1,0 +1,53 @@
+<h1>Mascotas perdidas cercanas</h1>
+
+<div id="nearby-map" style="height: 400px; width: 100%;"></div> <!-- Cambiado el id a 'nearby-map' -->
+<%= link_to 'Volver a Home', root_path, class: "btn btn-primary" %>
+
+<script>
+  document.addEventListener('turbo:load', function() {
+    mapboxgl.accessToken = '<%= ENV['MAPBOX_API_KEY'] %>';
+
+    const nearbyMapElement = document.getElementById('nearby-map');
+    if (!nearbyMapElement) return;
+
+    navigator.geolocation.getCurrentPosition(function(position) {
+      const userLat = position.coords.latitude;
+      const userLng = position.coords.longitude;
+
+      const nearbyMap = new mapboxgl.Map({
+        container: 'nearby-map', // Cambiado el id aquí también
+        style: 'mapbox://styles/mapbox/streets-v11',
+        center: [userLng, userLat],
+        zoom: 12
+      });
+
+      // Marcador de la ubicación del usuario
+      new mapboxgl.Marker({ color: 'blue' })
+        .setLngLat([userLng, userLat])
+        .setPopup(new mapboxgl.Popup().setText('Estás aquí'))
+        .addTo(nearbyMap);
+
+      // Añadir marcadores para las mascotas perdidas
+      <% @petlosts.each_with_index do |petlost, index| %>
+        const petlostMarker<%= index %> = document.createElement('div');
+        petlostMarker<%= index %>.className = 'marker';
+        petlostMarker<%= index %>.style.backgroundImage = 'url(<%= asset_path("heart.png") %>)';
+        petlostMarker<%= index %>.style.width = '40px';
+        petlostMarker<%= index %>.style.height = '40px';
+        petlostMarker<%= index %>.style.backgroundSize = '100%';
+
+        new mapboxgl.Marker(petlostMarker<%= index %>)
+          .setLngLat([<%= petlost.longitude %>, <%= petlost.latitude %>])
+          .setPopup(new mapboxgl.Popup().setHTML(`
+            <strong>Mascota perdida:</strong> <%= petlost.name %><br>
+            <strong>Perdido:</strong> <%= petlost.finded ? 'No' : 'Sí' %><br>
+            <strong>Fecha perdida:</strong> <%= petlost.day_lost.strftime('%d/%m/%Y') %>
+          `))
+          .addTo(nearbyMap);
+      <% end %>
+
+    }, function() {
+      alert('No se pudo obtener tu ubicación.');
+    });
+  });
+</script>

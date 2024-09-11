@@ -1,10 +1,8 @@
 <h1><%= @petlost.name %></h1>
 
-
-  <% @petlost.photos.each do |photo| %>
-    <%= cl_image_tag photo.key, height: 300, width: 400, crop: :fill %>
-  <% end %>
-
+<% @petlost.photos.each do |photo| %>
+  <%= cl_image_tag photo.key, height: 300, width: 400, crop: :fill %>
+<% end %>
 
 <p>Raza: <%= @petlost.breed %></p>
 <p>Color: <%= @petlost.color %></p>
@@ -16,9 +14,8 @@
 <%= link_to 'Editar', edit_petlost_path, class: "btn btn-primary" %>
 <%= link_to 'Eliminar', petlost_path(@petlost), class: "btn btn-danger", data: { turbo_method: :delete, turbo_confirm: "¿Seguro que quieres eliminar?" } %>
 
-
 <div class="card mb-4" style="width: 50%; margin: 0 auto;">
-    <div id="map" style="height: 300px; width: 100%;"></div>
+  <div id="map" style="height: 300px; width: 100%;"></div>
 </div>
 
 <script>
@@ -34,7 +31,6 @@
       bearing: -17.6
     });
 
-
     const el = document.createElement('div');
     el.className = 'marker';
     el.style.backgroundImage = 'url(<%= asset_path("heart.png") %>)';
@@ -42,14 +38,12 @@
     el.style.height = '40px';
     el.style.backgroundSize = '100%';
 
-
+    // Crear el marcador personalizado
     new mapboxgl.Marker(el)
       .setLngLat([<%= @petlost.longitude %>, <%= @petlost.latitude %>])
       .addTo(map);
 
-
     map.on('load', function () {
-
       map.addLayer({
         'id': '3d-buildings',
         'source': 'composite',
@@ -58,7 +52,7 @@
         'type': 'fill-extrusion',
         'minzoom': 15,
         'paint': {
-          'fill-extrusion-color': '#aaa', // Color de los edificios
+          'fill-extrusion-color': '#aaa',
           'fill-extrusion-height': [
             'interpolate', ['linear'], ['zoom'],
             15, 0,

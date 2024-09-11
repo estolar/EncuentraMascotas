@@ -41,6 +41,16 @@ class PetlostsController < ApplicationController
     redirect_to petlosts_path, status: :see_other
   end
 
+  def nearby
+    # Suponiendo que quieras buscar todas las mascotas perdidas
+    @petlosts = Petlost.geocoded # Solo las mascotas con coordenadas
+
+    respond_to do |format|
+      format.html # nearby.html.erb
+    end
+  end
+
+
   private
 
   def petlost_params

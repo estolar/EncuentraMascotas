@@ -11,7 +11,11 @@ Rails.application.routes.draw do
   get "service-worker" => "rails/pwa#service_worker", as: :pwa_service_worker
   get "manifest" => "rails/pwa#manifest", as: :pwa_manifest
 
-  resources :petlosts
+  resources :petlosts do
+    collection do
+      get :nearby
+    end
+  end
   resources :petfounds
   # , only: [:create, :new, :index, :destroy, :edit, :update, :show]
   # Defines the root path route ("/")
