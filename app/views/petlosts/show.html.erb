@@ -12,4 +12,5 @@
 <p>Perdido el: <%= @petlost.day_lost %></p>
 
 <%= link_to 'Volver a la lista', petlosts_path %>
+<%= link_to 'Editar', edit_petlost_path(@petlost) %>
 <%= link_to 'Eliminar', petlost_path(@petlost), data: { turbo_method: :delete,turbo_confirm: "¿Seguro que quieres eliminar?"} %>
