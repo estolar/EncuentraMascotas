@@ -38,19 +38,21 @@ puts "Usuarios creados: #{users.inspect}"
 
 # Crear perros perdidos
 petlosts = Petlost.create!([
-  { name: 'Max', finded: true, breed: 'Labrador', color: 'Negro', signs: 'Collar rojo', day_lost: Date.today - 5, user: users[0] },
-  { name: 'Bella', finded: true, breed: 'Beagle', color: 'Marrón y blanco', signs: 'Orejas largas', day_lost: Date.today - 10, user: users[1] },
-  { name: 'Rocky', finded: true, breed: 'Bulldog', color: 'Gris', signs: 'Cicatriz en la pata', day_lost: Date.today - 7, user: users[2] },
-  { name: 'Lucy', finded: true, breed: 'Golden Retriever', color: 'Dorado', signs: 'Pelaje brillante', day_lost: Date.today - 3, user: users[3] },
-  { name: 'Buddy', finded: true, breed: 'Poodle', color: 'Blanco', signs: 'Pequeño tamaño', day_lost: Date.today - 12, user: users[4] },
-  { name: 'Shadow', finded: false, breed: 'Shih zu', color: 'Negro', signs: 'Collar rojo', day_lost: Date.today - 5, user: users[0] },
-  { name: 'Charlie', finded: false, breed: 'Schnauzer', color: 'Marrón y blanco', signs: 'Orejas largas', day_lost: Date.today - 10, user: users[1] },
-  { name: 'Duke', finded: false, breed: 'Pomerania', color: 'Gris', signs: 'Cicatriz en la pata', day_lost: Date.today - 7, user: users[2] },
-  { name: 'Bailey', finded: false, breed: 'Pequines', color: 'Dorado', signs: 'Pelaje brillante', day_lost: Date.today - 3, user: users[3] },
-  { name: 'Coco', finded: false, breed: 'Unica', color: 'Blanco', signs: 'Pequeño tamaño', day_lost: Date.today - 12, user: users[4] }
+  { name: 'Max', finded: true, breed: 'Labrador Retriever', color: 'Negro', signs: 'Collar rojo', day_lost: Date.today - 5, user: users[0], address: 'Avenida Arequipa 1234, Miraflores, Lima' },
+  { name: 'Bella', finded: true, breed: 'Beagle', color: 'Marrón y blanco', signs: 'Orejas largas', day_lost: Date.today - 10, user: users[1], address: 'Avenida Arequipa, Miraflores, Lima' },
+  { name: 'Rocky', finded: true, breed: 'Bulldog Francés', color: 'Gris', signs: 'Cicatriz en la pata', day_lost: Date.today - 7, user: users[2], address: 'Jirón Puno, Santiago, Cusco' },
+  { name: 'Lucy', finded: true, breed: 'Golden Retriever', color: 'Dorado', signs: 'Pelaje brillante', day_lost: Date.today - 3, user: users[3], address: 'Calle Santa Catalina, Cercado, Arequipa' },
+  { name: 'Buddy', finded: true, breed: 'Pug', color: 'Blanco', signs: 'Pequeño tamaño', day_lost: Date.today - 12, user: users[4], address: 'Avenida Pardo, Trujillo, La Libertad' },
+  { name: 'Shadow', finded: false, breed: 'Shih Tzu', color: 'Negro', signs: 'Collar rojo', day_lost: Date.today - 5, user: users[0], address: 'Calle 28 de julio, Miraflores, Lima' },
+  { name: 'Charlie', finded: false, breed: 'Schnauzer', color: 'Marrón y blanco', signs: 'Orejas largas', day_lost: Date.today - 10, user: users[1], address: 'Avenida Arequipa, Miraflores, Lima' },
+  { name: 'Duke', finded: false, breed: 'Boxer', color: 'Gris', signs: 'Cicatriz en la pata', day_lost: Date.today - 7, user: users[2], address: 'Jirón Puno, Santiago, Cusco' },
+  { name: 'Bailey', finded: false, breed: 'Otros', color: 'Dorado', signs: 'Pelaje brillante', day_lost: Date.today - 3, user: users[3], address: 'Calle Santa Catalina, Cercado, Arequipa' },
+  { name: 'Coco', finded: false, breed: 'Otros', color: 'Blanco', signs: 'Pequeño tamaño', day_lost: Date.today - 12, user: users[4], address: 'Avenida Pardo, Trujillo, La Libertad' }
 ])
 
 puts "Perros perdidos creados: #{petlosts.inspect}"
+
+
 
 # Crear perros encontrados
 petfounds = Petfound.create!([

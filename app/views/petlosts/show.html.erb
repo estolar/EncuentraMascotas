@@ -3,6 +3,67 @@
 <p>Color: <%= @petlost.color %></p>
 <p>Señas particulares: <%= @petlost.signs %></p>
 <p>Perdido el: <%= @petlost.day_lost %></p>
+<p>Dirección donde se perdió: <%= @petlost.address %></p>
 
-<%= link_to 'Volver a la lista', petlosts_path %>
-<%= link_to 'Eliminar', petlost_path(@petlost), data: { turbo_method: :delete,turbo_confirm: "¿Seguro que quieres eliminar?"} %>
+<%= link_to 'Volver a la lista', petlosts_path, class: "btn btn-primary" %>
+<%= link_to 'Eliminar', petlost_path(@petlost), class: "btn btn-danger", data: { turbo_method: :delete, turbo_confirm: "¿Seguro que quieres eliminar?" } %>
+
+
+<div class="card mb-4" style="width: 50%; margin: 0 auto;">
+    <div id="map" style="height: 300px; width: 100%;"></div>
+</div>
+
+<script>
+  document.addEventListener('turbo:load', function() {
+    mapboxgl.accessToken = '<%= ENV['MAPBOX_API_KEY'] %>';
+
+    const map = new mapboxgl.Map({
+      container: 'map',
+      style: 'mapbox://styles/mapbox/streets-v11',
+      center: [<%= @petlost.longitude %>, <%= @petlost.latitude %>],
+      zoom: 15,
+      pitch: 45,
+      bearing: -17.6
+    });
+
+    
+    const el = document.createElement('div');
+    el.className = 'marker';
+    el.style.backgroundImage = 'url(<%= asset_path("heart.png") %>)';
+    el.style.width = '40px';
+    el.style.height = '40px';
+    el.style.backgroundSize = '100%';
+
+
+    new mapboxgl.Marker(el)
+      .setLngLat([<%= @petlost.longitude %>, <%= @petlost.latitude %>])
+      .addTo(map);
+
+
+    map.on('load', function () {
+
+      map.addLayer({
+        'id': '3d-buildings',
+        'source': 'composite',
+        'source-layer': 'building',
+        'filter': ['==', 'extrude', 'true'],
+        'type': 'fill-extrusion',
+        'minzoom': 15,
+        'paint': {
+          'fill-extrusion-color': '#aaa', // Color de los edificios
+          'fill-extrusion-height': [
+            'interpolate', ['linear'], ['zoom'],
+            15, 0,
+            16.05, ['get', 'height']
+          ],
+          'fill-extrusion-base': [
+            'interpolate', ['linear'], ['zoom'],
+            15, 0,
+            16.05, ['get', 'min_height']
+          ],
+          'fill-extrusion-opacity': 0.6
+        }
+      });
+    });
+  });
+</script>
