@@ -13,6 +13,7 @@
 <p>Dirección donde se perdió: <%= @petlost.address %></p>
 
 <%= link_to 'Volver a la lista', petlosts_path, class: "btn btn-primary" %>
+<%= link_to 'Editar', edit_petlost_path, class: "btn btn-primary" %>
 <%= link_to 'Eliminar', petlost_path(@petlost), class: "btn btn-danger", data: { turbo_method: :delete, turbo_confirm: "¿Seguro que quieres eliminar?" } %>
 
 
