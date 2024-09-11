@@ -1,5 +1,6 @@
 class Petlost < ApplicationRecord
   belongs_to :user
+  has_many_attached :photos
   BREEDS = ['Labrador Retriever','Golden Retriever','Pastor Alemán','Shih Tzu','Beagle',
     'Bulldog Francés','Rottweiler','Chihuahua', 'Schnauzer', 'Pug', 'Dóberman', 'Cocker Spaniel',
     'Boxer', 'Pitbull Terrier', 'Perro Sin Pelo', 'Otros']

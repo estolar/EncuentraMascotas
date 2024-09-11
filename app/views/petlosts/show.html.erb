@@ -1,4 +1,11 @@
 <h1><%= @petlost.name %></h1>
+
+
+  <% @petlost.photos.each do |photo| %>
+    <%= cl_image_tag photo.key, height: 300, width: 400, crop: :fill %>
+  <% end %>
+
+
 <p>Raza: <%= @petlost.breed %></p>
 <p>Color: <%= @petlost.color %></p>
 <p>Señas particulares: <%= @petlost.signs %></p>
