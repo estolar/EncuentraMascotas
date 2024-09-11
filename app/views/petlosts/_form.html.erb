@@ -1,0 +1,10 @@
+<%= simple_form_for(petlost) do |f| %>
+  <%= f.input :name %>
+  <%= f.input :breed, collection: Petlost::BREEDS %>
+  <%= f.input :color %>
+  <%= f.input :signs %>
+  <%= f.input :day_lost, html5: true %>
+  <%= f.hidden_field :user_id, value:current_user.id %>
+  <%= f.hidden_field :finded, value: false %>
+  <%= f.submit %>
+<% end %>
