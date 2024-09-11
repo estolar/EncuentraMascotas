@@ -1,0 +1,8 @@
+<h1><%= @petlost.name %></h1>
+<p>Raza: <%= @petlost.breed %></p>
+<p>Color: <%= @petlost.color %></p>
+<p>Señas particulares: <%= @petlost.signs %></p>
+<p>Perdido el: <%= @petlost.day_lost %></p>
+
+<%= link_to 'Volver a la lista', petlosts_path %>
+<%= link_to 'Eliminar', petlost_path(@petlost), data: { turbo_method: :delete,turbo_confirm: "¿Seguro que quieres eliminar?"} %>
