@@ -3,6 +3,40 @@
 <p>Color: <%= @petlost.color %></p>
 <p>Señas particulares: <%= @petlost.signs %></p>
 <p>Perdido el: <%= @petlost.day_lost %></p>
+<p>Dirección donde se perdió: <%= @petlost.address %></p>
 
-<%= link_to 'Volver a la lista', petlosts_path %>
-<%= link_to 'Eliminar', petlost_path(@petlost), data: { turbo_method: :delete,turbo_confirm: "¿Seguro que quieres eliminar?"} %>
+<%= link_to 'Volver a la lista', petlosts_path, class: "btn btn-primary" %>
+<%= link_to 'Eliminar', petlost_path(@petlost), class: "btn btn-danger", data: { turbo_method: :delete, turbo_confirm: "¿Seguro que quieres eliminar?" } %>
+
+
+<div class="card mb-4" style="width: 50%; margin: 0 auto;">
+    <div id="map" style="height: 300px; width: 100%;"></div>
+</div>
+
+
+
+<script>
+  document.addEventListener('turbo:load', function() {
+    mapboxgl.accessToken = '<%= ENV['MAPBOX_API_KEY'] %>';
+
+    const map = new mapboxgl.Map({
+      container: 'map',
+      style: 'mapbox://styles/mapbox/streets-v11',
+      center: [<%= @petlost.longitude %>, <%= @petlost.latitude %>],
+      zoom: 12
+    });
+
+    // Crear un elemento HTML para el marcador personalizado
+    const el = document.createElement('div');
+    el.className = 'marker';
+    el.style.backgroundImage = 'url(<%= asset_path("heart.png") %>)'; // Ruta al perrito
+    el.style.width = '40px';
+    el.style.height = '40px';
+    el.style.backgroundSize = '100%';
+
+    //  Marcador personalizado
+    new mapboxgl.Marker(el)
+      .setLngLat([<%= @petlost.longitude %>, <%= @petlost.latitude %>])
+      .addTo(map);
+  });
+</script>
