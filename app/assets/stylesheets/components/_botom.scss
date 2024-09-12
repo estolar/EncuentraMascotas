@@ -1,0 +1,20 @@
+/* Botones */
+
+
+.btn-primary {
+  background-color: $rosa-em;
+  border: none;
+  margin-top: auto; /* Empuja el botón hacia el final de la tarjeta */
+}
+
+.btn-primary:hover {
+  background-color: $azul-em;
+}
+
+.btn-success {
+  background-color: $azul-em;
+  border: none;
+}
+.btn-success:hover {
+  background-color: $rosa-em;
+}
