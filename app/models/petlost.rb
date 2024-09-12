@@ -8,5 +8,4 @@ class Petlost < ApplicationRecord
     'Boxer', 'Pitbull Terrier', 'Perro Sin Pelo', 'Otros']
   validates :breed, inclusion: { in: BREEDS }
   validates :name, :breed, :color, :day_lost, presence: true
-
 end

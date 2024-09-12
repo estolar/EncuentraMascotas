@@ -56,11 +56,16 @@ puts "Perros perdidos creados: #{petlosts.inspect}"
 
 # Crear perros encontrados
 petfounds = Petfound.create!([
-  { details: 'Encontrado cerca del parque', breed: 'Labrador', color: 'Negro', signs: 'Collar azul', day_found: Date.today - 1, user: users[0] },
-  { details: 'Estaba asustado en la calle', breed: 'Beagle', color: 'Marrón y blanco', signs: 'Orejas largas', day_found: Date.today - 4, user: users[1] },
-  { details: 'Muy amigable, con correa', breed: 'Bulldog', color: 'Gris', signs: 'Cicatriz visible', day_found: Date.today - 2, user: users[2] },
-  { details: 'Parecía perdido en el centro', breed: 'Golden Retriever', color: 'Dorado', signs: 'Pelaje largo', day_found: Date.today - 3, user: users[3] },
-  { details: 'Caminando solo por la avenida', breed: 'Poodle', color: 'Blanco', signs: 'Sin collar', day_found: Date.today - 5, user: users[4] }
+  { details: 'Encontrado en buen estado', breed: 'Labrador Retriever', color: 'Negro', signs: 'Collar rojo', day_found: Date.today - 5, user: users[0], address: 'Avenida Arequipa 1234, Miraflores, Lima' },
+  { details: 'Parece estar perdido hace poco', breed: 'Beagle', color: 'Marrón y blanco', signs: 'Orejas largas', day_found: Date.today - 10, user: users[1], address: 'Avenida Arequipa, Miraflores, Lima' },
+  { details: 'Un poco asustado pero en buen estado', breed: 'Bulldog Francés', color: 'Gris', signs: 'Cicatriz en la pata', day_found: Date.today - 7, user: users[2], address: 'Jirón Puno, Santiago, Cusco' },
+  { details: 'Parece bien cuidado, tiene buen pelaje', breed: 'Golden Retriever', color: 'Dorado', signs: 'Pelaje brillante', day_found: Date.today - 3, user: users[3], address: 'Calle Santa Catalina, Cercado, Arequipa' },
+  { details: 'Muy amistoso', breed: 'Pug', color: 'Blanco', signs: 'Pequeño tamaño', day_found: Date.today - 12, user: users[4], address: 'Avenida Pardo, Trujillo, La Libertad' },
+  { details: 'Encontrado en buen estado pero parece extraviado', breed: 'Shih Tzu', color: 'Negro', signs: 'Collar rojo', day_found: Date.today - 5, user: users[0], address: 'Calle 28 de julio, Miraflores, Lima' },
+  { details: 'Parece haber sido perdido hace poco', breed: 'Schnauzer', color: 'Marrón y blanco', signs: 'Orejas largas', day_found: Date.today - 10, user: users[1], address: 'Avenida Arequipa, Miraflores, Lima' },
+  { details: 'Encontrado cerca de un parque', breed: 'Boxer', color: 'Gris', signs: 'Cicatriz en la pata', day_found: Date.today - 7, user: users[2], address: 'Jirón Puno, Santiago, Cusco' },
+  { details: 'Parece bien alimentado', breed: 'Otros', color: 'Dorado', signs: 'Pelaje brillante', day_found: Date.today - 3, user: users[3], address: 'Calle Santa Catalina, Cercado, Arequipa' },
+  { details: 'Muy amigable', breed: 'Otros', color: 'Blanco', signs: 'Pequeño tamaño', day_found: Date.today - 12, user: users[4], address: 'Avenida Pardo, Trujillo, La Libertad' }
 ])
 
 puts "Perros encontrados creados: #{petfounds.inspect}"
