@@ -24,4 +24,7 @@ Rails.application.routes.draw do
   get 'terms', to: 'pages#terms', as: :terms
   get 'privacy', to: 'pages#privacy', as: :privacy
 
+  # Ruta para la vista detallada de la app Encuentra Mascotas
+  get 'app_info', to: 'pages#app_info', as: :app_info
+
 end

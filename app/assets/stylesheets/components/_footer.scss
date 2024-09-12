@@ -1,0 +1,51 @@
+/* Footer */
+.footer {
+  background-color: #0079C2; /* Fondo azul */
+  color: #fff; /* Texto blanco */
+  padding: 40px 0;
+}
+
+.footer-logo {
+  width: 150px; /* Tamaño del logo */
+  margin-bottom: 20px;
+}
+
+.footer h5 {
+  color: #F7C6C7; /* Títulos en rosa */
+}
+
+.footer ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.footer ul li {
+  margin-bottom: 10px;
+}
+
+.footer ul li a {
+  color: #fff;
+  text-decoration: none;
+}
+
+.footer ul li a:hover {
+  color: #F7C6C7; /* Cambia a rosa cuando se pasa el mouse */
+}
+
+.social-icons {
+  display: flex;
+  flex-direction: column;
+}
+
+.social-icons li {
+  margin-bottom: 10px;
+}
+
+.social-icons i {
+  margin-right: 8px;
+}
+
+.text-center p {
+  margin: 0;
+  font-size: 14px;
+}

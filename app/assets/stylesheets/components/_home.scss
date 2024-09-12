@@ -1,4 +1,12 @@
+$rosa-em: #F7C6C7; // Defining a variable
+$azul-em: #0079C2;
+$spacer: 8px;
+
+
 /* Carrusel styles */
+#carouselExampleCaptions{
+  margin-bottom: 50px;
+}
 .carousel-inner img {
   object-fit: cover;
   height: 100%;
@@ -14,28 +22,37 @@
   transition: background-color 0.3s ease;
 }
 .filter-button:hover {
-  background-color: #ff7300;
+  background-color: $rosa-em;
   color: white;
 }
 
-/* Card Styles */
-.card {
-  border-radius: 10px;
-}
-.card-body h5 {
-  color: #ff7300;
-}
-.btn-primary {
-  background-color: #ff7300;
-  border: none;
-}
-.btn-primary:hover {
-  background-color: #ff9800;
-}
 
-/* Footer */
-.footer {
+/* Estilos para la sección de información de la App */
+.app-info-section {
   background-color: #f8f9fa;
-  padding: 20px;
-  text-align: center;
+  padding: 50px 0;
+
+  .section-title {
+    color: #0079C2;
+    font-size: 2rem;
+    margin-bottom: 20px;
+  }
+
+  .section-text {
+    font-size: 1.2rem;
+    margin-bottom: 20px;
+  }
+
+  .btn-large {
+    width: 300px;
+    height: 50px;
+    font-size: 1.1rem;
+    border-radius: 25px;
+    background-color: $azul-em;
+    border: none;
+  }
+
+  .btn-large:hover {
+    background-color: $rosa-em;
+  }
 }

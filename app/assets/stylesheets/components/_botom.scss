@@ -1,0 +1,49 @@
+/* Botones */
+.btn-primary {
+  background-color: $rosa-em;
+  border: none;
+  margin-top: auto; /* Empuja el botón hacia el final de la tarjeta */
+}
+
+.btn-primary:hover {
+  background-color: $azul-em;
+}
+
+.btn-success {
+  background-color: $azul-em;
+  border: none;
+}
+.btn-success:hover {
+  background-color: $rosa-em;
+}
+
+
+/* Estilos personalizados para los botones */
+.custom-btn-lost, .custom-btn-found {
+  width: 300px;
+  height: 50px;
+  border-radius: 25px; /* Bordes redondeados */
+  font-size: 1.25rem;  /* Ajustar el tamaño de la fuente */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+}
+
+.custom-btn-lost {
+  background-color: $rosa-em; /* Color para el botón "Mascotas Perdidas" */
+  color: black;
+}
+
+.custom-btn-found {
+  background-color: $azul-em; /* Color para el botón "Mascotas Encontradas" */
+}
+
+.custom-btn-lost:hover {
+  background-color: $azul-em; /* Cambiar color al pasar el mouse */
+}
+
+.custom-btn-found:hover {
+  background-color: $rosa-em; /* Cambiar color al pasar el mouse */
+  color: black;
+}
