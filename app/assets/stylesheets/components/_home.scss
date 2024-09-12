@@ -1,3 +1,8 @@
+$rosa-em: #F7C6C7; // Defining a variable
+$azul-em: #0079C2;
+$spacer: 8px;
+
+
 /* Carrusel styles */
 .carousel-inner img {
   object-fit: cover;
@@ -14,28 +19,27 @@
   transition: background-color 0.3s ease;
 }
 .filter-button:hover {
-  background-color: #ff7300;
+  background-color: $rosa-em;
   color: white;
 }
 
 /* Card Styles */
-.card {
-  border-radius: 10px;
-}
-.card-body h5 {
-  color: #ff7300;
-}
+
+
 .btn-primary {
-  background-color: #ff7300;
+  background-color: $rosa-em;
   border: none;
-}
-.btn-primary:hover {
-  background-color: #ff9800;
+  margin-top: auto; /* Empuja el botón hacia el final de la tarjeta */
 }
 
-/* Footer */
-.footer {
-  background-color: #f8f9fa;
-  padding: 20px;
-  text-align: center;
+.btn-primary:hover {
+  background-color: $azul-em;
+}
+
+.btn-success {
+  background-color: $azul-em;
+  border: none;
+}
+.btn-success:hover {
+  background-color: $rosa-em;
 }
