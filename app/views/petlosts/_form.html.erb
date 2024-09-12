@@ -1,9 +1,21 @@
 <%= simple_form_for(petlost) do |f| %>
   <%= f.input :name %>
-  <%= f.input :breed, collection: Petlost::BREEDS, input_html: {multiple: true, data: {controller: "tom-select", tom_select_options_value: {tags: true}}} %>
-  <%= f.input :color %>
+  <%= f.input :breed, collection: Petlost::BREEDS, prompt: 'Selecciona su raza' %>
+  <%= f.input :color, collection: Petlost::COLORS, hint: 'Selecciona su(s) color(es)', input_html: {
+    multiple: true, data: {
+      controller: "tom-select",
+      tom_select_options_value: { tags: true }
+      }
+    } %>
   <%= f.input :signs %>
-  <%= f.input :day_lost, html5: true %>
+  <%= f.input :day_lost, placeholder: 'Selecciona una fecha',
+              as: :string,
+              input_html: {
+                data: {
+                  controller: "datepicker",
+                  datepicker_today_value: Date.today
+                }
+              } %>
   <%= f.input :photos, as: :file, input_html: { multiple: true } %>
   <%= f.input :address, label: "Dirección donde se perdió" %>
   <%= f.hidden_field :user_id, value:current_user.id %>
