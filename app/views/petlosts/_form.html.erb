@@ -4,6 +4,14 @@
   <%= f.input :color %>
   <%= f.input :signs %>
   <%= f.input :day_lost, html5: true %>
+   <% if @petlost.photos.attached? %>
+    <div class="current-photo">
+      <p>Imagen actual:</p>
+      <% @petlost.photos.each do |photo| %>
+        <%= cl_image_tag photo.key, height: 300, width: 400, crop: :fill %>
+        <% end %>
+    </div>
+  <% end %>
   <%= f.input :photos, as: :file, input_html: { multiple: true } %>
   <%= f.input :address, label: "Dirección donde se perdió" %>
   <%= f.hidden_field :user_id, value:current_user.id %>
