@@ -1,6 +1,6 @@
 <%= simple_form_for(petlost) do |f| %>
   <%= f.input :name %>
-  <%= f.input :breed, collection: Petlost::BREEDS %>
+  <%= f.input :breed, collection: Petlost::BREEDS, input_html: {multiple: true, data: {controller: "tom-select", tom_select_options_value: {tags: true}}} %>
   <%= f.input :color %>
   <%= f.input :signs %>
   <%= f.input :day_lost, html5: true %>
