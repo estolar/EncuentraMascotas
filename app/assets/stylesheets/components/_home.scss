@@ -4,6 +4,9 @@ $spacer: 8px;
 
 
 /* Carrusel styles */
+#carouselExampleCaptions{
+  margin-bottom: 50px;
+}
 .carousel-inner img {
   object-fit: cover;
   height: 100%;
@@ -23,23 +26,33 @@ $spacer: 8px;
   color: white;
 }
 
-/* Card Styles */
 
+/* Estilos para la sección de información de la App */
+.app-info-section {
+  background-color: #f8f9fa;
+  padding: 50px 0;
 
-.btn-primary {
-  background-color: $rosa-em;
-  border: none;
-  margin-top: auto; /* Empuja el botón hacia el final de la tarjeta */
-}
+  .section-title {
+    color: #0079C2;
+    font-size: 2rem;
+    margin-bottom: 20px;
+  }
 
-.btn-primary:hover {
-  background-color: $azul-em;
-}
+  .section-text {
+    font-size: 1.2rem;
+    margin-bottom: 20px;
+  }
 
-.btn-success {
-  background-color: $azul-em;
-  border: none;
-}
-.btn-success:hover {
-  background-color: $rosa-em;
+  .btn-large {
+    width: 300px;
+    height: 50px;
+    font-size: 1.1rem;
+    border-radius: 25px;
+    background-color: $azul-em;
+    border: none;
+  }
+
+  .btn-large:hover {
+    background-color: $rosa-em;
+  }
 }
