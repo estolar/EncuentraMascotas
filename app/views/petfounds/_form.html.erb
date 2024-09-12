@@ -3,7 +3,14 @@
   <%= f.input :color %>
   <%= f.input :signs %>
   <%= f.input :details, as: :radio_buttons, collection: ["le estoy dando refugio! :)", "solo lo vi mientras pasaba :(", "Otras circunstancias"] %>
-  <%= f.input :day_found, html5: true %>
+  <%= f.input :day_found, placeholder: 'Selecciona una fecha',
+              as: :string,
+              input_html: {
+                data: {
+                  controller: "datepicker",
+                  datepicker_today_value: Date.today
+                }
+              } %>
   <%= f.input :photos, as: :file, input_html: { multiple: true } %>
   <%= f.hidden_field :user_id, value:current_user.id %>
   <%= f.submit %>
