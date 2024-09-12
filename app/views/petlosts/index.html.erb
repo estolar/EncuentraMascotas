@@ -1,18 +1,72 @@
-<h1>Listado de Mascotas Perdidas</h1>
-<%= link_to 'Ver mascotas cercanas', nearby_petlosts_path, class: "btn btn-info mb-3" %>
+<div class="container mt-5">
+  <div class="row">
+    <!-- Columna para el filtro -->
+    <div class="col-md-3">
+      <div class="card" style="max-height: 400px; overflow-y: auto;"> <!-- Limitamos la altura del filtro a 400px -->
+        <div class="card-header">
+          Filtro por búsqueda
+        </div>
+        <div class="card-body">
+          <%= form_with url: petlosts_path, method: :get, local: true do %>
+            <div class="form-group mb-2">
+              <%= label_tag :raza, "Raza" %>
+              <%= text_field_tag :raza, params[:raza], class: 'form-control' %>
+            </div>
 
-<% @petlosts.each do |petlost| %>
-  <h2><%= petlost.name %></h2>
-  <% petlost.photos.each do |photo| %>
-    <%= cl_image_tag photo.key, height: 300, width: 400, crop: :fill %>
-  <% end %>
-  <p>Raza: <%= petlost.breed %></p>
-  <p>Color: <%= petlost.color %></p>
-  <p>Señas particulares: <%= petlost.signs %></p>
-  <p>Perdido el: <%= petlost.day_lost %></p>
-  <p>Dirección donde se perdió: <%= petlost.address %></p>
+            <div class="form-group mb-2">
+              <%= label_tag :color, "Color" %>
+              <%= text_field_tag :color, params[:color], class: 'form-control' %>
+            </div>
 
-  <%= link_to 'Ver detalles', petlost_path(petlost) %>
-  <hr>
-<% end %>
-<%= link_to 'Crear nueva mascota perdida', new_petlost_path, class: "btn btn-primary" %>
+            <div class="form-group mb-2">
+              <%= label_tag :señas, "Señas particulares" %>
+              <%= text_field_tag :signs, params[:signs], class: 'form-control' %>
+            </div>
+
+            <div class="form-group mb-2">
+              <%= label_tag :fecha_perdido, "Fecha perdido" %>
+              <%= date_field_tag :day_lost, params[:day_lost], class: 'form-control' %>
+            </div>
+
+            <%= submit_tag 'Filtrar', class: 'btn btn-primary btn-block' %>
+          <% end %>
+        </div>
+      </div>
+    </div>
+
+    <!-- Columna para las tarjetas -->
+    <div class="col-md-9">
+      <div class="row g-3">
+        <% if @petlosts.any? %>
+          <% @petlosts.each do |petlost| %>
+            <div class="col-md-4">
+              <div class="card mb-4 shadow-sm d-flex flex-column"> <!-- d-flex flex-column para hacer que las tarjetas se alineen -->
+                <!-- Ajustar imágenes con tamaño fijo y object-fit para alineación uniforme -->
+                <% if petlost.photos.any? %>
+                  <%= cl_image_tag petlost.photos.first.key, class: 'card-img-top', style: 'height: 250px; object-fit: cover;', alt: petlost.name %>
+                <% else %>
+                  <%= image_tag 'default-image.png', class: 'card-img-top', style: 'height: 250px; object-fit: cover;', alt: 'No image available' %>
+                <% end %>
+
+                <div class="card-body d-flex flex-column">
+                  <h5 class="card-title"><%= petlost.name %></h5>
+                  <p class="card-text">Raza: <%= petlost.breed %></p>
+                  <p class="card-text">Color: <%= petlost.color %></p>
+                  <p class="card-text">Señas particulares: <%= petlost.signs %></p>
+                  <p class="card-text">Perdido el: <%= petlost.day_lost %></p>
+                  <p class="card-text">Dirección donde se perdió: <%= petlost.address %></p>
+
+                  <div class="mt-auto"> <!-- mt-auto empuja el botón hacia abajo -->
+                    <%= link_to 'Ver más', petlost_path(petlost), class: 'btn btn-primary' %>
+                  </div>
+                </div>
+              </div>
+            </div>
+          <% end %>
+        <% else %>
+          <p>No hay mascotas perdidas que coincidan con los filtros.</p>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
