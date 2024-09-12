@@ -1,6 +1,36 @@
 <!-- Footer -->
-<footer class="footer">
-  <p>&copy; 2024 EncuentraMascotas - Todos los derechos reservados</p>
-  <%= link_to 'Términos y Condiciones', terms_path %> <!-- Comentado hasta que terms_path esté definido -->
-  <%= link_to 'Política de Privacidad', privacy_path %> <!-- Comentado hasta que privacy_path esté definido -->
+<footer class="footer mt-5">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-4">
+        <!-- Logo -->
+        <img src="<%= asset_path('http://enrsto.freehostia.com/enriquestolar.com/img/logo-encuentramascotas.png') %>" alt="Encuentra Mascotas" class="footer-logo">
+        <p>Conectamos mascotas perdidas con sus dueños a través de tecnología y comunidad.</p>
+      </div>
+
+      <div class="col-md-4">
+        <h5>Enlaces útiles</h5>
+        <ul class="list-unstyled">
+          <li><%= link_to 'Mascotas Perdidas', petlosts_path %></li>
+          <li><%= link_to 'Mascotas Encontradas', petfounds_path %></li>
+          <li><%= link_to 'Términos y Condiciones', terms_path %></li>
+          <li><%= link_to 'Política de Privacidad', privacy_path %></li>
+        </ul>
+      </div>
+
+      <div class="col-md-4">
+        <h5>Síguenos</h5>
+        <ul class="list-unstyled social-icons">
+          <li><a href="https://www.facebook.com"><i class="fab fa-facebook-f"></i> Facebook</a></li>
+          <li><a href="https://www.instagram.com"><i class="fab fa-instagram"></i> Instagram</a></li>
+          <li><a href="https://www.tiktok.com"><i class="fab fa-tiktok"></i> TikTok</a></li>
+          <li><a href="https://chat.whatsapp.com/invite-code"><i class="fab fa-whatsapp"></i> Grupo de WhatsApp</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="text-center mt-4">
+      <p>&copy; 2024 EncuentraMascotas - Todos los derechos reservados</p>
+    </div>
+  </div>
 </footer>
