@@ -1,0 +1,24 @@
+/* Card Styles */
+.card {
+  border-radius: 10px;
+  height: 100%; /* Asegura que la tarjeta tenga la altura completa */
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 20px; /* Agrega espacio entre filas */
+}
+
+.card-body {
+  flex-grow: 1; /* Permite que el cuerpo de la tarjeta crezca para ocupar el espacio disponible */
+  text-align: center;
+}
+
+.pet-image {
+  height: 200px; /* Altura fija para las imágenes */
+  width: 100%;   /* Ocupa el 100% del ancho */
+  object-fit: cover; /* Asegura que la imagen se ajuste al contenedor sin deformarse */
+  display: block;
+}
+
+.card-title {
+  color: $azul-em;
+}
