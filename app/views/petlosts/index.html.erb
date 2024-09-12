@@ -1,4 +1,5 @@
 <h1>Listado de Mascotas Perdidas</h1>
+<%= link_to 'Ver mascotas cercanas', nearby_petlosts_path, class: "btn btn-info mb-3" %>
 
 <% @petlosts.each do |petlost| %>
   <h2><%= petlost.name %></h2>

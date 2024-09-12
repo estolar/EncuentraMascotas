@@ -1,8 +1,7 @@
 <h1>Mascotas perdidas cercanas</h1>
 
-<div id="nearby-map" style="height: 400px; width: 100%;"></div> <!-- Cambiado el id a 'nearby-map' -->
-<%= link_to 'Volver a Home', root_path, class: "btn btn-primary" %>
-
+<div id="nearby-map" style="height: 400px; width: 100%;"></div>
+<%= link_to 'Volver a la lista de mascotas perdidas', petlosts_path, class: "btn btn-primary" %>
 <script>
   document.addEventListener('turbo:load', function() {
     mapboxgl.accessToken = '<%= ENV['MAPBOX_API_KEY'] %>';
@@ -16,9 +15,11 @@
 
       const nearbyMap = new mapboxgl.Map({
         container: 'nearby-map', // Cambiado el id aquí también
-        style: 'mapbox://styles/mapbox/streets-v11',
+        style: 'mapbox://styles/mapbox/outdoors-v11', // Usar un estilo con relieve
         center: [userLng, userLat],
-        zoom: 12
+        zoom: 12,
+        pitch: 45, // Ajustar el ángulo de inclinación para ver el relieve
+        bearing: -17.6 // Ajustar el ángulo de rotación del mapa
       });
 
       // Marcador de la ubicación del usuario
@@ -45,6 +46,32 @@
           `))
           .addTo(nearbyMap);
       <% end %>
+
+      nearbyMap.on('load', function () {
+        // Añadir capa de edificios en 3D
+        nearbyMap.addLayer({
+          'id': '3d-buildings',
+          'source': 'composite',
+          'source-layer': 'building',
+          'filter': ['==', 'extrude', 'true'],
+          'type': 'fill-extrusion',
+          'minzoom': 15,
+          'paint': {
+            'fill-extrusion-color': '#aaa',
+            'fill-extrusion-height': [
+              'interpolate', ['linear'], ['zoom'],
+              15, 0,
+              16.05, ['get', 'height']
+            ],
+            'fill-extrusion-base': [
+              'interpolate', ['linear'], ['zoom'],
+              15, 0,
+              16.05, ['get', 'min_height']
+            ],
+            'fill-extrusion-opacity': 0.6
+          }
+        });
+      });
 
     }, function() {
       alert('No se pudo obtener tu ubicación.');
