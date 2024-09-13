@@ -66,7 +66,19 @@
                 <div class="card-body d-flex flex-column">
                   <h5 class="card-title"><%= petlost.name %></h5>
                   <p class="card-text">Raza: <%= petlost.breed %></p>
-                  <p class="card-text">Color: <%= petlost.color %></p>
+                <% if petlost.color.present? %>
+                  <% if petlost.color.class = Array%>
+                    <% colors_array = JSON.parse(petlost.color).reject(&:blank?) %>
+                    <% if colors_array.size == 1 %>
+                      <p>Color: <%= colors_array.join %></p>
+                      <% else %>
+                      <p>Color: <%= colors_array.join(", ") %></p>
+                    <% end %>
+                  <% else %>
+                    <p>Color: <%= petlost.color %></p>
+                  <% end %>
+
+                <% end %>
                   <p class="card-text">Señas particulares: <%= petlost.signs %></p>
                   <p class="card-text">Perdido el: <%= petlost.day_lost %></p>
                   <p class="card-text">Dirección donde se perdió: <%= petlost.address %></p>

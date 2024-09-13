@@ -6,7 +6,15 @@
     <%= cl_image_tag photo.key, height: 300, width: 400, crop: :fill %>
   <% end %>
   <p>Raza: <%= petfound.breed %></p>
-  <p>Color: <%= petfound.color %></p>
+  <% if petfound.color.present? %>
+    <% colors_array = JSON.parse(petfound.color).reject(&:blank?) %>
+
+    <% if colors_array.size == 1 %>
+      <p>Color: <%= colors_array.join %></p>
+      <% else %>
+      <p>Color: <%= colors_array.join(", ") %></p>
+    <% end %>
+  <% end %>
   <p>Señas particulares: <%= petfound.signs %></p>
   <p>Encontrado el: <%= petfound.day_found %></p>
   <p>Dirección donde fue encontrado: <%= petfound.address %></p>

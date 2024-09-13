@@ -1,3 +1,7 @@
+<% if @petlost.user && @petlost.user.phone_number.present? %>
+  <%= link_to 'Contactar por WhatsApp', "https://wa.me/#{@petlost.user.phone_number}?text=Hola.%20Vengo%20de%20Encuentra%20Mascotas.%20Me%20puedes%20ayudar%20a%20encontrar%20a%20mi%20compañero:%20https://www.encuentramascotas.org/", class: "btn btn-success", target: "_blank" %>
+<% end %>
+
 <h1><%= @petlost.name %></h1>
 
 <div class = "container">
@@ -23,12 +27,19 @@
         </div>
       <%# fin carrusel %>
 </div>
-<% @petlost.photos.each do |photo| %>
-  <%= cl_image_tag photo.key, height: 300, width: 400, crop: :fill %>
-<% end %>
 
 <p>Raza: <%= @petlost.breed %></p>
-<p>Color: <%= @petlost.color %></p>
+
+  <% if @petlost.color.present? %>
+    <% colors_array = JSON.parse(@petlost.color).reject(&:blank?) %>
+
+    <% if colors_array.size == 1 %>
+      <p>Color: <%= colors_array.join %></p>
+      <% else %>
+      <p>Color: <%= colors_array.join(", ") %></p>
+    <% end %>
+  <% end %>
+
 <p>Señas particulares: <%= @petlost.signs %></p>
 <p>Perdido el: <%= @petlost.day_lost %></p>
 <p>Dirección donde se perdió: <%= @petlost.address %></p>
