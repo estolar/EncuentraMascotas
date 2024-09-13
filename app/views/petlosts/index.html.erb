@@ -1,10 +1,18 @@
 <div class="container mt-5">
-  <!-- Botones en la parte superior -->
-  <div class="d-flex justify-content-between mb-4">
-    <%= link_to 'Mascotas cerca', loading_screen_petlosts_path, class: 'btn btn-success text-white' %>
-    <%= link_to 'Volver a inicio', root_path, class: 'btn btn-success text-white' %>
-    <%= link_to 'Crear mascota perdida', new_petlost_path, class: 'btn btn-success text-white' %>
+ <div class="d-flex justify-content-between mb-4">
+  <div>
+    <%= link_to  root_path, class: 'btn btn-success text-white' do  %>
+        <i class="fa-solid fa-house"></i>
+    <%end%>
   </div>
+  <div>
+    <%= link_to  loading_screen_petlosts_path, class: 'btn btn-success text-white' do %>
+      <i class="fa-solid fa-paw"></i>
+      <i class="fa-solid fa-location-dot"></i>
+    <%end%>
+    <%= link_to 'Perdi mi mascota', new_petlost_path, class: 'btn btn-success text-white ms-2' %>
+ </div>
+</div>
 
   <div class="row">
     <!-- Columna para el filtro -->
@@ -35,7 +43,7 @@
               <%= date_field_tag :day_lost, params[:day_lost], class: 'form-control' %>
             </div>
 
-            <%= submit_tag 'Filtrar', class: 'btn btn-primary btn-block' %>
+            <%= submit_tag 'Filtrar', class: 'btn btn-success btn-block text-white' %>
           <% end %>
         </div>
       </div>
@@ -64,7 +72,10 @@
                   <p class="card-text">Dirección donde se perdió: <%= petlost.address %></p>
 
                   <div class="mt-auto"> <!-- mt-auto empuja el botón hacia abajo -->
-                    <%= link_to 'Ver más', petlost_path(petlost), class: 'btn btn-primary' %>
+                    <%= link_to petlost_path(petlost), class: 'btn btn-success text-white' do %>
+                      <i class="fa-solid fa-plus"></i>
+                      <i class="fa-solid fa-paw"></i>
+                    <% end %>
                   </div>
                 </div>
               </div>
