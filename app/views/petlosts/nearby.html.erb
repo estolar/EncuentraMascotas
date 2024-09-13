@@ -1,7 +1,7 @@
-<h1>Mascotas perdidas cercanas</h1>
-
-<div id="nearby-map" style="height: 400px; width: 100%;"></div>
+<h1 class="text-center fw-bold mb-4">Mascotas perdidas cercanas</h1>
 <%= link_to 'Volver a la lista de mascotas perdidas', petlosts_path, class: "btn btn-primary" %>
+<div id="nearby-map" style="height: 400px; width: 100%;"></div>
+
 <script>
   document.addEventListener('turbo:load', function() {
     mapboxgl.accessToken = '<%= ENV['MAPBOX_API_KEY'] %>';

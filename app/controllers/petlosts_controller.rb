@@ -65,20 +65,19 @@ class PetlostsController < ApplicationController
     redirect_to petlosts_path, status: :see_other
   end
 
-  def nearby
-    # Suponiendo que quieras buscar todas las mascotas perdidas
-    @petlosts = Petlost.geocoded # Solo las mascotas con coordenadas
-
-    respond_to do |format|
-      format.html # nearby.html.erb
-    end
+  def loading_screen
   end
 
+  def nearby
+    @petlosts = Petlost.geocoded
+    respond_to do |format|
+      format.html
+    end
+  end
 
   private
 
   def petlost_params
     params.require(:petlost).permit(:name, :breed, :color, :signs, :day_lost, :user_id, :finded, :address, photos: [])
   end
-
 end

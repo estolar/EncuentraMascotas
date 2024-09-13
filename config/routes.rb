@@ -14,6 +14,7 @@ Rails.application.routes.draw do
   resources :petlosts do
     collection do
       get :nearby
+      get :loading_screen
     end
   end
   resources :petfounds
