@@ -19,7 +19,15 @@ class PetlostsController < ApplicationController
 
   def update
     @petlost = Petlost.find(params[:id])
-    @petlost.update(petlost_params)
+    if @petlost.update(petlost_params.except(:photos))
+      if params[:petlost][:photos].present?
+        params[:petlost][:photos].each do |photo|
+          @petlost.photos.attach(photo)
+        end
+      end
+    else
+      @petlost.update(petlost_params.except(:photos))
+    end
     redirect_to petlost_path(@petlost)
   end
 
