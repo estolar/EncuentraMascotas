@@ -62,4 +62,6 @@ class Petfound < ApplicationRecord
   validates :breed, inclusion: { in: BREEDS }
   validates :breed, :color, :day_found, presence: true
 
+  validates :address, length: { in: 5..20, message: "Direccion entre 5 y 20 caracteres" }
+
 end
