@@ -58,8 +58,8 @@ class Petlost < ApplicationRecord
 
   COLORS = ['bicolor', 'tricolor', 'otro color', 'negro', 'blanco', 'marrón', 'gris', 'canela', 'atigrado',
             'crema', 'dorado', 'leonado']
+
   validates :breed, inclusion: { in: BREEDS }
-  validates :color, inclusion: { in: COLORS }
   validates :name, :breed, :color, :day_lost, presence: true
 
 end

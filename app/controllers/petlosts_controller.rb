@@ -47,7 +47,6 @@ class PetlostsController < ApplicationController
   private
 
   def petlost_params
-    params.require(:petlost).permit(:name, :breed, :color, :signs, :day_lost, :user_id, :finded, photos: [])
+    params.require(:petlost).permit(:name, :breed, :signs, :day_lost, :address, :user_id, :finded, photos: [], color: [])
   end
-
 end
