@@ -32,6 +32,22 @@ class PetlostsController < ApplicationController
 
   def index
     @petlosts = Petlost.all
+
+    if params[:raza].present?
+      @petlosts = @petlosts.where("breed ILIKE ?", "%#{params[:raza]}%")
+    end
+
+    if params[:color].present?
+      @petlosts = @petlosts.where("color ILIKE ?", "%#{params[:color]}%")
+    end
+
+    if params[:signs].present?
+      @petlosts = @petlosts.where("signs ILIKE ?", "%#{params[:signs]}%")
+    end
+
+    if params[:day_lost].present?
+      @petlosts = @petlosts.where(day_lost: params[:day_lost])
+    end
   end
 
   def show
@@ -42,6 +58,16 @@ class PetlostsController < ApplicationController
     @petlost = Petlost.find(params[:id])
     @petlost.destroy
     redirect_to petlosts_path, status: :see_other
+  end
+
+  def loading_screen
+  end
+
+  def nearby
+    @petlosts = Petlost.geocoded
+    respond_to do |format|
+      format.html
+    end
   end
 
   private
