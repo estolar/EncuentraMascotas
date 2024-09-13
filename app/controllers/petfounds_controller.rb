@@ -17,7 +17,7 @@ class PetfoundsController < ApplicationController
     @petfound.destroy
     redirect_to petfounds_path, status: :see_other
   end
-  
+
   def new
     @petfound = Petfound.new
   end

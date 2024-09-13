@@ -53,7 +53,7 @@ class Petlost < ApplicationRecord
             'Chinook', 'Redbone Coonhound', 'Treeing Tennessee Brindle', 'Boykin Spaniel',
             'Nova Scotia Duck Tolling Retriever', 'American Water Spaniel', 'Chesapeake Bay Retriever',
             'Curly-Coated Retriever', 'Flat-Coated Retriever', 'Irish Setter', 'Gordon Setter',
-            'English Setter', 'Welsh Corgi Pembroke', 'Welsh Corgi Cardigan', 'Perro Sin Pelo', 'Otros'
+            'English Setter', 'Welsh Corgi Pembroke', 'Welsh Corgi Cardigan', 'Perro Sin Pelo', 'Otros', 'Criollo'
           ]
 
   COLORS = ['bicolor', 'tricolor', 'otro color', 'negro', 'blanco', 'marrón', 'gris', 'canela', 'atigrado',
