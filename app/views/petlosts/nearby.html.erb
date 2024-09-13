@@ -1,6 +1,13 @@
-<h1 class="text-center fw-bold mb-4">Mascotas perdidas cercanas</h1>
-<%= link_to 'Volver a la lista de mascotas perdidas', petlosts_path, class: "btn btn-primary" %>
-<div id="nearby-map" style="height: 400px; width: 100%;"></div>
+<div class="container my-5 ">
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <%= link_to 'Volver', petlosts_path, class: "btn btn-success btn-lg text-white" %>
+    <h1 class="text-center flex-grow-1 fw-bold mb-0 ">Mascotas perdidas cercanas</h1>
+  </div>
+
+  <div class="map-container rounded shadow">
+    <div id="nearby-map" style="height: 400px; width: 100%;"></div>
+  </div>
+</div>
 
 <script>
   document.addEventListener('turbo:load', function() {
