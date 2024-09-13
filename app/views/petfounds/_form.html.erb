@@ -1,0 +1,32 @@
+<%= simple_form_for(petfound) do |f| %>
+  <%= f.input :breed, label: "Raza", collection: Petfound::BREEDS, prompt: 'Selecciona su raza' %>
+  <%= f.input :color, label: "Color", collection: Petfound::COLORS, hint: 'Selecciona su(s) color(es). Si tiene más de dos, selecciona primero bicolor/tricolor y luego sus colores!', input_html: {
+    multiple: true, data: {
+      controller: "tom-select",
+      tom_select_options_value: { tags: true }
+      }
+    } %>
+  <%= f.input :signs, label: 'Características/peculiaridades' %>
+  <%= f.input :day_found, label: '¿Cuándo lo encontraste?', placeholder: 'Selecciona una fecha',
+              as: :string,
+              input_html: {
+                data: {
+                  controller: "datepicker",
+                  datepicker_today_value: Date.today
+                }
+              } %>
+  <%= f.input :facts, label: '¿Cuál es su estado actual?', as: :radio_buttons, collection: ["le estoy dando refugio! :)", "solo lo vi mientras pasaba :(", "Otras circunstancias"] %>
+  <%= f.input :details, label: 'Detalles adicionales' %>
+  <% if @petfound.photos.attached? %>
+    <div class="current-photo">
+      <p>Imagen actual:</p>
+      <% @petfound.photos.each do |photo| %>
+        <%= cl_image_tag photo.key, height: 300, width: 400, crop: :fill %>
+        <% end %>
+    </div>
+  <% end %>
+  <%= f.input :photos, as: :file, label: 'Adjunta una foto', input_html: { multiple: true } %>
+  <%# <%= f.input :address, label: "Ingresa la dirección donde lo viste o donde se encuentra actualmente" %> %>
+  <%= f.hidden_field :user_id, value:current_user.id %>
+  <%= f.submit %>
+<% end %>

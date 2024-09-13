@@ -1,9 +1,21 @@
 <%= simple_form_for(petlost) do |f| %>
-  <%= f.input :name %>
-  <%= f.input :breed, collection: Petlost::BREEDS %>
-  <%= f.input :color %>
-  <%= f.input :signs %>
-  <%= f.input :day_lost, html5: true %>
+  <%= f.input :name, label: "Nombre"%>
+  <%= f.input :breed, label: "Raza", collection: Petlost::BREEDS, prompt: 'Selecciona su raza' %>
+  <%= f.input :color, label: "Color", collection: Petlost::COLORS, hint: 'Selecciona su(s) color(es). Si tiene más de dos, selecciona primero bicolor/tricolor y luego sus colores!', input_html: {
+    multiple: true, data: {
+      controller: "tom-select",
+      tom_select_options_value: { tags: true }
+      }
+    } %>
+  <%= f.input :signs, label: 'Características/peculiaridades' %>
+  <%= f.input :day_lost, placeholder: '¿Cuándo se perdió?',
+              as: :string,
+              input_html: {
+                data: {
+                  controller: "datepicker",
+                  datepicker_today_value: Date.today
+                }
+              } %>
    <% if @petlost.photos.attached? %>
     <div class="current-photo">
       <p>Imagen actual:</p>
@@ -12,8 +24,8 @@
         <% end %>
     </div>
   <% end %>
-  <%= f.input :photos, as: :file, input_html: { multiple: true } %>
-  <%= f.input :address, label: "Dirección donde se perdió" %>
+  <%= f.input :photos, as: :file, label: 'Adjunta una foto', input_html: { multiple: true } %>
+  <%= f.input :address, label: "Ingresa la dirección donde se perdió" %>
   <%= f.hidden_field :user_id, value:current_user.id %>
   <%= f.hidden_field :finded, value: false %>
   <%= f.submit %>

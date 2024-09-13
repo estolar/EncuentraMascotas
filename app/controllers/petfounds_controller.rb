@@ -17,10 +17,33 @@ class PetfoundsController < ApplicationController
     @petfound.destroy
     redirect_to petfounds_path, status: :see_other
   end
+  
+  def new
+    @petfound = Petfound.new
+  end
+
+  def create
+    @petfound = Petfound.new(petfound_params)
+    if @petfound.save
+      redirect_to petfound_path(@petfound)
+    else
+      render :new, status: :unprocessable_entity
+    end
+  end
+
+  def edit
+    @petfound = Petfound.find(params[:id])
+  end
+
+  def update
+    @petfound = Petfound.find(params[:id])
+    @petfound.update(petfound_params)
+    redirect_to petfound_path(@petfound)
+  end
 
   private
 
   def petfound_params
-    params.require(:petfound).permit(:details, :breed, :color, :signs, :day_found, :user_id, :address, photos: [])
+    params.require(:petfound).permit(:breed, :facts, :signs, :details, :day_found, :user_id, :address , photos: [], color: [])
   end
 end

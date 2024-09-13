@@ -17,7 +17,9 @@ Rails.application.routes.draw do
       get :loading_screen
     end
   end
+  
   resources :petfounds
+
   # , only: [:create, :new, :index, :destroy, :edit, :update, :show]
   # Defines the root path route ("/")
   # root "posts#index"
