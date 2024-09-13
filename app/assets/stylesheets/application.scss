@@ -10,3 +10,26 @@
 // Your CSS partials
 @import "components/index";
 @import "pages/index";
+
+
+/* app/assets/stylesheets/application.scss */
+body {
+  font-family: 'Titillium Web', sans-serif;
+  font-weight: 900; /* Este es el peso de la versión Black */
+}
+
+
+h1 {
+  font-family: 'Titillium Web', sans-serif;
+  font-weight: 900; /* Muy grueso */
+}
+
+h2 {
+  font-family: 'Titillium Web', sans-serif;
+  font-weight: 700; /* Menos grueso */
+}
+
+h3 {
+  font-family: 'Titillium Web', sans-serif;
+  font-weight: 500; /* Aún menos grueso */
+}
