@@ -22,11 +22,11 @@
       <p>Imagen actual:</p>
       <% @petfound.photos.each do |photo| %>
         <%= cl_image_tag photo.key, height: 300, width: 400, crop: :fill %>
-        <% end %>
+      <% end %>
     </div>
   <% end %>
   <%= f.input :photos, as: :file, label: 'Adjunta una foto', input_html: { multiple: true } %>
-  <%# <%= f.input :address, label: "Ingresa la dirección donde lo viste o donde se encuentra actualmente" %> %>
-  <%= f.hidden_field :user_id, value:current_user.id %>
+  <%= f.input :address, label: "Ingresa la dirección donde lo viste o donde se encuentra actualmente" %> 
+  <%= f.hidden_field :user_id, value: current_user.id %>
   <%= f.submit %>
 <% end %>

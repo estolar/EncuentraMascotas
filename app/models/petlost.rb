@@ -61,4 +61,5 @@ class Petlost < ApplicationRecord
 
   validates :breed, inclusion: { in: BREEDS }
   validates :name, :breed, :color, :day_lost, presence: true
+  validates :address, length: { in: 5..20, message: "No debe estar en blanco entre 5 y 20 caracteres" }
 end
