@@ -55,10 +55,11 @@ class Petlost < ApplicationRecord
             'Curly-Coated Retriever', 'Flat-Coated Retriever', 'Irish Setter', 'Gordon Setter',
             'English Setter', 'Welsh Corgi Pembroke', 'Welsh Corgi Cardigan', 'Perro Sin Pelo', 'Otros'
           ]
-  COLORS = ['negro', 'blanco', 'marrón', 'gris', 'canela', 'atigrado',
-            'crema', 'dorado', 'leonado', 'bicolor', 'tricolor', 'otro color']
+
+  COLORS = ['bicolor', 'tricolor', 'otro color', 'negro', 'blanco', 'marrón', 'gris', 'canela', 'atigrado',
+            'crema', 'dorado', 'leonado']
   validates :breed, inclusion: { in: BREEDS }
-  validates :breed, inclusion: { in: COLORS }
+  validates :color, inclusion: { in: COLORS }
   validates :name, :breed, :color, :day_lost, presence: true
 
 end

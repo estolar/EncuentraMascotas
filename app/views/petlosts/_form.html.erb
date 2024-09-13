@@ -1,7 +1,7 @@
 <%= simple_form_for(petlost) do |f| %>
   <%= f.input :name %>
   <%= f.input :breed, collection: Petlost::BREEDS, prompt: 'Selecciona su raza' %>
-  <%= f.input :color, collection: Petlost::COLORS, hint: 'Selecciona su(s) color(es)', input_html: {
+  <%= f.input :color, collection: Petlost::COLORS, hint: 'Selecciona su(s) color(es). Si tiene más de dos, selecciona primero bicolor/tricolor y luego sus colores!', input_html: {
     multiple: true, data: {
       controller: "tom-select",
       tom_select_options_value: { tags: true }
@@ -22,3 +22,5 @@
   <%= f.hidden_field :finded, value: false %>
   <%= f.submit %>
 <% end %>
+
+<% console %>
