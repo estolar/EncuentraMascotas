@@ -1,24 +1,21 @@
-<h1><%= @petlost.name %></h1>
+<h1><%= @petfound.details %></h1>
 
-<% @petlost.photos.each do |photo| %>
+<% @petfound.photos.each do |photo| %>
   <%= cl_image_tag photo.key, height: 300, width: 400, crop: :fill %>
 <% end %>
 
-<p>Raza: <%= @petlost.breed %></p>
-<p>Color: <%= @petlost.color %></p>
-<p>Señas particulares: <%= @petlost.signs %></p>
-<p>Perdido el: <%= @petlost.day_lost %></p>
-<p>Dirección donde se perdió: <%= @petlost.address %></p>
+<p>Raza: <%= @petfound.breed %></p>
+<p>Color: <%= @petfound.color %></p>
+<p>Señas particulares: <%= @petfound.signs %></p>
+<p>Encontrado el: <%= @petfound.day_found %></p>
+<p>Dirección donde fue encontrado: <%= @petfound.address %></p>
 
-<%= link_to 'Volver a la lista', petlosts_path, class: "btn btn-primary" %>
-<%= link_to 'Editar', edit_petlost_path, class: "btn btn-primary" %>
-<%= link_to 'Eliminar', petlost_path(@petlost), class: "btn btn-danger", data: { turbo_method: :delete, turbo_confirm: "¿Seguro que quieres eliminar?" } %>
+<%= link_to 'Volver a la lista', petfounds_path, class: "btn btn-primary" %>
+<%= link_to 'Eliminar', petfound_path(@petfound), class: "btn btn-danger", data: { turbo_method: :delete, turbo_confirm: "¿Seguro que quieres eliminar?" } %>
 
 <div class="card mb-4" style="width: 50%; margin: 0 auto;">
   <div id="map" style="height: 300px; width: 100%;"></div>
 </div>
-
-
 
 <script>
   document.addEventListener('turbo:load', function() {
@@ -27,7 +24,7 @@
     const map = new mapboxgl.Map({
       container: 'map',
       style: 'mapbox://styles/mapbox/streets-v11',
-      center: [<%= @petlost.longitude %>, <%= @petlost.latitude %>],
+      center: [<%= @petfound.longitude %>, <%= @petfound.latitude %>],
       zoom: 15,
       pitch: 45,
       bearing: -17.6
@@ -35,14 +32,14 @@
 
     const el = document.createElement('div');
     el.className = 'marker';
-    el.style.backgroundImage = 'url(<%= asset_path("icon.png") %>)';
+    el.style.backgroundImage = 'url(<%= asset_path("heart.png") %>)';
     el.style.width = '40px';
     el.style.height = '40px';
     el.style.backgroundSize = '100%';
 
     // Crear el marcador personalizado
     new mapboxgl.Marker(el)
-      .setLngLat([<%= @petlost.longitude %>, <%= @petlost.latitude %>])
+      .setLngLat([<%= @petfound.longitude %>, <%= @petfound.latitude %>])
       .addTo(map);
 
     map.on('load', function () {

@@ -51,7 +51,7 @@
   </div>
   <div class="mx-2">
     <!-- Botón Mascotas Encontradas -->
-    <%= link_to 'Mascotas Encontradas', new_petfound_path, class: 'btn btn-success custom-btn-found' %>
+    <%= link_to 'Mascotas Encontradas', petfounds_path, class: 'btn btn-success custom-btn-found' %>
   </div>
 </div>
 
@@ -72,7 +72,7 @@
             <div class="card-body">
               <h5 class="card-title"><%= pet.name %></h5>
               <p class="card-text"><%= truncate(pet.color, length: 100) %></p>
-              <%= link_to 'Ver más', petlost_path(pet), class: 'btn btn-primary' %>
+              <%= link_to 'Ver más', petlost_path(pet), class: 'btn btn-success text-white' %>
             </div>
           </div>
         </div>
