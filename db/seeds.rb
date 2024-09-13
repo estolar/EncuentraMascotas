@@ -37,7 +37,7 @@ file1 = URI.open('https://res.cloudinary.com/dqx97scli/image/upload/v1726259195/
 file2 = URI.open('https://res.cloudinary.com/dqx97scli/image/upload/v1726259194/perrito_encontrado2_o2o2dn.jpg')
 petlost1.photos.attach(io: file1, filename: 'perrito1.jpg', content_type: 'image/jpg')
 petlost1.photos.attach(io: file2, filename: 'perrito2.jpg', content_type: 'image/jpg')
-petlost1.save
+petlost1.save!
 
 petlost2 = Petlost.new(name: 'Bella', finded: false, breed: 'Beagle', color: "['Marrón', 'blanco']", signs: 'Orejas largas', day_lost: Date.today - 10, user: user2, address: 'Avenida Arequipa 670, Miraflores, Lima')
 file1 = URI.open('https://res.cloudinary.com/dqx97scli/image/upload/v1726259357/perrito_encontrado3_ukgfj1.jpg')
@@ -47,7 +47,7 @@ petlost2.photos.attach(io: file1, filename: 'perrito1.jpg', content_type: 'image
 petlost2.photos.attach(io: file2, filename: 'perrito2.jpg', content_type: 'image/jpg')
 petlost2.photos.attach(io: file3, filename: 'perrito3.jpg', content_type: 'image/jpg')
 petlost2.photos.attach(io: file4, filename: 'perrito3.jpg', content_type: 'image/jpg')
-petlost2.save
+petlost2.save!
 
 petlost3 = Petlost.new(name: 'Rocky', finded: false, breed: 'Otros', color: "['Gris']", signs: 'Cicatriz en la pata', day_lost: Date.today - 7, user: user3, address: 'Avenida Javier Prado 1340, Surco, Lima')
 file1 = URI.open('https://res.cloudinary.com/dqx97scli/image/upload/v1726259516/perrito_encontrado4_pmzwca.jpg')
