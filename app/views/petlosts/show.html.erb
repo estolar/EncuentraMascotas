@@ -1,59 +1,64 @@
-<% if @petlost.user && @petlost.user.phone_number.present? %>
-  <%= link_to 'Contactar por WhatsApp', "https://wa.me/#{@petlost.user.phone_number}?text=Hola.%20Vengo%20de%20Encuentra%20Mascotas.%20Me%20puedes%20ayudar%20a%20encontrar%20a%20mi%20compañero:%20https://www.encuentramascotas.org/", class: "btn btn-success", target: "_blank" %>
-<% end %>
-
 <h1><%= @petlost.name %></h1>
 
-<div class = "container">
-      <%# carrusel %>
-        <div class = "contenedor-carrusel">
-          <div id="carouselExample" class="carousel slide" data-bs-ride="carousel">
-            <div class="carousel-inner">
-              <% @petlost.photos.each_with_index do |photo, index| %>
-                <div class="carousel-item <%= 'active' if index == 0 %>">
-                  <%= cl_image_tag photo.key, crop: :fill, class: "d-block w-100" %>
+<div class = 'row'>
+  <div class = 'col-4'>
+    <%# datos del perro %>
+    <div class = "container">
+          <%# carrusel %>
+            <div class = "contenedor-carrusel">
+              <div id="carouselExample" class="carousel slide" data-bs-ride="carousel">
+                <div class="carousel-inner">
+                  <% @petlost.photos.each_with_index do |photo, index| %>
+                    <div class="carousel-item <%= 'active' if index == 0 %>">
+                      <%= cl_image_tag photo.key, crop: :fill, class: "d-block w-100" %>
+                    </div>
+                  <% end %>
                 </div>
-              <% end %>
+                <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
+                  <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                  <span class="visually-hidden">Previous</span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
+                  <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                  <span class="visually-hidden">Next</span>
+                </button>
+              </div>
             </div>
-            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
-              <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-              <span class="visually-hidden">Previous</span>
-            </button>
-            <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
-              <span class="carousel-control-next-icon" aria-hidden="true"></span>
-              <span class="visually-hidden">Next</span>
-            </button>
-          </div>
-        </div>
-      <%# fin carrusel %>
+          <%# fin carrusel %>
+    </div>
+
+    <p>Raza: <%= @petlost.breed %></p>
+
+      <% if @petlost.color.present? %>
+        <% colors_array = JSON.parse(@petlost.color).reject(&:blank?) %>
+
+        <% if colors_array.size == 1 %>
+          <p>Color: <%= colors_array.join %></p>
+          <% else %>
+          <p>Color: <%= colors_array.join(", ") %></p>
+        <% end %>
+      <% end %>
+
+    <p>Señas particulares: <%= @petlost.signs %></p>
+    <p>Perdido el: <%= @petlost.day_lost %></p>
+    <p>Dirección donde se perdió: <%= @petlost.address %></p>
+
+    <%= link_to 'Volver a la lista', petlosts_path, class: "btn btn-primary" %>
+    <%= link_to 'Editar', edit_petlost_path, class: "btn btn-primary" %>
+    <%= link_to 'Eliminar', petlost_path(@petlost), class: "btn btn-danger", data: { turbo_method: :delete, turbo_confirm: "¿Seguro que quieres eliminar?" } %>
+
+    <%# fin datos del perro %>
+
+
+  </div>
 </div>
 
-<p>Raza: <%= @petlost.breed %></p>
 
-  <% if @petlost.color.present? %>
-    <% colors_array = JSON.parse(@petlost.color).reject(&:blank?) %>
 
-    <% if colors_array.size == 1 %>
-      <p>Color: <%= colors_array.join %></p>
-      <% else %>
-      <p>Color: <%= colors_array.join(", ") %></p>
-    <% end %>
-  <% end %>
-
-<p>Señas particulares: <%= @petlost.signs %></p>
-<p>Perdido el: <%= @petlost.day_lost %></p>
-<p>Dirección donde se perdió: <%= @petlost.address %></p>
-
-<%= link_to 'Volver a la lista', petlosts_path, class: "btn btn-primary" %>
-<%= link_to 'Editar', edit_petlost_path, class: "btn btn-primary" %>
-<%= link_to 'Eliminar', petlost_path(@petlost), class: "btn btn-danger", data: { turbo_method: :delete, turbo_confirm: "¿Seguro que quieres eliminar?" } %>
 
 <div class="card mb-4" style="width: 50%; margin: 0 auto;">
   <div id="map" style="height: 300px; width: 100%;"></div>
 </div>
-
-
-
 <script>
   document.addEventListener('turbo:load', function() {
     mapboxgl.accessToken = '<%= ENV['MAPBOX_API_KEY'] %>';
