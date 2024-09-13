@@ -1,0 +1,11 @@
+<!-- Pantalla de carga -->
+<div class="d-flex justify-content-center align-items-center vh-100 position-fixed top-0 start-0 w-100 h-100 bg-white" style="z-index: 9999;">
+  <iframe src="https://my.spline.design/buzzinagent-5ec8200679b2133b56330e07cfb369b8/" frameborder="0" width="100%" height="100%"></iframe>
+</div>
+
+<script>
+  // Redirige a la vista 'nearby' después de 3 segundos
+  setTimeout(function() {
+    window.location.href = "<%= nearby_petlosts_path %>";
+  }, 7000);
+</script>

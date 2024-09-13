@@ -1,0 +1,87 @@
+<div class="container my-5 ">
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <%= link_to 'Volver', petlosts_path, class: "btn btn-success btn-lg text-white" %>
+    <h1 class="text-center flex-grow-1 fw-bold mb-0 ">Mascotas perdidas cercanas</h1>
+  </div>
+
+  <div class="map-container rounded shadow">
+    <div id="nearby-map" style="height: 400px; width: 100%;"></div>
+  </div>
+</div>
+
+<script>
+  document.addEventListener('turbo:load', function() {
+    mapboxgl.accessToken = '<%= ENV['MAPBOX_API_KEY'] %>';
+
+    const nearbyMapElement = document.getElementById('nearby-map');
+    if (!nearbyMapElement) return;
+
+    navigator.geolocation.getCurrentPosition(function(position) {
+      const userLat = position.coords.latitude;
+      const userLng = position.coords.longitude;
+
+      const nearbyMap = new mapboxgl.Map({
+        container: 'nearby-map', // Cambiado el id aquí también
+        style: 'mapbox://styles/mapbox/outdoors-v11', // Usar un estilo con relieve
+        center: [userLng, userLat],
+        zoom: 12,
+        pitch: 45, // Ajustar el ángulo de inclinación para ver el relieve
+        bearing: -17.6 // Ajustar el ángulo de rotación del mapa
+      });
+
+      // Marcador de la ubicación del usuario
+      new mapboxgl.Marker({ color: 'blue' })
+        .setLngLat([userLng, userLat])
+        .setPopup(new mapboxgl.Popup().setText('Estás aquí'))
+        .addTo(nearbyMap);
+
+      // Añadir marcadores para las mascotas perdidas
+      <% @petlosts.each_with_index do |petlost, index| %>
+        const petlostMarker<%= index %> = document.createElement('div');
+        petlostMarker<%= index %>.className = 'marker';
+        petlostMarker<%= index %>.style.backgroundImage = 'url(<%= asset_path("heart.png") %>)';
+        petlostMarker<%= index %>.style.width = '40px';
+        petlostMarker<%= index %>.style.height = '40px';
+        petlostMarker<%= index %>.style.backgroundSize = '100%';
+
+        new mapboxgl.Marker(petlostMarker<%= index %>)
+          .setLngLat([<%= petlost.longitude %>, <%= petlost.latitude %>])
+          .setPopup(new mapboxgl.Popup().setHTML(`
+            <strong>Mascota perdida:</strong> <%= petlost.name %><br>
+            <strong>Perdido:</strong> <%= petlost.finded ? 'No' : 'Sí' %><br>
+            <strong>Fecha perdida:</strong> <%= petlost.day_lost.strftime('%d/%m/%Y') %>
+          `))
+          .addTo(nearbyMap);
+      <% end %>
+
+      nearbyMap.on('load', function () {
+        // Añadir capa de edificios en 3D
+        nearbyMap.addLayer({
+          'id': '3d-buildings',
+          'source': 'composite',
+          'source-layer': 'building',
+          'filter': ['==', 'extrude', 'true'],
+          'type': 'fill-extrusion',
+          'minzoom': 15,
+          'paint': {
+            'fill-extrusion-color': '#aaa',
+            'fill-extrusion-height': [
+              'interpolate', ['linear'], ['zoom'],
+              15, 0,
+              16.05, ['get', 'height']
+            ],
+            'fill-extrusion-base': [
+              'interpolate', ['linear'], ['zoom'],
+              15, 0,
+              16.05, ['get', 'min_height']
+            ],
+            'fill-extrusion-opacity': 0.6
+          }
+        });
+      });
+
+    }, function() {
+      alert('No se pudo obtener tu ubicación.');
+    });
+  });
+</script>

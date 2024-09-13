@@ -1,0 +1,17 @@
+<h1>Listado de Mascotas Encontradas</h1>
+
+<% @petfounds.each do |petfound| %>
+  <h2><%= petfound.details %></h2>
+  <% petfound.photos.each do |photo| %>
+    <%= cl_image_tag photo.key, height: 300, width: 400, crop: :fill %>
+  <% end %>
+  <p>Raza: <%= petfound.breed %></p>
+  <p>Color: <%= petfound.color %></p>
+  <p>Señas particulares: <%= petfound.signs %></p>
+  <p>Encontrado el: <%= petfound.day_found %></p>
+  <p>Dirección donde fue encontrado: <%= petfound.address %></p>
+
+  <%= link_to 'Ver detalles', petfound_path(petfound) %>
+  <hr>
+<% end %>
+<%= link_to 'Crear nueva mascota encontrada', new_petfound_path, class: "btn btn-primary" %>
