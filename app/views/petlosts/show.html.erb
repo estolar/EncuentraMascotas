@@ -1,64 +1,109 @@
-<h1><%= @petlost.name %></h1>
+<!-- Fila 1: Botones y nombre del perro -->
+<div class="row">
+  <!-- Columna 1: Botones alineados a la izquierda -->
+  <div class="col-md-2 text-start">
+    <%= link_to 'Volver a la lista', petlosts_path, class: "btn btn-primary mb-2" %>
+    <%= link_to 'Editar', edit_petlost_path(@petlost), class: "btn btn-secondary mb-2" %>
+    <%= link_to 'Eliminar', petlost_path(@petlost), class: "btn btn-danger mb-2", data: { turbo_method: :delete, turbo_confirm: "¿Seguro que quieres eliminar?" } %>
+  </div>
 
-<div class = 'row'>
-  <div class = 'col-4'>
-    <%# datos del perro %>
-    <div class = "container">
-          <%# carrusel %>
-            <div class = "contenedor-carrusel">
-              <div id="carouselExample" class="carousel slide" data-bs-ride="carousel">
-                <div class="carousel-inner">
-                  <% @petlost.photos.each_with_index do |photo, index| %>
-                    <div class="carousel-item <%= 'active' if index == 0 %>">
-                      <%= cl_image_tag photo.key, crop: :fill, class: "d-block w-100" %>
-                    </div>
-                  <% end %>
-                </div>
-                <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
-                  <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                  <span class="visually-hidden">Previous</span>
-                </button>
-                <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
-                  <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                  <span class="visually-hidden">Next</span>
-                </button>
-              </div>
-            </div>
-          <%# fin carrusel %>
-    </div>
-
-    <p>Raza: <%= @petlost.breed %></p>
+  <!-- Columna 2: Nombre y detalles del perro con alineación y tamaño ajustados -->
+  <div class="col-md-8 text-center">
+    <h1 class="display-4"><%= @petlost.name %></h1>
+    <p class="lead">
+      Raza: <%= @petlost.breed %><br>
 
       <% if @petlost.color.present? %>
         <% colors_array = JSON.parse(@petlost.color).reject(&:blank?) %>
-
-        <% if colors_array.size == 1 %>
-          <p>Color: <%= colors_array.join %></p>
-          <% else %>
-          <p>Color: <%= colors_array.join(", ") %></p>
-        <% end %>
+        <p>Color: <%= colors_array.join(", ") %></p>
       <% end %>
 
-    <p>Señas particulares: <%= @petlost.signs %></p>
-    <p>Perdido el: <%= @petlost.day_lost %></p>
-    <p>Dirección donde se perdió: <%= @petlost.address %></p>
+      Señas particulares: <%= @petlost.signs %><br>
+      Perdido el: <%= @petlost.day_lost %><br>
+      Dirección donde se perdió: <%= @petlost.address %>
+    </p>
+  </div>
+</div>
 
-    <%= link_to 'Volver a la lista', petlosts_path, class: "btn btn-primary" %>
-    <%= link_to 'Editar', edit_petlost_path, class: "btn btn-primary" %>
-    <%= link_to 'Eliminar', petlost_path(@petlost), class: "btn btn-danger", data: { turbo_method: :delete, turbo_confirm: "¿Seguro que quieres eliminar?" } %>
+<!-- Fila 2: Card con Carrusel de imágenes -->
+<div class="row justify-content-center text-center mt-4">
+  <div class="col-md-8">
+    <!-- Card que contiene el carrusel -->
+    <div class="card p-3" style="box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);"> <!-- Box shadow agregado -->
+      <h4>Imágenes</h4>
+      <div id="carouselExample" class="carousel slide" data-bs-ride="carousel">
+        <div class="carousel-inner">
+          <% @petlost.photos.each_with_index do |photo, index| %>
+            <div class="carousel-item <%= 'active' if index == 0 %>">
+              <%= cl_image_tag photo.key, class: "d-block w-100", style: "height: 300px; object-fit: cover;" %>
+            </div>
+          <% end %>
+        </div>
+        <!-- Controles de navegación -->
+        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
+          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
+          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Next</span>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
 
-    <%# fin datos del perro %>
+<!-- Fila 3: Card con los datos del dueño incluyendo la foto y los iconos de contacto -->
+<div class="row justify-content-center mt-4">
+  <!-- Columna 1: Datos del dueño -->
+  <div class="col-md-4">
+    <div class="card p-4 text-center">
+      <div class="row align-items-center">
+        <!-- Columna izquierda: Datos del dueño (centrados) -->
+        <div class="col-8 text-start">
+          <h class="mb-4" style="font-size: 2rem;">Datos del dueño</h4> <!-- Tamaño del título aumentado -->
+          <p style="font-size: 1.0rem;"><strong>Nombre:</strong> <%= @petlost.user.name %></p> <!-- Tamaño del texto aumentado -->
+          <p style="font-size: 1.0rem;"><strong>Correo:</strong> <%= @petlost.user.email %></p> <!-- Tamaño del texto aumentado -->
+          <p style="font-size: 1.0rem;"><strong>Teléfono:</strong> <%= @petlost.user.phone_number %></p> <!-- Tamaño del texto aumentado -->
+        </div>
 
+        <!-- Columna derecha: Foto del dueño (reducida) -->
+        <div class="col-4 text-end">
+          <% if @petlost.user.photo.attached? %>
+            <%= image_tag @petlost.user.photo, class: "img-fluid rounded-circle", style: "width: 150px; height: 150px; object-fit: cover;" %> <!-- Tamaño reducido a 150px -->
+          <% end %>
+        </div>
+      </div>
 
+      <!-- Nueva fila: Iconos de redes sociales centrados debajo de la foto y los datos -->
+      <div class="row justify-content-center mt-4">
+        <div class="col-12">
+          <div class="d-flex justify-content-center">
+            <a href="#" class="me-3" style="font-size: 4rem;"> <!-- Tamaño reducido a 4rem -->
+              <i class="fab fa-facebook-square"></i>
+            </a>
+            <a href="#" class="me-3" style="font-size: 4rem; color: #25D366;"> <!-- Tamaño reducido a 4rem -->
+              <i class="fab fa-whatsapp"></i>
+            </a>
+            <a href="#" style="font-size: 4rem;"> <!-- Tamaño reducido a 4rem -->
+              <i class="fab fa-instagram"></i>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Columna 2: Ubicación de pérdida -->
+  <div class="col-md-4">
+    <div class="card p-3">
+      <div id="map" style="height: 350px; width: 100%;"></div> <!-- Mapa ocupa más espacio -->
+      <button class="btn btn-success mt-3 text-white w-100">Lo encontré</button> <!-- Botón ajustado para ocupar todo el ancho y moverse hacia abajo -->
+    </div>
   </div>
 </div>
 
 
-
-
-<div class="card mb-4" style="width: 50%; margin: 0 auto;">
-  <div id="map" style="height: 300px; width: 100%;"></div>
-</div>
 <script>
   document.addEventListener('turbo:load', function() {
     mapboxgl.accessToken = '<%= ENV['MAPBOX_API_KEY'] %>';
