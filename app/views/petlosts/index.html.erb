@@ -1,3 +1,8 @@
+<body style="background: linear-gradient(to bottom, #0079c2, #ffffff, #f7c6c7);">
+  <!-- Todo el contenido de la página -->
+</body>
+
+
 <div class="container mt-5">
  <div class="d-flex justify-content-between mb-4">
   <div>
@@ -51,16 +56,15 @@
 
     <!-- Columna para las tarjetas -->
     <div class="col-md-9">
-      <div class="row g-3">
+      <div class="row g-3 ">
         <% if @petlosts.any? %>
           <% @petlosts.each do |petlost| %>
-            <div class="col-md-4">
-              <div class="card mb-4 shadow-sm d-flex flex-column"> <!-- d-flex flex-column para hacer que las tarjetas se alineen -->
-                <!-- Ajustar imágenes con tamaño fijo y object-fit para alineación uniforme -->
+            <div class="col-md-4 ">
+              <div class=" mb-4 shadow-sm d-flex flex-column ">
                 <% if petlost.photos.any? %>
-                  <%= cl_image_tag petlost.photos.first.key, class: 'card-img-top', style: 'height: 250px; object-fit: cover;', alt: petlost.name %>
+                  <%= cl_image_tag petlost.photos.first.key, class: 'card', style: 'height: 250px; object-fit: cover;', alt: petlost.name %>
                 <% else %>
-                  <%= image_tag 'default-image.png', class: 'card-img-top', style: 'height: 250px; object-fit: cover;', alt: 'No image available' %>
+                  <%= image_tag 'default-image.png', class: 'card', style: 'height: 250px; object-fit: cover;', alt: 'No image available' %>
                 <% end %>
 
                 <div class="card-body d-flex flex-column">
@@ -79,7 +83,7 @@
                   <p class="card-text">Dirección donde se perdió: <%= petlost.address %></p>
 
                   <div class="mt-auto"> <!-- mt-auto empuja el botón hacia abajo -->
-                    <%= link_to petlost_path(petlost), class: 'btn btn-success text-white' do %>
+                    <%= link_to petlost_path(petlost), class: 'btn btn-success text-white mb-2' do %>
                       <i class="fa-solid fa-plus"></i>
                       <i class="fa-solid fa-paw"></i>
                     <% end %>

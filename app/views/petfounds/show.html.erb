@@ -1,63 +1,94 @@
-<%= link_to 'Volver a la lista', petfounds_path, class: "btn btn-primary" %>
-<%= link_to 'Eliminar', petfound_path(@petfound), class: "btn btn-danger", data: { turbo_method: :delete, turbo_confirm: "¿Seguro que quieres eliminar?" } %>
-<%= link_to 'Editar', edit_petfound_path, class: "btn btn-primary" %>
+<body style="background: linear-gradient(to bottom, #0079c2, #ffffff, #f7c6c7);">
+  <div class="container-fluid mt-3" style="padding: 20px;">
+    <div class="row">
+      <!-- Columna vacía a la izquierda -->
+      <div class="col-md-2"></div> <!-- Ajusta 'col-md-2' según el espacio que quieras ocupar -->
 
+      <!-- Contenido principal -->
+      <div class="col-md-8" style="background:#0079c2; padding: 20px; border-radius: 15px;">
+        <div class="row align-items-center" style="height: auto;">
+          <!-- Columna izquierda para 'Volver a la lista' -->
+          <div class="col text-start">
+            <%= link_to petfounds_path, class: "btn btn-primary" do %>
+              <i class="fa-solid fa-house"></i>
+            <% end %>
+          </div>
 
-<div class = "container">
-
-
-
-<div class = 'row'>
-  <div class = 'col-4'>
-
-      <%# carrusel %>
-        <div class = "contenedor-carrusel">
-          <div id="carouselExample" class="carousel slide" data-bs-ride="carousel">
-            <div class="carousel-inner">
-              <% @petfound.photos.each_with_index do |photo, index| %>
-                <div class="carousel-item <%= 'active' if index == 0 %>">
-                  <%= cl_image_tag photo.key, crop: :fill, class: "d-block w-100" %>
-                </div>
-              <% end %>
-            </div>
-            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
-              <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-              <span class="visually-hidden">Previous</span>
-            </button>
-            <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
-              <span class="carousel-control-next-icon" aria-hidden="true"></span>
-              <span class="visually-hidden">Next</span>
-            </button>
+          <!-- Columna derecha para 'Editar' y 'Eliminar' -->
+          <div class="col text-end">
+            <%= link_to 'Editar', edit_petfound_path(@petfound), class: "btn btn-primary me-2" %>
+            <%= link_to 'Eliminar', petfound_path(@petfound), class: "btn btn-danger", data: { turbo_method: :delete, turbo_confirm: "¿Seguro que quieres eliminar?" } %>
           </div>
         </div>
-      <%# fin carrusel %>
 
-      <p> Detalles: <%= @petfound.details %></p>
-<p>Raza: <%= @petfound.breed %></p>
-  <% if @petfound.color.present? %>
-    <% colors_array = JSON.parse(@petfound.color).reject(&:blank?) %>
+        <!-- Fila A: Detalles de la mascota -->
+        <div class="row align-items-center mb-3" style="height: 15vh;">
+          <div class="col text-center">
+            <h1 class="display-4" style="color: #fff;"><%= @petfound.details %></h1>
+            <p style="color: white; font-size: 1.5rem;">Encontrado el: <%= @petfound.day_found %></p>
+          </div>
+        </div>
 
-    <% if colors_array.size == 1 %>
-      <p>Color: <%= colors_array.join %></p>
-      <% else %>
-      <p>Color: <%= colors_array.join(", ") %></p>
-    <% end %>
-  <% end %>
-<p>Señas particulares: <%= @petfound.signs %></p>
-<p>Encontrado el: <%= @petfound.day_found %></p>
-<p>Dirección donde fue encontrado: <%= @petfound.address %></p>
+        <!-- Fila B: Carrusel de fotos -->
+        <div class="row">
+          <div class="col text-center">
+            <div class="card p-3 mb-0" style="box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2); border-radius: 15px;">
+              <div id="carouselExample" class="carousel slide" data-bs-ride="carousel">
+                <div class="carousel-inner">
+                  <% @petfound.photos.each_with_index do |photo, index| %>
+                    <div class="carousel-item <%= index == 0 ? 'active' : '' %>">
+                      <%= cl_image_tag(photo.key, class: "d-block w-100", style: "height: 500px; object-fit: cover; border-radius: 15px;") %>
+                    </div>
+                  <% end %>
+                </div>
+                <!-- Controles de navegación -->
+                <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
+                  <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                  <span class="visually-hidden">Previous</span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
+                  <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                  <span class="visually-hidden">Next</span>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
 
+        <!-- Fila de Datos del Perro y Mapa -->
+        <div class="row">
+          <!-- Tarjeta Datos del Perro -->
+          <div class="col-md-6">
+            <div class="mt-4 p-3" style="box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.3); border-radius: 15px; background-color: #ffffff;">
+              <div class="row align-items-center">
+                <div class="col-12 text-start">
+                  <h4 class="mb-2" style="font-size: 2rem; color: #0079c2;">Datos del Perro</h4>
+                  <p style="font-size: 1.0rem; color: #333;"><strong>Raza:</strong> <%= @petfound.breed %></p>
+                  <% if @petfound.color.present? %>
+                    <% colors_array = JSON.parse(@petfound.color).reject(&:blank?) %>
+                    <p style="font-size: 1.0rem; color: #333;"><strong>Color:</strong> <%= colors_array.join(', ') %></p>
+                  <% end %>
+                  <p style="font-size: 1.0rem; color: #333;"><strong>Señas particulares:</strong> <%= @petfound.signs %></p>
+                  <p style="font-size: 1.0rem; color: #333;"><strong>Dirección:</strong> <%= @petfound.address %></p>
+                </div>
+              </div>
+            </div>
+          </div>
 
+          <!-- Mapa -->
+          <div class="col-md-6 mt-3 text-center">
+            <div class="p-3 mt-2" style="box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2); border-radius: 15px; background-color: #ffffff;">
+              <div id="map" style="height: 350px; width: 100%; border-radius: 10px;"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Columna vacía a la derecha -->
+      <div class="col-md-2"></div> <!-- Ajusta 'col-md-2' según el espacio que quieras ocupar -->
+    </div>
   </div>
-</div>
-
-
-</div>
-
-
-<div class="card mb-4" style="width: 50%; margin: 0 auto;">
-  <div id="map" style="height: 300px; width: 100%;"></div>
-</div>
+</body>
 
 <script>
   document.addEventListener('turbo:load', function() {

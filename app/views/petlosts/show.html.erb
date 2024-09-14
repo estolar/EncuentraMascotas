@@ -1,3 +1,8 @@
+<body style="background: linear-gradient(to bottom, #0079c2, #ffffff, #f7c6c7);">
+  <!-- Todo el contenido de la página -->
+</body>
+
+
 <div class="container mt-3" style="background:#0079c2; padding: 20px; border-radius: 15px;">
   <div class="row align-items-center " style="height: auto;">
   <!-- Columna izquierda para 'Volver a la lista' -->
@@ -25,7 +30,24 @@
   <div class="row">
     <div class="col text-center">
       <div class="card p-3 mb-0" style="box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2); border-radius: 15px;">
-        <div id="map" style="height: 350px; width: 100%; border-radius: 10px;"></div> <!-- Mapa ocupa más espacio -->
+      <div id="carouselExample" class="carousel slide" data-bs-ride="carousel">
+      <div class="carousel-inner">
+        <% @petlost.photos.each_with_index do |photo, index| %>
+          <div class="carousel-item <%= index == 0 ? 'active' : '' %>">
+            <%= cl_image_tag(photo.key, class: "d-block w-100", style: "height: 500px; object-fit: cover; border-radius: 15px;") %>
+          </div>
+        <% end %>
+      </div>
+      <!-- Controles de navegación -->
+      <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Previous</span>
+      </button>
+      <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Next</span>
+      </button>
+    </div>
       </div>
     </div>
   </div>
@@ -72,24 +94,7 @@
     <div class="col-md-6 mt-3 text-center ">
       <!-- Carrusel con bordes redondeados y sombra -->
       <div class="p-3 mt-2" style="box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2); border-radius: 15px; background-color: #ffffff;">
-        <div id="carouselExample" class="carousel slide" data-bs-ride="carousel">
-          <div class="carousel-inner">
-            <% @petlost.photos.each_with_index do |photo, index| %>
-              <div class="carousel-item <%= index == 0 ? 'active' : '' %>">
-                <%= cl_image_tag(photo.key, class: "d-block w-100", style: "height: 500px; object-fit: cover; border-radius: 15px;") %>
-              </div>
-            <% end %>
-          </div>
-          <!-- Controles de navegación -->
-          <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
-            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Previous</span>
-          </button>
-          <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
-            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Next</span>
-          </button>
-        </div>
+        <div id="map" style="height: 350px; width: 100%; border-radius: 10px;"></div> <!-- Mapa ocupa más espacio -->
       </div>
     </div>
   </div>
