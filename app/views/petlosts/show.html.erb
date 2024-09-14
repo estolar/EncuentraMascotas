@@ -1,74 +1,82 @@
-<div class="container">
+<div class="container mt-3" style="background:#0079c2; padding: 20px; border-radius: 15px;">
+  <div class="row align-items-center " style="height: auto;">
+  <!-- Columna izquierda para 'Volver a la lista' -->
+  <div class="col text-start">
+    <%= link_to petlosts_path, class: "btn btn-primary" do %>
+        <i class="fa-solid fa-house"></i>
+    <%end%>
+  </div>
+  <!-- Columna central vacía para que 'Editar' y 'Eliminar' estén a la derecha -->
+  <div class="col text-end">
+    <%= link_to 'Editar', edit_petlost_path(@petlost), class: "btn btn-primary me-2" %>
+    <%= link_to 'Eliminar', petlost_path(@petlost), class: "btn btn-danger", data: { turbo_method: :delete, turbo_confirm: "¿Seguro que quieres eliminar?" } %>
+  </div>
+  </div>
+
   <!-- Fila A: Nombre del perro -->
-  <div class="row align-items-center" style="height: 15vh;">
+  <div class="row align-items-center mb-3" style="height: 15vh;">
     <div class="col text-center">
-      <h1 class="display-4"><%= @petlost.name %></h1>
-      Perdido el: <%= @petlost.day_lost %><br>
+      <h class="display-4" style="color: #white;"><%= @petlost.name %></h>
+      <p style="color: white; font-size: 1.5rem;">Perdido el: <%= @petlost.day_lost %></p>
     </div>
   </div>
 
-  <!-- Fila B: Mapa -->
+  <!-- Fila B: Mapa con utilidades de Bootstrap -->
   <div class="row">
     <div class="col text-center">
-      <div class="card p-3 mb-4" style="box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);">
-        <div id="map" style="height: 350px; width: 100%;"></div> <!-- Mapa ocupa más espacio -->
+      <div class="card p-3 mb-0" style="box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2); border-radius: 15px;">
+        <div id="map" style="height: 350px; width: 100%; border-radius: 10px;"></div> <!-- Mapa ocupa más espacio -->
       </div>
     </div>
   </div>
 
-  <!-- Fila C: Dos columnas de igual tamaño -->
+  <!-- Columna Datos Dueño y Datos del Perro apilados (lado izquierdo) -->
   <div class="row">
-    <!-- Columna Datos Dueño -->
     <div class="col-md-6">
-      <div class="card h-100 mt-4" style="box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);">
-        <!-- Fila C1 dentro de la columna Datos Dueño -->
-        <div class="row align-items-center" style="height: 50%;">
-          <!-- Columna con los datos del dueño -->
-          <div class="col-8 text-center">
-            <div class="card m-3" style="height: 100%;"> <!-- Ajuste para que el contenido ocupe todo el espacio -->
-              <h4 class="mb-2" style="font-size: 2rem;">Datos del dueño</h4>
-              <p style="font-size: 1.0rem;"><strong>Nombre:</strong> <%= @petlost.user.name %></p>
-              <p style="font-size: 1.0rem;"><strong>Correo:</strong> <%= @petlost.user.email %></p>
-              <p style="font-size: 1.0rem;"><strong>Teléfono:</strong> <%= @petlost.user.phone_number %></p>
-            </div>
+      <!-- Tarjeta Datos del Dueño -->
+      <div class="mt-4 p-3" style="box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.3); border-radius: 15px; background-color: #ffffff;">
+        <div class="row align-items-center">
+          <div class="col-8 text-start">
+            <h4 class="mb-2" style="font-size: 2rem; color: #0079c2;">Datos del dueño</h4>
+            <p style="font-size: 1.0rem; color: #333;"><strong>Nombre:</strong> <%= @petlost.user.name %></p>
+            <p style="font-size: 1.0rem; color: #333;"><strong>Correo:</strong> <%= @petlost.user.email %></p>
+            <p style="font-size: 1.0rem; color: #333;"><strong>Teléfono:</strong> <%= @petlost.user.phone_number %></p>
           </div>
-          <!-- Columna para la foto del dueño -->
           <div class="col-4 text-center">
             <% if @petlost.user.photo.attached? %>
-              <%= image_tag @petlost.user.photo, class: "img-fluid rounded-circle", style: "width: 100px; height: 100px; object-fit: cover;" %>
+              <%= image_tag @petlost.user.photo, class: "img-fluid rounded-circle", style: "width: 80px; height: 80px; object-fit: cover;" %>
+            <% else %>
+              <i class="fas fa-map-marker-alt" style="font-size: 3rem; color: #0079c2;"></i>
             <% end %>
           </div>
         </div>
+      </div>
 
-        <!-- Fila C2 dentro de la columna Datos Perro -->
-        <div class="row align-items-center" style="height: 50%;">
-          <!-- Columna con los datos del perro a la izquierda -->
-          <div class="col-8 text-center">
-            <div class="card m-3" style="height: 100%;"> <!-- Ajuste para que el contenido ocupe todo el espacio -->
-              <h4 class="mb-2" style="font-size: 2rem;">Datos del Perro</h4>
-              <p style="font-size: 1.0rem;"><strong>Raza:</strong> <%= @petlost.breed %></p>
-              <p style="font-size: 1.0rem;"><strong>Perdido el:</strong> <%= @petlost.day_lost %></p>
-              <p style="font-size: 1.0rem;"><strong>Se perdió en:</strong> <%= @petlost.address %></p>
-            </div>
+      <!-- Tarjeta Datos del Perro (debajo del dueño) -->
+      <div class="mt-4 p-3" style="box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.3); border-radius: 15px; background-color: #ffffff;">
+        <div class="row align-items-center">
+          <div class="col-8 text-start">
+            <h4 class="mb-2" style="font-size: 2rem; color: #0079c2;">Datos del Perro</h4>
+            <p style="font-size: 1.0rem; color: #333;"><strong>Raza:</strong> <%= @petlost.breed %></p>
+            <p style="font-size: 1.0rem; color: #333;"><strong>Perdido el:</strong> <%= @petlost.day_lost %></p>
+            <p style="font-size: 1.0rem; color: #333;"><strong>Se perdió en:</strong> <%= @petlost.address %></p>
           </div>
-          <!-- Columna con el icono del perro a la derecha -->
           <div class="col-4 text-center">
-            <!-- Icono del perro -->
-            <i class="fas fa-dog" style="font-size: 50px; color: gray;"></i>
+            <i class="fas fa-dog" style="font-size: 3rem; color: #0079c2;"></i>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- Columna Fotos Carrusel -->
-    <div class="col-md-6 text-center">
-      <!-- Card que contiene el carrusel -->
-      <div class="card p-3 mt-4" style="box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); height: 100%;">
+    <!-- Columna Carrusel (lado derecho) -->
+    <div class="col-md-6 mt-3 text-center ">
+      <!-- Carrusel con bordes redondeados y sombra -->
+      <div class="p-3 mt-2" style="box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2); border-radius: 15px; background-color: #ffffff;">
         <div id="carouselExample" class="carousel slide" data-bs-ride="carousel">
           <div class="carousel-inner">
             <% @petlost.photos.each_with_index do |photo, index| %>
               <div class="carousel-item <%= index == 0 ? 'active' : '' %>">
-                <%= cl_image_tag(photo.key, class: "d-block w-100", style: "height: 300px; object-fit: cover;") %>
+                <%= cl_image_tag(photo.key, class: "d-block w-100", style: "height: 500px; object-fit: cover; border-radius: 15px;") %>
               </div>
             <% end %>
           </div>
@@ -93,6 +101,7 @@
     </div>
   </div>
 </div>
+
 
 <script>
   document.addEventListener('turbo:load', function() {
