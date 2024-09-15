@@ -47,7 +47,7 @@
                 <div class="row">
                   <% photos_group.each do |photo| %>
                     <div class="col-md-4">
-                      <%= cl_image_tag(photo.key, class: "d-block w-100 rounded", width: 400, height: 250, crop: "fill", gravity: "auto") %>
+                      <%= cl_image_tag(photo.key, class: "d-block w-100 rounded-lg", width: 400, height: 250, crop: "fill", gravity: "auto") %>
                     </div>
                   <% end %>
                 </div>
