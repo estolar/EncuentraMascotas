@@ -1,14 +1,56 @@
-<div class="container my-5 ">
+<style>
+  .gato-sobre-mapa {
+    position: absolute;
+    top: 63px;
+    left: 50%;
+    transform: translateX(-520px);
+    z-index: 2;
+    width: 300px;
+    pointer-events:
+  }
+
+  .perro-sobre-mapa {
+    position: absolute;
+    top: 87px;
+    left: 50%;
+    transform: translateX(300px);
+    z-index: 2;
+    width: 300px;
+    pointer-events:
+  }
+
+  .map-container {
+    position: relative;
+    z-index: 1;
+  }
+</style>
+
+<div class="container my-5">
+  <!-- Encabezado con botón "Volver" y título -->
   <div class="d-flex justify-content-between align-items-center mb-4">
-    <%= link_to 'Volver', petlosts_path, class: "btn btn-success btn-lg text-white" %>
-    <h1 class="text-center flex-grow-1 fw-bold mb-0 ">Mascotas perdidas cercanas</h1>
+    <%= link_to petlosts_path, class: "btn btn-success btn-lg text-white d-flex align-items-center justify-content-center" do %>
+      <%= image_tag 'icons8-home.png', alt: 'Volver', width: 32, height: 32 %>
+    <% end %>
+    <h1 class="text-center flex-grow-1 fw-bold mb-0">¡Ayudalos a volver!</h1>
   </div>
 
-  <div class="map-container rounded shadow">
-    <div id="nearby-map" style="height: 400px; width: 100%;"></div>
+  <!-- Imagen del gato superpuesta sobre el mapa -->
+  <%= image_tag 'gato_form.png', alt: 'Gato sobre el mapa', class: 'gato-sobre-mapa' %>
+  <%= image_tag 'dog_form.png', alt: 'Perro sobre el mapa', class: 'perro-sobre-mapa' %>
+
+  <!-- Tarjeta que contiene el mapa -->
+  <div class="card rounded shadow mb-4">
+    <div class="card-header">
+      <h2 class="text-center flex-grow-1 fw-bold mb-0">Mascotas perdidas cercanas</h2>
+    </div>
+    <div class="card-body p-0">
+      <div id="nearby-map" style="height: 400px; width: 100%;"></div>
+    </div>
   </div>
 </div>
 
+
+<!-- Script para inicializar el mapa -->
 <script>
   document.addEventListener('turbo:load', function() {
     mapboxgl.accessToken = '<%= ENV['MAPBOX_API_KEY'] %>';
@@ -21,12 +63,12 @@
       const userLng = position.coords.longitude;
 
       const nearbyMap = new mapboxgl.Map({
-        container: 'nearby-map', // Cambiado el id aquí también
-        style: 'mapbox://styles/mapbox/outdoors-v11', // Usar un estilo con relieve
+        container: 'nearby-map',
+        style: 'mapbox://styles/mapbox/outdoors-v11',
         center: [userLng, userLat],
         zoom: 12,
-        pitch: 45, // Ajustar el ángulo de inclinación para ver el relieve
-        bearing: -17.6 // Ajustar el ángulo de rotación del mapa
+        pitch: 45,
+        bearing: -17.6
       });
 
       // Marcador de la ubicación del usuario
@@ -42,7 +84,8 @@
         petlostMarker<%= index %>.style.backgroundImage = 'url(<%= asset_path("heart.png") %>)';
         petlostMarker<%= index %>.style.width = '40px';
         petlostMarker<%= index %>.style.height = '40px';
-        petlostMarker<%= index %>.style.backgroundSize = '100%';
+        petlostMarker<%= index %>.style.backgroundSize = 'contain';
+        petlostMarker<%= index %>.style.cursor = 'pointer';
 
         new mapboxgl.Marker(petlostMarker<%= index %>)
           .setLngLat([<%= petlost.longitude %>, <%= petlost.latitude %>])
@@ -54,6 +97,10 @@
           .addTo(nearbyMap);
       <% end %>
 
+
+
+
+      
       nearbyMap.on('load', function () {
         // Añadir capa de edificios en 3D
         nearbyMap.addLayer({
