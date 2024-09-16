@@ -1,50 +1,143 @@
-<div class = 'container'>
-  <h1>Listado de Mascotas Encontradas</h1>
-  <% @petfounds.each do |petfound| %>
-    <h2><%= petfound.details %></h2>
-    <div class = 'row'>
-      <div class = "col-4">
-        <%# carrusel %>
-          <div class = "contenedor-carrusel">
-            <div id="carouselExample" class="carousel slide" data-bs-ride="carousel">
-              <div class="carousel-inner">
-                <% petfound.photos.each_with_index do |photo, index| %>
-                  <div class="carousel-item <%= 'active' if index == 0 %>">
-                    <%= cl_image_tag photo.key, crop: :fill, class: "d-block w-100" %>
-                  </div>
-                <% end %>
-              </div>
-              <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
-                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                <span class="visually-hidden">Previous</span>
-              </button>
-              <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
-                <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                <span class="visually-hidden">Next</span>
-              </button>
-            </div>
-          </div>
-        <%# fin carrusel %>
+<body style="background: linear-gradient(to bottom, #f7c6c7, #ffffff);">
+  <div class="container mt-5">
+    <!-- Botones de navegación superior -->
+    <div class="d-flex justify-content-between mb-4">
+      <div>
+        <%= link_to root_path, class: "btn btn-success btn-lg text-white d-flex align-items-center justify-content-center" do %>
+          <%= image_tag 'icons8-home.png', alt: 'Volver', width: 32, height: 32, class: 'me-2'  %> Volver
+        <% end %>
+      </div>
+      <div>
+        <%= link_to new_petfound_path, class: 'btn btn-success text-white ms-2' do %>
+          <i class="fa-solid fa-dog me-2"></i>
+          Perdi mi mascota
+        <% end %>
       </div>
     </div>
 
-    <p>Raza: <%= petfound.breed %></p>
-    <% if petfound.color.present? %>
-      <% colors_array = JSON.parse(petfound.color).reject(&:blank?) %>
+    <div class="row">
+      <!-- Columna para el filtro -->
+      <div class="col-md-3">
+        <div class="card" style="max-height: 400px; overflow-y: auto;">
+          <div class="card-header">
+            Filtro por búsqueda
+          </div>
+          <div class="card-body">
+            <%= form_with url: petfounds_path, method: :get, local: true do %>
+              <div class="form-group mb-2">
+                <%= label_tag :raza, "Raza" %>
+                <%= text_field_tag :raza, params[:raza], class: 'form-control' %>
+              </div>
 
-      <% if colors_array.size == 1 %>
-        <p>Color: <%= colors_array.join %></p>
-        <% else %>
-        <p>Color: <%= colors_array.join(", ") %></p>
-      <% end %>
-    <% end %>
-    <p>Señas particulares: <%= petfound.signs %></p>
-    <p>Encontrado el: <%= petfound.day_found %></p>
-    <p>Dirección donde fue encontrado: <%= petfound.address %></p>
+              <div class="form-group mb-2">
+                <%= label_tag :color, "Color" %>
+                <%= text_field_tag :color, params[:color], class: 'form-control' %>
+              </div>
 
-    <%= link_to 'Ver detalles', petfound_path(petfound) %>
-    <hr>
-  <% end %>
-  <%= link_to 'Crear nueva mascota encontrada', new_petfound_path, class: "btn btn-primary" %>
+              <div class="form-group mb-2">
+                <%= label_tag :señas, "Señas particulares" %>
+                <%= text_field_tag :signs, params[:signs], class: 'form-control' %>
+              </div>
 
-</div>
+              <div class="form-group mb-2">
+                <%= label_tag :fecha_encontrado, "Fecha encontrado" %>
+                <%= date_field_tag :day_found, params[:day_found], class: 'form-control' %>
+              </div>
+
+              <%= button_tag(type: 'submit', class: 'btn btn-success btn-block text-white') do %>
+                <i class="fa-solid fa-filter me-2"></i>
+                Filtrar
+              <% end %>
+            <% end %>
+          </div>
+        </div>
+      </div>
+
+      <!-- Columna para las tarjetas -->
+      <div class="col-md-9">
+        <div class="row g-3">
+          <% if @petfounds.any? %>
+            <% @petfounds.each do |petfound| %>
+              <div class="col-md-4">
+                <div class="card mb-4 shadow-sm d-flex flex-column">
+                  <!-- Carrusel de fotos -->
+                  <% if petfound.photos.any? %>
+                    <div id="carouselPetfound<%= petfound.id %>" class="carousel slide" data-bs-ride="carousel">
+                      <div class="carousel-inner">
+                        <% petfound.photos.each_with_index do |photo, index| %>
+                          <div class="carousel-item <%= 'active' if index == 0 %>">
+                            <%= cl_image_tag photo.key, class: 'd-block w-100', style: 'height: 200px; object-fit: cover;', alt: petfound.details %>
+                          </div>
+                        <% end %>
+                      </div>
+                      <!-- Controles del carrusel -->
+                      <button class="carousel-control-prev" type="button" data-bs-target="#carouselPetfound<%= petfound.id %>" data-bs-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Anterior</span>
+                      </button>
+                      <button class="carousel-control-next" type="button" data-bs-target="#carouselPetfound<%= petfound.id %>" data-bs-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Siguiente</span>
+                      </button>
+                    </div>
+                  <% else %>
+                    <!-- Si no hay fotos, muestra una imagen predeterminada -->
+                    <%= image_tag 'default-image.png', class: 'card-img-top', style: 'height: 200px; object-fit: cover;', alt: 'No image available' %>
+                  <% end %>
+
+                  <div class="card-body d-flex flex-column">
+                    <h5 class="card-title mb-2"><%= petfound.details %></h5>
+
+                    <p class="card-text mb-1">
+                      <span class="fw-bold" style="color: #00629D;">Raza:</span>
+                      <span class="fw-normal text-dark"><%= petfound.breed %></span>
+                    </p>
+
+                    <% if petfound.color.present? %>
+                      <% colors_array = JSON.parse(petfound.color).reject(&:blank?) %>
+                      <p class="card-text mb-1">
+                        <span class="fw-bold" style="color: #00629D;">Color:</span>
+                        <span class="fw-normal text-dark"><%= colors_array.join(", ") %></span>
+                      </p>
+                    <% end %>
+
+                    <p class="card-text mb-1">
+                      <span class="fw-bold" style="color: #00629D;">Señas particulares:</span>
+                      <span class="fw-normal text-dark"><%= petfound.signs %></span>
+                    </p>
+
+                    <p class="card-text mb-1">
+                      <span class="fw-bold" style="color: #00629D;">Encontrado el:</span>
+                      <span class="fw-normal text-dark"><%= petfound.day_found %></span>
+                    </p>
+
+                    <p class="card-text mb-1">
+                      <span class="fw-bold" style="color: #00629D;">Dirección donde fue encontrado:</span>
+                      <span class="fw-normal text-dark"><%= petfound.address %></span>
+                    </p>
+
+                    <!-- Botón Ver Detalles estilo petlost -->
+                    <div class="mt-auto">
+                      <%= link_to petfound_path(petfound), class: 'btn btn-success text-white mb-2' do %>
+                        <i class="fa-solid fa-plus"></i>
+                        <i class="fa-solid fa-paw me-2"></i>
+                        Ver
+                      <% end %>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            <% end %>
+          <% else %>
+            <p>No hay mascotas encontradas que coincidan con los filtros.</p>
+          <% end %>
+        </div>
+
+        <!-- Paginación -->
+        <div class="d-flex justify-content-center mt-4">
+          <%= paginate @petfounds %>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>

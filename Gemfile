@@ -70,3 +70,4 @@ end
 
 # Image storage
 gem 'cloudinary'
+gem 'kaminari', '~> 1.2.2'
