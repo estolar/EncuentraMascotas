@@ -7,22 +7,22 @@ User.destroy_all
 
 # Crear usuarios individualmente y adjuntar las imágenes de perfil
 user1 = User.new(email: 'victorhuatucov@gmail.com', password: '123456', name: 'Victor Huatuco', phone_number: '943053632')
-file1 = URI.open("https://res.cloudinary.com/dqx97scli/image/upload/v1726245018/victor_dnrjqz.png")
+file1 = URI.open("https://res.cloudinary.com/dhfv2yrux/image/upload/v1726246388/development/plsmg0x2iti5he2f6itpmjbufn2m.png")
 user1.photo.attach(io: file1, filename: "avatar.png", content_type: "image/png")
 user1.save
 
 user2 = User.new(email: 'pamelamc23@gmail.com', password: '123456', name: 'Pamela Matías', phone_number: '949195838')
-file2 = URI.open("https://res.cloudinary.com/dqx97scli/image/upload/v1726245018/Pamela_zdalre.png")
+file2 = URI.open("https://res.cloudinary.com/dhfv2yrux/image/upload/v1726481548/pamela_tszf7g.jpg")
 user2.photo.attach(io: file2, filename: "avatar.png", content_type: "image/png")
 user2.save
 
 user3 = User.new(email: 'gslazar96@gmail.com', password: '123456', name: 'Gustavo Salazar', phone_number: '941455221')
-file3 = URI.open("https://res.cloudinary.com/dqx97scli/image/upload/v1726245018/gustavo_rgm2kj.png")
+file3 = URI.open("https://res.cloudinary.com/dhfv2yrux/image/upload/v1726246392/development/6awylfov2eqz2z7qgyy6idde7i3h.png")
 user3.photo.attach(io: file3, filename: "avatar.png", content_type: "image/png")
 user3.save
 
 user4 = User.new(email: 'enrique7stolar@gmail.com', password: '123456', name: 'Enrique Stolar', phone_number: '969758460')
-file4 = URI.open("https://res.cloudinary.com/dqx97scli/image/upload/v1726180273/development/xcpqaf6zmnmygc31q6dp0rx7nd2m.png")
+file4 = URI.open("https://res.cloudinary.com/dhfv2yrux/image/upload/v1726481309/yo_vvkviu.jpg")
 user4.photo.attach(io: file4, filename: "avatar.png", content_type: "image/png")
 user4.save
 
@@ -33,8 +33,8 @@ puts "Usuarios creados y con imágenes adjuntas: #{[user1, user2, user3, user4, 
 
 # Crear perros perdidos con 3 imágenes directamente
 petlost1 = Petlost.new(name: 'Max', finded: false, breed: 'Labrador Retriever', color: ['Negro'].to_json, signs: 'Collar rojo', day_lost: Date.today - 5, user: user1, address: 'Avenida Arequipa 120, Miraflores, Lima')
-file1 = URI.open('https://res.cloudinary.com/dqx97scli/image/upload/v1726259195/perrito_encontrado22_elpv0r.jpg')
-file2 = URI.open('https://res.cloudinary.com/dqx97scli/image/upload/v1726259194/perrito_encontrado2_o2o2dn.jpg')
+file1 = URI.open('https://res.cloudinary.com/dhfv2yrux/image/upload/v1726257430/development/rj57bxeownyl3qagbvl9g1ewl7x4.jpg')
+file2 = URI.open('https://res.cloudinary.com/dhfv2yrux/image/upload/v1726257816/development/qu5mjkzsllihwxq5ql6uemrfbxr5.jpg')
 petlost1.photos.attach(io: file1, filename: 'perrito1.jpg', content_type: 'image/jpg')
 petlost1.photos.attach(io: file2, filename: 'perrito2.jpg', content_type: 'image/jpg')
 petlost1.save
@@ -68,8 +68,8 @@ petlost4.photos.attach(io: file3, filename: 'perrito3.jpg', content_type: 'image
 petlost4.save
 
 petlost5 = Petlost.new(name: 'Buddy', finded: false, breed: 'Pug', color: ['Blanco'].to_json, signs: 'Pequeño tamaño', day_lost: Date.today - 12, user: user5, address: 'Calle Santa Catalina 320, Cercado, Arequipa')
-file1 = URI.open('https://res.cloudinary.com/dqx97scli/image/upload/v1726259050/perrito_encontrado12_gsblbr.jpg')
-file2 = URI.open('https://res.cloudinary.com/dqx97scli/image/upload/v1726259050/perrito_encontrado1_a2ejif.jpg')
+file1 = URI.open('https://res.cloudinary.com/dhfv2yrux/image/upload/v1726265219/development/3i9eue3vgtpmbo4p4mkny94unr8p.jpg')
+file2 = URI.open('https://res.cloudinary.com/dhfv2yrux/image/upload/v1726265221/development/61a80rwtcx452h5lgoq953lb8dmx.jpg')
 petlost5.photos.attach(io: file1, filename: 'perrito1.jpg', content_type: 'image/jpg')
 petlost5.photos.attach(io: file2, filename: 'perrito2.jpg', content_type: 'image/jpg')
 petlost5.save
