@@ -143,7 +143,7 @@
             <% if pet.photos.attached? %>
               <%= image_tag pet.photos.first, class: 'card-img-top pet-image', alt: pet.breed %>
             <% else %>
-              <%= image_tag 'default-image.jpg', class: 'card-img-top', alt: 'No image available' %>
+              <%= image_tag 'default-image.png', class: 'card-img-top', alt: 'No image available' %>
             <% end %>
             <div class="card-body">
               <h5 class="card-title"><%= pet.breed %></h5> <!-- Mostrando la raza del perro -->
