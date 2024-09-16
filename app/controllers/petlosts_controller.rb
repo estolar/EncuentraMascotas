@@ -48,6 +48,8 @@ class PetlostsController < ApplicationController
     if params[:day_lost].present?
       @petlosts = @petlosts.where(day_lost: params[:day_lost])
     end
+
+    @petlosts = @petlosts.page(params[:page]).per(6)
   end
 
   def show
