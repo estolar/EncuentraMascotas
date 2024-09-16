@@ -6,7 +6,6 @@
           <%= image_tag 'icons8-home.png', alt: 'Volver', width: 32, height: 32 %>
         <% end %>
       </div>
-
       <div>
         <%= link_to loading_screen_petlosts_path, class: 'btn btn-success text-white' do %>
           <i class="fa-solid fa-paw"></i>
@@ -59,8 +58,32 @@
               <div class="col-md-4">
                 <div class="card mb-4 shadow-sm d-flex flex-column">
                   <% if petlost.photos.any? %>
-                    <%= cl_image_tag petlost.photos.first.key, class: 'card-img-top', style: 'height: 200px; object-fit: cover;', alt: petlost.name %>
+                    <!-- Si hay más de una foto, mostramos el carrusel -->
+                    <% if petlost.photos.count > 1 %>
+                      <div id="carouselPetlost<%= petlost.id %>" class="carousel slide" data-bs-ride="carousel">
+                        <div class="carousel-inner">
+                          <% petlost.photos.each_with_index do |photo, index| %>
+                            <div class="carousel-item <%= 'active' if index == 0 %>">
+                              <%= cl_image_tag photo.key, class: 'd-block w-100', style: 'height: 200px; object-fit: cover;', alt: petlost.name %>
+                            </div>
+                          <% end %>
+                        </div>
+                        <!-- Controles del carrusel -->
+                        <button class="carousel-control-prev" type="button" data-bs-target="#carouselPetlost<%= petlost.id %>" data-bs-slide="prev">
+                          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                          <span class="visually-hidden">Anterior</span>
+                        </button>
+                        <button class="carousel-control-next" type="button" data-bs-target="#carouselPetlost<%= petlost.id %>" data-bs-slide="next">
+                          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                          <span class="visually-hidden">Siguiente</span>
+                        </button>
+                      </div>
+                    <% else %>
+                      <!-- Si solo hay una foto, mostrar esa foto -->
+                      <%= cl_image_tag petlost.photos.first.key, class: 'card-img-top', style: 'height: 200px; object-fit: cover;', alt: petlost.name %>
+                    <% end %>
                   <% else %>
+                    <!-- Si no hay fotos, mostramos la imagen predeterminada -->
                     <%= image_tag 'default-image.png', class: 'card-img-top', style: 'height: 200px; object-fit: cover;', alt: 'No image available' %>
                   <% end %>
 
@@ -114,10 +137,9 @@
         <div class="d-flex justify-content-center mt-4">
           <%= paginate @petlosts %>
         </div>
-
-
-
       </div>
+
+
     </div>
   </div>
 </body>
