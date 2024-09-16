@@ -1,17 +1,21 @@
-<body style="background: linear-gradient(to bottom, #0079c2, #ffffff);">
+<body style="background: linear-gradient(to bottom, #0079c2, #ffffff, #f7c6c7);">
   <div class="container mt-5">
     <div class="d-flex justify-content-between mb-4">
       <div>
         <%= link_to root_path, class: "btn btn-success btn-lg text-white d-flex align-items-center justify-content-center" do %>
-          <%= image_tag 'icons8-home.png', alt: 'Volver', width: 32, height: 32 %>
+          <%= image_tag 'icons8-home.png', alt: 'Volver', width: 32, height: 32, class: 'me-2'  %> Volver
         <% end %>
       </div>
       <div>
         <%= link_to loading_screen_petlosts_path, class: 'btn btn-success text-white' do %>
           <i class="fa-solid fa-paw"></i>
-          <i class="fa-solid fa-location-dot"></i>
+          <i class="fa-solid fa-location-dot me-2"></i>
+          Mascotas cerca
         <% end %>
-        <%= link_to 'Perdi mi mascota', new_petlost_path, class: 'btn btn-success text-white ms-2' %>
+        <%= link_to new_petlost_path, class: 'btn btn-success text-white ms-2' do %>
+          <i class="fa-solid fa-dog me-2"></i>
+          Perdi mi mascota
+        <% end %>
       </div>
     </div>
 
@@ -44,9 +48,21 @@
                 <%= date_field_tag :day_lost, params[:day_lost], class: 'form-control' %>
               </div>
 
-              <%= submit_tag 'Filtrar', class: 'btn btn-success btn-block text-white' %>
+              <%= button_tag(type: 'submit', class: 'btn btn-success btn-block text-white') do %>
+                <i class="fa-solid fa-filter me-2"></i>
+                Filtrar
+              <% end %>
+
             <% end %>
           </div>
+        </div>
+
+        <!-- Video debajo del filtro -->
+        <div class="mt-4">
+          <video width="100%" height="auto" loop muted autoplay playsinline>
+            <source src="<%= asset_path('videoejemplo.mp4') %>" type="video/mp4">
+            Tu navegador no soporta la etiqueta de video.
+          </video>
         </div>
       </div>
 
@@ -58,32 +74,27 @@
               <div class="col-md-4">
                 <div class="card mb-4 shadow-sm d-flex flex-column">
                   <% if petlost.photos.any? %>
-                    <!-- Si hay más de una foto, mostramos el carrusel -->
-                    <% if petlost.photos.count > 1 %>
-                      <div id="carouselPetlost<%= petlost.id %>" class="carousel slide" data-bs-ride="carousel">
-                        <div class="carousel-inner">
-                          <% petlost.photos.each_with_index do |photo, index| %>
-                            <div class="carousel-item <%= 'active' if index == 0 %>">
-                              <%= cl_image_tag photo.key, class: 'd-block w-100', style: 'height: 200px; object-fit: cover;', alt: petlost.name %>
-                            </div>
-                          <% end %>
-                        </div>
-                        <!-- Controles del carrusel -->
-                        <button class="carousel-control-prev" type="button" data-bs-target="#carouselPetlost<%= petlost.id %>" data-bs-slide="prev">
-                          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                          <span class="visually-hidden">Anterior</span>
-                        </button>
-                        <button class="carousel-control-next" type="button" data-bs-target="#carouselPetlost<%= petlost.id %>" data-bs-slide="next">
-                          <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                          <span class="visually-hidden">Siguiente</span>
-                        </button>
+                    <!-- Carrusel de fotos si hay más de una -->
+                    <div id="carouselPetlost<%= petlost.id %>" class="carousel slide" data-bs-ride="carousel">
+                      <div class="carousel-inner">
+                        <% petlost.photos.each_with_index do |photo, index| %>
+                          <div class="carousel-item <%= 'active' if index == 0 %>">
+                            <%= cl_image_tag photo.key, class: 'd-block w-100', style: 'height: 200px; object-fit: cover;', alt: petlost.name %>
+                          </div>
+                        <% end %>
                       </div>
-                    <% else %>
-                      <!-- Si solo hay una foto, mostrar esa foto -->
-                      <%= cl_image_tag petlost.photos.first.key, class: 'card-img-top', style: 'height: 200px; object-fit: cover;', alt: petlost.name %>
-                    <% end %>
+                      <!-- Controles del carrusel -->
+                      <button class="carousel-control-prev" type="button" data-bs-target="#carouselPetlost<%= petlost.id %>" data-bs-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Anterior</span>
+                      </button>
+                      <button class="carousel-control-next" type="button" data-bs-target="#carouselPetlost<%= petlost.id %>" data-bs-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Siguiente</span>
+                      </button>
+                    </div>
                   <% else %>
-                    <!-- Si no hay fotos, mostramos la imagen predeterminada -->
+                    <!-- Si no hay fotos, muestra una imagen predeterminada -->
                     <%= image_tag 'default-image.png', class: 'card-img-top', style: 'height: 200px; object-fit: cover;', alt: 'No image available' %>
                   <% end %>
 
@@ -121,7 +132,8 @@
                     <div class="mt-auto">
                       <%= link_to petlost_path(petlost), class: 'btn btn-success text-white mb-2' do %>
                         <i class="fa-solid fa-plus"></i>
-                        <i class="fa-solid fa-paw"></i>
+                        <i class="fa-solid fa-paw  me-2"></i>
+                        Ver
                       <% end %>
                     </div>
                   </div>
@@ -138,8 +150,6 @@
           <%= paginate @petlosts %>
         </div>
       </div>
-
-
     </div>
   </div>
 </body>
