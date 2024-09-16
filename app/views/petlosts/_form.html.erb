@@ -1,8 +1,10 @@
+<%= stylesheet_link_tag 'pet/form', media: 'all', 'data-turbolinks-track': 'reload' %>
+
 <%= simple_form_for(petlost) do |f| %>
-  <%= f.input :name, label: "Nombre"%>
+  <%= f.input :name, label: "Nombre", placeholder: "Escribe el nombre aquí", label_html: { class: "pets-name" } wrapper_html: {class:}%>
   <div data-controller= 'type-pet'>
-    <%= f.input :type_pet, label: 'Selecciona qué animalito se perdió',
-                as: :radio_buttons, collection: ['perro', 'gato', 'otros'],
+    <%= f.input :type_pet, label: 'Tipo de animalito',
+                as: :radio_buttons, collection: ['Perro', 'Gato', 'Otro'],
                 input_html: {
                   data: {
                     action: "change->type-pet#showBreed"
@@ -19,18 +21,20 @@
     </div>
     <%# contenedor otros %>
     <div data-type-pet-target="otros" class="d-none">
-      <%= f.input :breed, label: "Tipo de animal", hint: 'Escribe el tipo de animalito' %>
+      <%= f.input :breed, label: "Tipo de animal", placeholder: 'Escribe el tipo de animalito' %>
     </div>
   </div>
 
+<div class = "bg-white">
   <%= f.input :color, label: "Color", collection: Petlost::COLORS, hint: 'Selecciona su(s) color(es). Si tiene más de dos, selecciona primero bicolor/tricolor y luego sus colores!', input_html: {
-    multiple: true, data: {
+    multiple: true, class: "bg-primary", data: {
       controller: "tom-select",
       tom_select_options_value: { tags: true }
       }
     } %>
-  <%= f.input :signs, label: 'Características/peculiaridades' %>
-  <%= f.input :day_lost, placeholder: '¿Cuándo se perdió?',
+</div>
+  <%= f.input :signs, label: 'Características/peculiaridades', placeholder: "Una buena descripción hará más fácil identificarlo!"%>
+  <%= f.input :day_lost, label:'¿Cuándo se perdió?', placeholder: 'Selecciona una fecha',
               as: :string,
               input_html: {
                 data: {
@@ -46,8 +50,8 @@
         <% end %>
     </div>
    <% end %>
-  <%= f.input :photos, as: :file, label: 'Adjunta una foto', input_html: { multiple: true } %>
-  <%= f.input :address, label: "Ingresa la dirección donde se perdió" %>
+  <%= f.input :photos, as: :file, label: 'Adjunta una foto o más fotos', input_html: { multiple: true } %>
+  <%= f.input :address, label: "¿Dónde se perdió?", placeholder: "Ingresa la dirección exacta", class:"pets-weight" %>
   <%= f.hidden_field :user_id, value:current_user.id %>
   <%= f.hidden_field :finded, value: false %>
   <%= f.submit %>

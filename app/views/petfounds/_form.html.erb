@@ -1,5 +1,26 @@
 <%= simple_form_for(petfound) do |f| %>
-  <%= f.input :breed, label: "Raza", collection: Petfound::BREEDS, prompt: 'Selecciona su raza' %>
+  <div data-controller= 'type-pet'>
+    <%= f.input :type_pet, label: 'Selecciona qué animalito se perdió',
+                as: :radio_buttons, collection: ['perro', 'gato', 'otros'],
+                input_html: {
+                  data: {
+                    action: "change->type-pet#showBreed"
+                    }
+                  } %>
+
+    <%# contenedor perros %>
+    <div data-type-pet-target="perro" class="d-none">
+      <%= f.input :breed, label: "Raza", collection: Petfound::DOGBREEDS, prompt: 'Selecciona su raza' %>
+    </div>
+    <%# contenedor gatos %>
+    <div data-type-pet-target="gato" class="d-none">
+      <%= f.input :breed, label: "Raza", collection: Petfound::CATBREEDS, prompt: 'Selecciona su raza' %>
+    </div>
+    <%# contenedor otros %>
+    <div data-type-pet-target="otros" class="d-none">
+      <%= f.input :breed, label: "Tipo de animal", hint: 'Escribe el tipo de animalito' %>
+    </div>
+  </div>
   <%= f.input :color, label: "Color", collection: Petfound::COLORS, hint: 'Selecciona su(s) color(es). Si tiene más de dos, selecciona primero bicolor/tricolor y luego sus colores!', input_html: {
     multiple: true, data: {
       controller: "tom-select",
@@ -26,7 +47,7 @@
     </div>
   <% end %>
   <%= f.input :photos, as: :file, label: 'Adjunta una foto', input_html: { multiple: true } %>
-  <%= f.input :address, label: "Ingresa la dirección donde lo viste o donde se encuentra actualmente" %> 
+  <%= f.input :address, label: "Ingresa la dirección donde lo viste o donde se encuentra actualmente" %>
   <%= f.hidden_field :user_id, value: current_user.id %>
   <%= f.submit %>
 <% end %>
