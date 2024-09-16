@@ -1,12 +1,12 @@
 class PagesController < ApplicationController
-  skip_before_action :authenticate_user!, only: [ :home ]
+  skip_before_action :authenticate_user!, only: [:home]
 
   def home
-    @petlosts = Petlost.all
+    @petlosts = Petlost.limit(4)
+    @petfounds = Petfound.limit(4)
   end
-
+  # @found_pets = Petfound.all # Carga todas las mascotas encontradas
   def app_info
-    # Puedes agregar aquí cualquier lógica adicional si la necesitas.
   end
 
   def terms
