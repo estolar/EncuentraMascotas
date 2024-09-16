@@ -1,4 +1,4 @@
-/* Card Styles */
+/* Estilo para los cards */
 .card {
   border-radius: 10px;
   height: 100%; /* Asegura que la tarjeta tenga la altura completa */
@@ -9,17 +9,28 @@
 
 .card-body {
   flex-grow: 1; /* Permite que el cuerpo de la tarjeta crezca para ocupar el espacio disponible */
-  text-align: center;
+  text-align: center; /* Centra el texto dentro de la tarjeta */
+  padding: 20px; /* Añade más espacio dentro del cuerpo de la tarjeta */
 }
+
 
 .pet-image {
-  height: 200px; /* Altura fija para las imágenes */
-  width: 100%;   /* Ocupa el 100% del ancho */
-  object-fit: cover; /* Asegura que la imagen se ajuste al contenedor sin deformarse */
-  display: block;
+  height: 200px; /* Fija la altura de la imagen */
+  width: 100%;   /* Asegura que la imagen ocupe todo el ancho disponible */
+  object-fit: cover; /* Ajusta la imagen dentro del contenedor sin deformarse */
+  display: block; /* Asegura que la imagen sea un bloque */
+  border-top-left-radius: 5px; /* Redondea solo la esquina superior izquierda */
+  border-top-right-radius: 5px; /* Redondea solo la esquina superior derecha */
 }
 
+
 .card-title {
-  color: $azul-em;
-  font-size: 24px;
+  color: $azul-em; /* Establece el color del título según tu variable $azul-em */
+  font-size: 24px; /* Aumenta el tamaño del título */
+  font-weight: 400;
+}
+
+.card:hover {
+  transform: scale(1.05); /* Levemente más grande cuando el usuario pasa el ratón */
+  transition: transform 0.3s ease; /* Transición suave al hacer hover */
 }
