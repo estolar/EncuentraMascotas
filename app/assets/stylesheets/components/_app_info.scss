@@ -1,0 +1,60 @@
+/* Estilos para la sección de información de la App */
+.app-info-section {
+  padding: 50px 0;
+
+  .section-title {
+    color: $azul-em;
+    font-size: 2rem;
+    margin-bottom: 20px;
+  }
+
+  .section-text {
+    font-size: 1.2rem;
+    margin-bottom: 20px;
+  }
+
+  .btn-large {
+    width: 300px;
+    height: 50px;
+    font-size: 1.1rem;
+    border-radius: 25px;
+    background-color: $azul-em;
+    border: none;
+  }
+
+  .btn-large:hover {
+    background-color: $rosa-em;
+  }
+
+  img {
+    max-width: 500px;
+    height: auto;
+  }
+}
+
+// terminos y condiciones
+
+.terms-container {
+  padding: 20px;
+  line-height: 1.6;
+  background-color: $azul-em-sec;
+}
+
+h1 {
+  color: #0079C2;
+  margin-bottom: 20px;
+}
+
+h3 {
+  color: #0079C2;
+  margin-top: 20px;
+}
+
+
+// privacidad
+
+.privacy-container {
+  padding: 20px;
+  line-height: 1.6;
+  background-color: $azul-em-sec;
+}

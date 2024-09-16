@@ -5,16 +5,25 @@
   margin-top: auto; /* Empuja el botón hacia el final de la tarjeta */
 }
 
-.btn-primary:hover {
+.btn-primary:hover,
+.btn-primary:focus,
+.btn-primary:active {
   background-color: $azul-em;
+  outline: none; /* Elimina el borde de enfoque por defecto */
+  box-shadow: none; /* Elimina sombras si las tiene */
 }
 
 .btn-success {
   background-color: $azul-em;
   border: none;
 }
-.btn-success:hover {
+
+.btn-success:hover,
+.btn-success:focus,
+.btn-success:active {
   background-color: $rosa-em;
+  outline: none; /* Elimina el borde de enfoque por defecto */
+  box-shadow: none; /* Elimina sombras si las tiene */
 }
 
 
@@ -46,4 +55,19 @@
 .custom-btn-found:hover {
   background-color: $rosa-em; /* Cambiar color al pasar el mouse */
   color: black;
+}
+
+/* Evitar cambio de color al hacer clic (focus y active) */
+.custom-btn-lost:focus, .custom-btn-lost:active {
+  background-color: $rosa-em; /* Mantener el color rosado cuando el botón está activo o enfocado */
+  color: black;
+  outline: none;
+  box-shadow: none;
+}
+
+.custom-btn-found:focus, .custom-btn-found:active {
+  background-color: $azul-em; /* Mantener el color azul cuando el botón está activo o enfocado */
+  color: white;
+  outline: none;
+  box-shadow: none;
 }
