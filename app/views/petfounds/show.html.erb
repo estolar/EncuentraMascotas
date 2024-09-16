@@ -1,95 +1,148 @@
-<body style="background: linear-gradient(to bottom, #0079c2, #ffffff, #f7c6c7);">
-  <div class="container-fluid mt-3" style="padding: 20px;">
-    <div class="row">
-      <!-- Columna vacía a la izquierda -->
-      <div class="col-md-2"></div> <!-- Ajusta 'col-md-2' según el espacio que quieras ocupar -->
+<body style="background: linear-gradient(to bottom, #f7c6c7,#ffffff);">
+  <div class="container-fluid mt-1 p-2 rounded" style="max-width: 1200px; margin: 0 auto;">
+    <!-- Fila de navegación -->
+    <div class="row align-items-center">
+      <!-- Columna izquierda para 'Volver a la lista' -->
+      <div class="col text-start">
+        <%= link_to petfounds_path, class: "btn btn-primary " do %>
+          <i class="fa-solid fa-house" style="font-size: 0.8rem;"></i>
+        <% end %>
+      </div>
+      <!-- Columna derecha para 'Editar' y 'Eliminar' -->
+      <div class="col text-end">
+        <%= link_to 'Editar', edit_petfound_path(@petfound), class: "btn btn-primary me-1", style: "font-size: 0.8rem;" %>
+        <%= link_to 'Eliminar', petfound_path(@petfound), class: "btn btn-success text-white", data: { turbo_method: :delete, turbo_confirm: "¿Seguro que quieres eliminar?" }, style: "font-size: 0.8rem;" %>
+      </div>
+    </div>
 
-      <!-- Contenido principal -->
-      <div class="col-md-8" style="background:#0079c2; padding: 20px; border-radius: 15px;">
-        <div class="row align-items-center" style="height: auto;">
-          <!-- Columna izquierda para 'Volver a la lista' -->
-          <div class="col text-start">
-            <%= link_to petfounds_path, class: "btn btn-primary" do %>
-              <i class="fa-solid fa-house"></i>
+    <!-- Fila A: Detalles de la mascota -->
+    <div class="row align-items-center my-1">
+      <div class="col text-center">
+        <h4 class="text-white mb-1" style="font-size: 1.2rem;"><%= @petfound.details %></h4>
+        <p class="text-white mb-0" style="font-size: 0.9rem;">Encontrado el: <%= @petfound.day_found %></p>
+      </div>
+    </div>
+
+    <!-- Carrusel de imágenes con 3 imágenes simultáneas -->
+    <div class="row mb-3">
+      <div class="col">
+        <div id="carouselExample" class="carousel slide" data-bs-ride="carousel">
+          <!-- Indicadores del carrusel -->
+          <div class="carousel-indicators">
+            <% total_photos = @petfound.photos.to_a + Array.new(6 - @petfound.photos.count, 'default-image.png') %>
+            <% (total_photos.each_slice(3).to_a).each_with_index do |_, index| %>
+              <button type="button" data-bs-target="#carouselExample" data-bs-slide-to="<%= index %>" class="<%= 'active' if index == 0 %>" aria-current="<%= 'true' if index == 0 %>" aria-label="Slide <%= index + 1 %>"></button>
             <% end %>
           </div>
 
-          <!-- Columna derecha para 'Editar' y 'Eliminar' -->
-          <div class="col text-end">
-            <%= link_to 'Editar', edit_petfound_path(@petfound), class: "btn btn-primary me-2" %>
-            <%= link_to 'Eliminar', petfound_path(@petfound), class: "btn btn-danger", data: { turbo_method: :delete, turbo_confirm: "¿Seguro que quieres eliminar?" } %>
-          </div>
-        </div>
-
-        <!-- Fila A: Detalles de la mascota -->
-        <div class="row align-items-center mb-3" style="height: 15vh;">
-          <div class="col text-center">
-            <h1 class="display-4" style="color: #fff;"><%= @petfound.details %></h1>
-            <p style="color: white; font-size: 1.5rem;">Encontrado el: <%= @petfound.day_found %></p>
-          </div>
-        </div>
-
-        <!-- Fila B: Carrusel de fotos -->
-        <div class="row">
-          <div class="col text-center">
-            <div class="card p-3 mb-0" style="box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2); border-radius: 15px;">
-              <div id="carouselExample" class="carousel slide" data-bs-ride="carousel">
-                <div class="carousel-inner">
-                  <% @petfound.photos.each_with_index do |photo, index| %>
-                    <div class="carousel-item <%= index == 0 ? 'active' : '' %>">
-                      <%= cl_image_tag(photo.key, class: "d-block w-100", style: "height: 500px; object-fit: cover; border-radius: 15px;") %>
+          <div class="carousel-inner">
+            <% total_photos.each_slice(3).with_index do |photos_group, index| %>
+              <div class="carousel-item <%= 'active' if index == 0 %>">
+                <div class="row">
+                  <% photos_group.each do |photo| %>
+                    <div class="col-md-4">
+                      <% if photo.is_a?(String) %> <!-- Imagen por defecto -->
+                        <%= image_tag(photo, class: "d-block w-100 rounded-lg", style: "width: 400px; height: 250px; object-fit: cover;") %>
+                      <% else %> <!-- Imágenes subidas por el usuario -->
+                        <%= cl_image_tag(photo.key, class: "d-block w-100 rounded-lg", width: 400, height: 250, crop: "fill", gravity: "auto", style: "object-fit: cover;") %>
+                      <% end %>
                     </div>
                   <% end %>
                 </div>
-                <!-- Controles de navegación -->
-                <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
-                  <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                  <span class="visually-hidden">Previous</span>
-                </button>
-                <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
-                  <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                  <span class="visually-hidden">Next</span>
-                </button>
               </div>
+            <% end %>
+          </div>
+
+          <!-- Controles de navegación -->
+          <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Anterior</span>
+          </button>
+          <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Siguiente</span>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Fila C: Datos del perro, la persona y el mapa -->
+    <div class="row">
+      <!-- Columna izquierda: Datos del perro -->
+      <div class="col-md-6">
+        <!-- Tarjeta Datos del Perro -->
+        <div class="mt-2 p-2 shadow-sm rounded bg-white">
+          <div class="row align-items-center">
+            <div class="col-9 text-start ps-3">
+              <h6 class="mb-1 text-primary" style="font-size: 1rem;">Datos del perro</h6>
+              <p class="mb-1" style="font-size: 0.8rem;"><i class="fas fa-paw me-2 text-primary"></i><strong>Raza:</strong> <%= @petfound.breed %></p>
+
+              <% if @petfound.color.present? %>
+                <% colors_array = JSON.parse(@petfound.color).reject(&:blank?) %>
+                <p class="mb-1" style="font-size: 0.8rem;"><i class="fas fa-palette me-2 text-primary"></i><strong>Color:</strong> <%= colors_array.join(", ") %></p>
+              <% end %>
+
+              <p class="mb-1" style="font-size: 0.8rem;"><i class="fas fa-map-marker-alt me-2 text-primary"></i><strong>Señas particulares:</strong> <%= @petfound.signs %></p>
+              <p class="mb-0" style="font-size: 0.8rem;"><i class="fas fa-map-marker-alt me-2 text-primary"></i><strong>Dirección donde fue encontrado:</strong> <%= @petfound.address %></p>
+            </div>
+            <div class="col-3 text-center">
+              <i class="fas fa-dog text-primary" style="font-size: 2.5rem;"></i>
             </div>
           </div>
         </div>
 
-        <!-- Fila de Datos del Perro y Mapa -->
-        <div class="row">
-          <!-- Tarjeta Datos del Perro -->
-          <div class="col-md-6">
-            <div class="mt-4 p-3" style="box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.3); border-radius: 15px; background-color: #ffffff;">
-              <div class="row align-items-center">
-                <div class="col-12 text-start">
-                  <h4 class="mb-2" style="font-size: 2rem; color: #0079c2;">Datos del Perro</h4>
-                  <p style="font-size: 1.0rem; color: #333;"><strong>Raza:</strong> <%= @petfound.breed %></p>
-                  <% if @petfound.color.present? %>
-                    <% colors_array = JSON.parse(@petfound.color).reject(&:blank?) %>
-                    <p style="font-size: 1.0rem; color: #333;"><strong>Color:</strong> <%= colors_array.join(', ') %></p>
-                  <% end %>
-                  <p style="font-size: 1.0rem; color: #333;"><strong>Señas particulares:</strong> <%= @petfound.signs %></p>
-                  <p style="font-size: 1.0rem; color: #333;"><strong>Dirección:</strong> <%= @petfound.address %></p>
-                </div>
-              </div>
+        <!-- Tarjeta Datos de la Persona que lo encontró -->
+        <div class="mt-2 p-2 shadow-sm rounded bg-white">
+          <div class="row align-items-center">
+            <div class="col-9 text-start ps-3">
+              <h6 class="mb-1 text-primary" style="font-size: 1rem;">Datos de la persona que lo encontró</h6>
+              <p class="mb-1" style="font-size: 0.8rem;"><i class="fas fa-user me-2 text-primary"></i><strong>Nombre:</strong> <%= @petfound.user.name %></p>
+              <p class="mb-1" style="font-size: 0.8rem;"><i class="fas fa-envelope me-2 text-primary"></i><strong>Correo:</strong> <%= @petfound.user.email %></p>
+              <p class="mb-0" style="font-size: 0.8rem;"><i class="fas fa-phone me-2 text-primary"></i><strong>Teléfono:</strong> <%= @petfound.user.phone_number %></p>
             </div>
-          </div>
-
-          <!-- Mapa -->
-          <div class="col-md-6 mt-3 text-center">
-            <div class="p-3 mt-2" style="box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2); border-radius: 15px; background-color: #ffffff;">
-              <div id="map" style="height: 350px; width: 100%; border-radius: 10px;"></div>
+            <div class="col-3 text-center">
+              <% if @petfound.user.photo.attached? %>
+                <%= image_tag @petfound.user.photo, class: "img-fluid rounded-circle", style: "width: 70px; height: 70px; object-fit: cover;" %>
+              <% else %>
+                <i class="fas fa-user-circle text-primary" style="font-size: 3rem;"></i>
+              <% end %>
             </div>
           </div>
         </div>
       </div>
 
-      <!-- Columna vacía a la derecha -->
-      <div class="col-md-2"></div> <!-- Ajusta 'col-md-2' según el espacio que quieras ocupar -->
+      <!-- Columna derecha: Mapa -->
+      <div class="col-md-6 mt-2">
+        <div class="p-1 shadow-sm rounded bg-white">
+          <div id="map" style="height: 250px; width: 100%; border-radius: 10px;"></div>
+        </div>
+      </div>
     </div>
-  </div>
+  </div> <!-- Cierre del contenedor principal -->
 </body>
 
+<!-- Estilos CSS -->
+<style>
+  /* Estilos para las imágenes y columnas del carrusel */
+  .carousel-item .col-md-4 {
+    padding: 0 5px;
+  }
+
+  .carousel-item img {
+    width: 100%;
+    height: auto;
+  }
+
+  /* Ajustes para pantallas pequeñas */
+  @media (max-width: 768px) {
+    .carousel-item .col-md-4 {
+      flex: 0 0 100%;
+      max-width: 100%;
+    }
+  }
+</style>
+
+<!-- Scripts -->
 <script>
   document.addEventListener('turbo:load', function() {
     mapboxgl.accessToken = '<%= ENV['MAPBOX_API_KEY'] %>';
@@ -98,46 +151,18 @@
       container: 'map',
       style: 'mapbox://styles/mapbox/streets-v11',
       center: [<%= @petfound.longitude %>, <%= @petfound.latitude %>],
-      zoom: 15,
-      pitch: 45,
-      bearing: -17.6
+      zoom: 13.5,
     });
 
     const el = document.createElement('div');
     el.className = 'marker';
     el.style.backgroundImage = 'url(<%= asset_path("heart.png") %>)';
-    el.style.width = '40px';
-    el.style.height = '40px';
+    el.style.width = '46px';
+    el.style.height = '46px';
     el.style.backgroundSize = '100%';
 
-    // Crear el marcador personalizado
     new mapboxgl.Marker(el)
       .setLngLat([<%= @petfound.longitude %>, <%= @petfound.latitude %>])
       .addTo(map);
-
-    map.on('load', function () {
-      map.addLayer({
-        'id': '3d-buildings',
-        'source': 'composite',
-        'source-layer': 'building',
-        'filter': ['==', 'extrude', 'true'],
-        'type': 'fill-extrusion',
-        'minzoom': 15,
-        'paint': {
-          'fill-extrusion-color': '#CCA691',
-          'fill-extrusion-height': [
-            'interpolate', ['linear'], ['zoom'],
-            15, 0,
-            16.05, ['get', 'height']
-          ],
-          'fill-extrusion-base': [
-            'interpolate', ['linear'], ['zoom'],
-            15, 0,
-            16.05, ['get', 'min_height']
-          ],
-          'fill-extrusion-opacity': 0.6
-        }
-      });
-    });
   });
 </script>

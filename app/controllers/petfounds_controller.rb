@@ -1,6 +1,26 @@
 class PetfoundsController < ApplicationController
   def index
     @petfounds = Petfound.all
+
+    # Filtros
+    if params[:raza].present?
+      @petfounds = @petfounds.where("breed ILIKE ?", "%#{params[:raza]}%")
+    end
+
+    if params[:color].present?
+      @petfounds = @petfounds.where("color ILIKE ?", "%#{params[:color]}%")
+    end
+
+    if params[:signs].present?
+      @petfounds = @petfounds.where("signs ILIKE ?", "%#{params[:signs]}%")
+    end
+
+    if params[:day_found].present?
+      @petfounds = @petfounds.where(day_found: params[:day_found])
+    end
+
+    # Paginación
+    @petfounds = @petfounds.page(params[:page]).per(6)
   end
 
   def show
