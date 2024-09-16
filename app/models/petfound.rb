@@ -3,7 +3,7 @@ class Petfound < ApplicationRecord
   after_validation :geocode, if: :will_save_change_to_address?
   belongs_to :user
   has_many_attached :photos
-  BREEDS = [
+  DOGBREEDS = [
     'Labrador Retriever', 'Golden Retriever', 'Pastor Alemán', 'Shih Tzu', 'Beagle',
     'Bulldog Inglés', 'Bulldog Francés', 'Rottweiler', 'Poodle', 'Chihuahua',
     'Dachshund', 'Boxer', 'Doberman Pinscher', 'Siberian Husky', 'Cocker Spaniel',
@@ -59,8 +59,9 @@ class Petfound < ApplicationRecord
   COLORS = ['bicolor', 'tricolor', 'otro color', 'negro', 'blanco', 'marrón', 'gris', 'canela', 'atigrado',
     'crema', 'dorado', 'leonado']
 
-  validates :breed, inclusion: { in: BREEDS }
-  validates :breed, :color, :day_found, presence: true
+  CATBREEDS = ['otros']
+
+  validates :color, :day_found, presence: true
 
   # validates :address, length: { in: 5..20, message: "Direccion entre 5 y 20 caracteres" }
 
