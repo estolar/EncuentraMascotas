@@ -1,4 +1,11 @@
 <style>
+  body {
+    background-image: url('<%= asset_path("fondo_map.jpg") %>');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+  }
+
   .gato-sobre-mapa {
     position: absolute;
     top: 63px;
@@ -34,44 +41,44 @@
 
   /* Estilo para las imágenes en los popups */
   .popup-image {
-    width: 100%; /* La imagen ocupará el 100% del ancho de la card */
-    height: auto; /* La altura se ajustará automáticamente para mantener la proporción */
+    width: 100%;
+    height: auto;
     border-top-left-radius: 10px;
     border-top-right-radius: 10px;
-    object-fit: cover; /* Ajusta la imagen para cubrir el contenedor sin distorsionarla */
-    display: block; /* Asegura que la imagen ocupe toda la línea */
+    object-fit: cover;
+    display: block;
     margin-left: auto;
-    margin-right: auto; /* Centra la imagen */
+    margin-right: auto;
   }
 
   /* Estilo para el contenedor de la card del popup */
   .popup-card {
-    width: 150px; /* Ancho reducido para hacer la card más pequeña */
-    border-radius: 10px; /* Bordes redondeados */
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Sombra para dar profundidad */
-    overflow: hidden; /* Oculta cualquier contenido que sobresalga de los bordes redondeados */
-    font-family: Arial, sans-serif; /* Fuente para el contenido */
-    background-color: #fff; /* Fondo blanco para la card */
+    width: 150px;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    font-family: Arial, sans-serif;
+    background-color: #fff;
   }
 
   /* Estilo para el contenido textual en los popups */
   .popup-content {
-    padding: 8px; /* Reducción del padding para hacer la card más compacta */
-    text-align: center; /* Centra el texto */
-    background-color: #fff; /* Fondo blanco para la información */
+    padding: 8px;
+    text-align: center;
+    background-color: #fff;
   }
 
   .popup-content strong {
     display: block;
     margin-top: 5px;
-    font-size: 12px; /* Reducción del tamaño de la fuente */
+    font-size: 12px;
     color: #333;
   }
 
   /* Responsive Design para dispositivos móviles */
   @media (max-width: 600px) {
     .popup-card {
-      width: 120px; /* Ancho estándar para dispositivos móviles */
+      width: 120px;
     }
 
     .popup-content {
@@ -83,8 +90,8 @@
     }
 
     .popup-image {
-      width: 100%; /* La imagen ocupará el 100% del ancho de la card */
-      height: auto; /* La altura se ajustará automáticamente para mantener la proporción */
+      width: 100%;
+      height: auto;
     }
 
     .gato-sobre-mapa {
@@ -108,12 +115,12 @@
     <h1 class="text-center flex-grow-1 fw-bold mb-0">¡Ayudalos a volver!</h1>
   </div>
 
-  <!-- Imagen del gato superpuesta sobre el mapa -->
+  <!-- Imagen del gato y perro superpuesta sobre el mapa -->
   <%= image_tag 'gato_form.png', alt: 'Gato sobre el mapa', class: 'gato-sobre-mapa' %>
   <%= image_tag 'dog_form.png', alt: 'Perro sobre el mapa', class: 'perro-sobre-mapa' %>
 
-  <!-- Tarjeta que contiene el mapa -->
-  <div class="card rounded shadow mb-4">
+  <!-- Contenedor del mapa -->
+  <div class="map-container card rounded shadow mb-4">
     <div class="card-header">
       <h2 class="text-center flex-grow-1 fw-bold mb-0">Mascotas perdidas cercanas</h2>
     </div>
@@ -153,7 +160,6 @@
       // Añadir marcadores para las mascotas perdidas
       <% @petlosts.each_with_index do |petlost, index| %>
         {
-          // Inicio de un nuevo bloque para esta iteración
           const petlostMarker<%= index %> = document.createElement('div');
           petlostMarker<%= index %>.className = 'marker';
           petlostMarker<%= index %>.style.backgroundImage = 'url("<%= asset_path("heart.png") %>")';
@@ -162,7 +168,6 @@
           petlostMarker<%= index %>.style.backgroundSize = 'contain';
           petlostMarker<%= index %>.style.cursor = 'pointer';
 
-          // Construir el contenido del popup con la imagen arriba y la información abajo
           let popupContent = `
             <div class="popup-card">
               <% if petlost.photos.attached? && petlost.photos.first.present? %>
@@ -181,7 +186,6 @@
             .setLngLat([<%= petlost.longitude %>, <%= petlost.latitude %>])
             .setPopup(new mapboxgl.Popup({ anchor: 'bottom' }).setHTML(popupContent))
             .addTo(nearbyMap);
-          // Fin del bloque para esta iteración
         }
       <% end %>
 

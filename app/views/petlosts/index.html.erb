@@ -1,18 +1,18 @@
-<body style="background: linear-gradient(to bottom, #0079c2, #ffffff, #f7c6c7);">
+<body style="background: linear-gradient(to bottom, #0079c2, #ffffff);">
   <div class="container mt-5">
     <div class="d-flex justify-content-between mb-4">
       <div>
-        <%= link_to root_path, class: "btn btn-success btn-lg text-white d-flex align-items-center justify-content-center" do %>
+        <%= link_to root_path, class: "btn btn-primary btn-lg text-white d-flex align-items-center justify-content-center" do %>
           <%= image_tag 'icons8-home.png', alt: 'Volver', width: 32, height: 32, class: 'me-2'  %> Volver
         <% end %>
       </div>
       <div>
-        <%= link_to loading_screen_petlosts_path, class: 'btn btn-success text-white' do %>
+        <%= link_to loading_screen_petlosts_path, class: 'btn btn-primary text-white' do %>
           <i class="fa-solid fa-paw"></i>
           <i class="fa-solid fa-location-dot me-2"></i>
           Mascotas cerca
         <% end %>
-        <%= link_to new_petlost_path, class: 'btn btn-success text-white ms-2' do %>
+        <%= link_to new_petlost_path, class: 'btn btn-primary text-white ms-2' do %>
           <i class="fa-solid fa-dog me-2"></i>
           Perdi mi mascota
         <% end %>
