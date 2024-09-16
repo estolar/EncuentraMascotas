@@ -2,11 +2,11 @@
   <div class="container mt-5">
     <div class="d-flex justify-content-between mb-4">
       <div>
-      <%= link_to root_path, class: "btn btn-success btn-lg text-white d-flex align-items-center justify-content-center" do %>
-        <%= image_tag 'icons8-home.png', alt: 'Volver', width: 32, height: 32 %>
-      <% end %>
+        <%= link_to root_path, class: "btn btn-success btn-lg text-white d-flex align-items-center justify-content-center" do %>
+          <%= image_tag 'icons8-home.png', alt: 'Volver', width: 32, height: 32 %>
+        <% end %>
       </div>
-      
+
       <div>
         <%= link_to loading_screen_petlosts_path, class: 'btn btn-success text-white' do %>
           <i class="fa-solid fa-paw"></i>
@@ -56,7 +56,7 @@
         <div class="row g-3">
           <% if @petlosts.any? %>
             <% @petlosts.each do |petlost| %>
-              <div class="col-md-3">
+              <div class="col-md-4">
                 <div class="card mb-4 shadow-sm d-flex flex-column">
                   <% if petlost.photos.any? %>
                     <%= cl_image_tag petlost.photos.first.key, class: 'card-img-top', style: 'height: 200px; object-fit: cover;', alt: petlost.name %>
@@ -65,19 +65,18 @@
                   <% end %>
 
                   <div class="card-body d-flex flex-column">
-                    <h5 class="card-title mb-2"><%= petlost.name %></h5> <!-- Clase mb-2 para reducir el margen -->
+                    <h5 class="card-title mb-2"><%= petlost.name %></h5>
 
-                    <!-- Raza en negrita antes de los dos puntos, y en azul -->
                     <p class="card-text mb-1">
                       <span class="fw-bold" style="color: #00629D;">Raza:</span>
-                      <span class="fw-normal text-dark"><%= petlost.breed %></span> <!-- Raza en negro y menos gruesa -->
+                      <span class="fw-normal text-dark"><%= petlost.breed %></span>
                     </p>
 
                     <% if petlost.color.present? %>
                       <% colors_array = JSON.parse(petlost.color).reject(&:blank?) %>
                       <p class="card-text mb-1">
                         <span class="fw-bold" style="color: #00629D;">Color:</span>
-                        <span class="fw-normal text-dark"><%= colors_array.join(", ") %></span> <!-- Color en negro y menos grueso -->
+                        <span class="fw-normal text-dark"><%= colors_array.join(", ") %></span>
                       </p>
                     <% end %>
 
@@ -110,6 +109,14 @@
             <p>No hay mascotas perdidas que coincidan con los filtros.</p>
           <% end %>
         </div>
+
+        <!-- Paginación -->
+        <div class="d-flex justify-content-center mt-4">
+          <%= paginate @petlosts %>
+        </div>
+
+
+
       </div>
     </div>
   </div>
