@@ -87,7 +87,7 @@
       <div class="d-flex justify-content-center mt-3">
         <% if @petlost.user && @petlost.user.phone_number.present? %>
           <%= link_to "https://wa.me/#{@petlost.user.phone_number}?text=Hola.%20Vengo%20de%20Encuentra%20Mascotas.%20Tengo%20información%20sobre%20tu%20mascota%20#{@petlost.name}:%20https://www.encuentramascotas.org/#{url_for(@petlost)}",
-                      class: "btn btn-success d-flex align-items-center justify-content-center px-4 py-2",
+                      class: "btn btn-success d-flex align-items-center justify-content-center px-4 py-2 text-white",
                       target: "_blank" do %>
             <i class="fab fa-whatsapp me-2" style="font-size: 1.5rem;"></i>
             <span style="font-size: 1.2rem;">Contactar por WhatsApp</span>
