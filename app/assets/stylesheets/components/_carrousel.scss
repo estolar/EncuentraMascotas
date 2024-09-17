@@ -25,3 +25,43 @@ $carousel-control-next-icon-bg:      url("data:image/svg+xml,<svg xmlns='http://
 
 $carousel-transition-duration:       .6s;
 $carousel-transition:                transform $carousel-transition-duration ease-in-out; // Define transform transition first if using multiple transitions (e.g., `transform 2s ease, opacity .5s ease-out`)
+
+.carousel-caption {
+  left: 10%;
+  top: 50%;
+  transform: translateY(-60%);
+  text-align: left;
+}
+
+.carousel-caption h5 {
+  color: #0079C2; /* Azul personalizado */
+  font-size: 3rem;
+  font-weight: bold;
+}
+
+.carousel-caption p {
+  color: #F7C6C7; /* Rosa personalizado */
+  font-size: 1.5rem;
+
+}
+
+.animate__animated.animate__fadeInLeft {
+  animation-duration: 1.5s; /* Ajuste de la duración de la animación para un efecto más suave */
+}
+
+.animate__animated.animate__fadeInUp {
+  animation-duration: 1.5s;
+}
+
+.carousel-caption h5 {
+  font-weight: bold;
+}
+
+.carousel-caption p {
+  font-weight: 600;
+}
+
+.carousel-caption h5,
+.carousel-caption p {
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.6); /* Sombra oscura */
+}
