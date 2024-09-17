@@ -121,6 +121,18 @@
           </div>
         </div>
       </div>
+
+      <div class="d-flex justify-content-center mt-3">
+        <% if @petfound.user && @petfound.user.phone_number.present? %>
+          <%= link_to "https://wa.me/#{@petfound.user.phone_number}?text=Hola.%20Vengo%20de%20Encuentra%20Mascotas.%20Me%20puedes%20ayudar%20a%20encontrar%20a%20mi%20mascota:%20https://www.encuentramascotas.org/#{url_for(@petfound)}",
+                      class: "btn btn-success d-flex align-items-center justify-content-center px-4 py-2",
+                      target: "_blank" do %>
+            <i class="fab fa-whatsapp me-2" style="font-size: 1.5rem;"></i>
+            <span style="font-size: 1.2rem;">Contactar por WhatsApp</span>
+          <% end %>
+        <% end %>
+      </div>
+
     </div>
 
     <!-- Columna derecha: Mapa -->
