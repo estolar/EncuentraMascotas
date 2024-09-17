@@ -2,6 +2,7 @@ class PagesController < ApplicationController
   skip_before_action :authenticate_user!, only: [:home]
 
   def home
+    authorize :page, :home?
     @petlosts = Petlost.limit(4)
     @petfounds = Petfound.limit(4)
   end
