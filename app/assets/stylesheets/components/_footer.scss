@@ -6,10 +6,13 @@ $azul-em-sec: #F4FBFF;
 .footer {
   background-color: $azul-em; /* Fondo azul */
   color: #fff; /* Texto blanco */
-  padding: 40px 0;
   background-image: url('huellas-footer.png'); /* Aquí va la imagen de fondo con las huellas */
   background-repeat: repeat; /* Repetir el fondo */
   background-size: contain; /* Ajustar el tamaño de las huellas */
+  padding-top: 0px;  /* Ajusta el relleno superior */
+  padding-bottom: 0px;  /* Ajusta el relleno inferior */
+  margin-top: 0px;
+  margin-bottom: 0px;
 }
 
 .footer-logo {

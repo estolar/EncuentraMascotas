@@ -1,7 +1,4 @@
-$rosa-em: #F7C6C7; // Defining a variable
-$azul-em: #0079C2;
-$rosa-em-sec: #FFF9F9;
-$azul-em-sec: #F4FBFF;
+@import "colors";
 $spacer: 8px;
 
 
@@ -30,24 +27,40 @@ $spacer: 8px;
 }
 
 .fondo-rosa-section{
-  background-color: $rosa-em-sec;
+  background-color: $rosa-em4;
   background-image: url('https://res.cloudinary.com/dhfv2yrux/image/upload/v1726517110/huellas-footer_f2ibj5.png'); /* Aquí va la imagen de fondo con las huellas */
 }
 
 .fondo-azul-section{
-  background-color: $azul-em-sec;
+  background-color: $azul-em4;
   background-image: url('https://res.cloudinary.com/dhfv2yrux/image/upload/v1726517110/huellas-footer_f2ibj5.png'); /* Aquí va la imagen de fondo con las huellas */
 }
+
+.fondo-rosa-section,
+.fondo-azul-section {
+  margin-top: 0;  /* Reduce el espacio superior */
+  margin-bottom: 0;  /* Reduce el espacio inferior */
+}
+
+.fondo-rosa-section,
+.fondo-azul-section {
+  padding-top: 20px;  /* Ajusta el relleno superior */
+  padding-bottom: 20px;  /* Ajusta el relleno inferior */
+}
+
 
 .section-title {
   color: $azul-em;
   font-size: 2rem;
-  margin-top: 30px;
-  margin-bottom: 30px;
+  // margin-top: 30px;
+  // margin-bottom: 30px;
+  margin-top: 0px;  /* Ajusta según sea necesario */
+  margin-bottom: 40px;  /* Ajusta según sea necesario */
 }
+
 
 .app-image {
   object-fit: cover; /* Ajusta la imagen dentro del contenedor sin deformarse */
   display: block; /* Asegura que la imagen sea un bloque */
-  border-radius: 5px; 
+  border-radius: 5px;
 }
