@@ -26,11 +26,16 @@
 
     <!-- Columna derecha para 'Editar' y 'Eliminar' con íconos -->
     <div class="col text-end">
-      <%= link_to edit_petlost_path(@petlost), class: "btn btn-primary btn-lg me-1", style: "font-size: 1rem;" do %>
-        <i class="fa-solid fa-marker me-2"></i> Editar
+      <% if policy(@petlost).edit? %>
+        <%= link_to edit_petlost_path(@petlost), class: "btn btn-primary btn-lg me-1", style: "font-size: 1rem;" do %>
+          <i class="fa-solid fa-marker me-2"></i> Editar
+        <% end %>
       <% end %>
-      <%= link_to petlost_path(@petlost), class: "btn btn-primary btn-lg text-white", data: { turbo_method: :delete, turbo_confirm: "¿Seguro que quieres eliminar?" }, style: "font-size: 1rem;" do %>
-        <i class="fa-regular fa-trash-can me-2"></i> Eliminar
+
+      <% if policy(@petlost).destroy? %>
+        <%= link_to petlost_path(@petlost), class: "btn btn-primary btn-lg text-white", data: { turbo_method: :delete, turbo_confirm: "¿Seguro que quieres eliminar?" }, style: "font-size: 1rem;" do %>
+          <i class="fa-regular fa-trash-can me-2"></i> Eliminar
+        <% end %>
       <% end %>
     </div>
   </div>
@@ -115,6 +120,18 @@
           </div>
         </div>
       </div>
+
+      <div class="d-flex justify-content-center mt-3">
+        <% if @petlost.user && @petlost.user.phone_number.present? %>
+          <%= link_to "https://wa.me/#{@petlost.user.phone_number}?text=Hola.%20Vengo%20de%20Encuentra%20Mascotas.%20Tengo%20información%20sobre%20tu%20mascota%20#{@petlost.name}:%20https://www.encuentramascotas.org/#{url_for(@petlost)}",
+                      class: "btn btn-success d-flex align-items-center justify-content-center px-4 py-2",
+                      target: "_blank" do %>
+            <i class="fab fa-whatsapp me-2" style="font-size: 1.5rem;"></i>
+            <span style="font-size: 1.2rem;">Contactar por WhatsApp</span>
+          <% end %>
+        <% end %>
+      </div>
+
     </div>
 
     <!-- Columna derecha: Mapa -->
