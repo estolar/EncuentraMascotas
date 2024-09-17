@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2024_09_16_175708) do
+ActiveRecord::Schema[7.2].define(version: 2024_09_17_172408) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -75,6 +75,7 @@ ActiveRecord::Schema[7.2].define(version: 2024_09_16_175708) do
     t.float "longitude"
     t.string "address"
     t.string "type_pet"
+    t.string "gender"
     t.index ["user_id"], name: "index_petfounds_on_user_id"
   end
 
@@ -92,6 +93,7 @@ ActiveRecord::Schema[7.2].define(version: 2024_09_16_175708) do
     t.float "longitude"
     t.string "address"
     t.string "type_pet"
+    t.string "gender"
     t.index ["user_id"], name: "index_petlosts_on_user_id"
   end
 

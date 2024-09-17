@@ -58,7 +58,7 @@ class Petlost < ApplicationRecord
   COLORS = ['bicolor', 'tricolor', 'otro color', 'negro', 'blanco', 'marrón', 'gris', 'canela', 'atigrado',
     'crema', 'dorado', 'leonado']
 
-    CATBREEDS = ['abisinio', 'americano de pelo corto', 'angora', 'azul ruso', 'bengalí', 'bosque de noruega',
+  CATBREEDS = ['abisinio', 'americano de pelo corto', 'angora', 'azul ruso', 'bengalí', 'bosque de noruega',
       'británico de pelo corto', 'burmés', 'chartreux', 'cornish rex', 'devon rex', 'egipcio', 'europeo', 'himalayo',
       'javanés', 'maine coon', 'mau egipcio', 'oriental', 'persa', 'ragdoll', 'siamés', 'siberiano', 'somalí', 'sphynx',
       'tonkinés', 'otros']
