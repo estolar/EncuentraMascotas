@@ -5,7 +5,7 @@
 $primary-bg-color: #F7C6C7;
 $secondary-bg-color: #0079C2;
 $font-color: rgba(0,0,0,.8);
-// $font-family: 'Montserrat',sans-serif;
+$font-family: 'Montserrat',sans-serif;
 $form-border-color: rgba(0,0,0,.1);
 
 
@@ -68,9 +68,9 @@ fieldset legend {
   padding: 35px 24px 0px 24px;
 }
 
-// .form-text {
-//   padding-left: 15px;
-// }
+.form-text {
+  text-align: justify;
+}
 
 * {
     box-sizing: border-box;
@@ -85,7 +85,7 @@ fieldset legend {
     display: grid;
     // font-family: $font-family;
     font-size: 14px;
-    font-weight: 400;
+    // font-weight: 400;
     // height: 100vh;
     justify-items: center;
     // weight: 100vw;
@@ -94,18 +94,20 @@ fieldset legend {
 .signup-container {
     display: grid;
     grid-template-areas: "left right";
-    max-width: 900px;
+    // max-width: 900px;
+    margin-top: 30px;
+    margin-bottom: 30px;
+    // box-shadow: 2px 4px;
+    box-shadow: 2px 3px 10px gray;
 }
 
 .left-container {
   width: 300px; /* Ancho del div */
   height: 100%; /* Altura del div */
-  background-image: url('/app/assets/images/img-form.jpeg'); /* Ruta de la imagen */
+  background-image: url('https://res.cloudinary.com/dqx97scli/image/upload/v1726605584/perrito_curioso_xqtlnd.jpg'); /* Ruta de la imagen */
   background-size: cover; /* Ajusta la imagen para cubrir todo el div */
   background-position: center; /* Centra la imagen en el div */
   background-repeat: no-repeat; /* Evita que la imagen se repita */
-
-
 }
 
 .right-container {
@@ -139,6 +141,7 @@ fieldset legend {
       // line-height: 38px;
       // padding-left: 5px;
       background-color: white;
+      font-family: $font-family;
     }
 
     & select {
@@ -172,7 +175,7 @@ fieldset legend {
     // adaptar para el submit
     & .custom-buttoms-form {
       align-items: center;
-      background: #fff;
+      background: #FEF3F3;
       display:flex;
       justify-content:space-between;
       padding: 5px 40px;
@@ -189,7 +192,6 @@ fieldset legend {
         line-height: 38px;
         width: 100px;
         border-radius: 19px;
-        // font-family: $font-family;
       }
 
       & #back-home {
@@ -197,7 +199,7 @@ fieldset legend {
         transition: .2s all ease-in-out;
 
         &:hover {
-          background: #171A2B;
+          background: $secondary-bg-color;
           color: white;
         }
       }
@@ -208,7 +210,8 @@ fieldset legend {
         color: #fff;
 
         &:hover {
-          background: #171A2B;
+          background: #FAD9D9;
+          color:black;
         }
       }
     }
@@ -272,9 +275,9 @@ fieldset legend {
   // line-height: 26px;
   margin: 0;
   padding: 5px 15px;
-  text-align: center;
+  text-align:start;
   transition: .2s all ease-in-out;
-  width: 192.11px;
+  width: 220px;
 }
 
 .current-photo {
