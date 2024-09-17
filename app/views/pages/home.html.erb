@@ -11,23 +11,23 @@
   <div class="carousel-inner" style="height: 500px;">
     <div class="carousel-item active">
       <img src="http://enrsto.freehostia.com/enriquestolar.com/img/carrusel-encuentramascotas-2_fb.png" class="d-block w-100" alt="Mascotas Felices" style="object-fit: cover; height: 100%; display: block;">
-      <div class="carousel-caption d-none d-md-block">
-        <h5>Mascotas Felices</h5>
-        <p>Encuentra y reúne a las mascotas perdidas con sus familias.</p>
+      <div class="carousel-caption d-md-block">
+        <h5 class="animate__animated animate__fadeInLeft">Mascotas Felices</h5>
+        <p class="animate__animated animate__fadeInUp">Encuentra y reúne a las mascotas perdidas con sus familias.</p>
       </div>
     </div>
     <div class="carousel-item">
       <img src="http://enrsto.freehostia.com/enriquestolar.com/img/carrusel-encuentramascotas-1_fb.png" class="d-block w-100" alt="Cuidado y Protección" style="object-fit: cover; height: 100%; display: block;">
-      <div class="carousel-caption d-none d-md-block">
-        <h5>Cuidado y Protección</h5>
-        <p>Protege a las mascotas de tu comunidad y comparte información importante.</p>
+      <div class="carousel-caption d-md-block">
+        <h5 class="animate__animated animate__fadeInLeft">Cuidado y Protección</h5>
+        <p class="animate__animated animate__fadeInUp">Protege a las mascotas de tu comunidad y comparte información importante.</p>
       </div>
     </div>
     <div class="carousel-item">
       <img src="http://enrsto.freehostia.com/enriquestolar.com/img/carrusel-encuentramascotas-3_fb.png" class="d-block w-100" alt="Adopta una Mascota" style="object-fit: cover; height: 100%; display: block;">
-      <div class="carousel-caption d-none d-md-block">
-        <h5>Adopta una Mascota</h5>
-        <p>Dale una segunda oportunidad a una mascota necesitada.</p>
+      <div class="carousel-caption d-md-block">
+        <h5 class="animate__animated animate__fadeInLeft">Adopta una Mascota</h5>
+        <p class="animate__animated animate__fadeInUp">Dale una segunda oportunidad a una mascota necesitada.</p>
       </div>
     </div>
   </div>
@@ -41,8 +41,10 @@
   </button>
 </div>
 
+
+
 <!-- Botón Mascotas Perdidas -->
-<div class="d-flex justify-content-center mb-3">
+<div class="d-flex justify-content-center mb-5 ">
   <div class="mx-2">
     <!-- Botón Mascotas Perdidas -->
     <%= link_to 'Mascotas Perdidas', petlosts_path, class: 'btn btn-primary custom-btn-lost' %>
@@ -55,141 +57,155 @@
 
 <!-- Cards de Mascotas Perdidas -->
 <div class="fondo-azul-section">
-<section class="container mt-5">
-  <h2 class="text-center section-title"><i class="fa-solid fa-paw"></i> Mascotas Perdidas <i class="fa-solid fa-paw"></i></h2>
-  <div class="row g-3"> <!-- Agregamos g-3 para espacio entre las tarjetas -->
-    <% if @petlosts.present? %>
+  <section class="container mt-5">
+    <h2 class="text-center section-title" data-aos="fade-up"><i class="fa-solid fa-paw"></i> Mascotas Perdidas <i class="fa-solid fa-paw"></i></h2>
+    <div class="row g-3 mb-5"> <!-- Agregamos g-3 para espacio entre las tarjetas -->
+      <% if @petlosts.present? %>
+        <% @petlosts.each_with_index do |pet, index| %> <!-- Añadimos index para controlar el retraso -->
 
-      <% @petlosts.each do |pet| %>
-
-    <% if pet.color.present? %>
-      <% colors_array = JSON.parse(pet.color).reject(&:blank?) %>
-
-      <% if colors_array.size == 1 %>
-        <% text = colors_array.join %>
-        <% else %>
-        <% text = colors_array.join(", ") %>
-      <% end %>
-    <% end %>
-
-
-
-        <div class="col-md-3">
-          <div class="card mb-4 shadow-sm">
-            <% if pet.photos.attached? %>
-              <%= image_tag pet.photos.first, class: 'card-img-top pet-image', alt: pet.name %>
+          <% if pet.color.present? %>
+            <% colors_array = JSON.parse(pet.color).reject(&:blank?) %>
+            <% if colors_array.size == 1 %>
+              <% text = colors_array.join %>
             <% else %>
-              <%= image_tag 'default-image.png', class: 'card-img-top pet-image', alt: 'No image available' %>
+              <% text = colors_array.join(", ") %>
             <% end %>
-            <div class="card-body">
-              <h5 class="card-title"><%= pet.name %></h5>
-              <p class="card-text"><strong>Color: </strong><%= truncate(text,length: 100) %></p>
+          <% end %>
 
-              <p><strong>Señas:</strong> <%= pet.signs %></p>
-              <p><strong>Dirección:</strong> <%= pet.address %></p>
-              <%= link_to 'Ver más', petlost_path(pet), class: 'btn btn-success text-white' %>
+          <!-- Animación de cada tarjeta con retraso dinámico -->
+          <div class="col-md-3" data-aos="fade-up" data-aos-delay="<%= index * 100 %>">
+            <div class="card mb-4 shadow-sm">
+              <% if pet.photos.attached? %>
+                <%= image_tag pet.photos.first, class: 'card-img-top pet-image', alt: pet.name %>
+              <% else %>
+                <%= image_tag 'default-image.png', class: 'card-img-top pet-image', alt: 'No image available' %>
+              <% end %>
+              <div class="card-body">
+                <h5 class="card-title"><%= pet.name %></h5>
+                <p class="card-text"><strong>Color: </strong><%= truncate(text,length: 100) %></p>
+                <p><strong>Señas:</strong> <%= pet.signs %></p>
+                <p><strong>Dirección:</strong> <%= pet.address %></p>
+                <%= link_to 'Ver más', petlost_path(pet), class: 'btn btn-success text-white' %>
+              </div>
             </div>
           </div>
-        </div>
+        <% end %>
+      <% else %>
+        <p>No hay mascotas perdidas disponibles.</p>
       <% end %>
-    <% else %>
-      <p>No hay mascotas perdidas disponibles.</p>
-    <% end %>
+    </div>
+    <div class="d-flex justify-content-center mb-5 ">
+  <div class="mx-2" data-aos="fade-up">
+    <!-- Botón Mascotas Perdidas -->
+    <%= link_to 'Mascotas Perdidas', petlosts_path, class: 'btn btn-primary custom-btn-lost' %>
   </div>
-</section>
 </div>
+  </section>
+</div>
+
 
 
 <!-- Nueva Sección sobre la App Encuentra Mascotas -->
 <div class="fondo-rosa-section">
-<section class="container app-info-section mt-5">
-  <div class="row align-items-center">
-    <div class="col-md-6">
-      <img src="<%= asset_path('http://enrsto.freehostia.com/enriquestolar.com/img/app-encuentra-mascotas.png') %>" class="img-fluid app-image" alt="Encuentra Mascotas App">
+  <section class="container app-info-section mt-5">
+    <div class="row align-items-center">
+      <div class="col-md-6" data-aos="fade-right"> <!-- Imagen animada -->
+        <img src="<%= asset_path('http://enrsto.freehostia.com/enriquestolar.com/img/app-encuentra-mascotas.png') %>" class="img-fluid app-image" alt="Encuentra Mascotas App">
+      </div>
+      <div class="col-md-6" data-aos="fade-left"> <!-- Texto animado -->
+        <h2 class="section-title">Encuentra Mascotas: Conectando a las Mascotas Perdidas con sus Dueños</h2>
+        <p class="section-text">
+          Con nuestra tecnología avanzada y geolocalización en tiempo real, Encuentra Mascotas ofrece una solución rápida y efectiva para la búsqueda y el reporte de mascotas perdidas. Únete a nuestra comunidad para ayudar a reunir a las mascotas con sus dueños.
+        </p>
+        <ul class="section-features" data-aos="fade-up"> <!-- Animación en la lista -->
+          <li>Geolocalización en tiempo real para ubicar mascotas perdidas.</li>
+          <li>Registro rápido y fácil de mascotas perdidas y encontradas.</li>
+          <li>Búsqueda avanzada por raza, color y características específicas.</li>
+          <li>Comunicación directa entre usuarios para agilizar el proceso de reencuentro.</li>
+          <li>Sección dedicada para mascotas en adopción.</li>
+          <li>Alertas y notificaciones de avistamientos cercanos a tu ubicación.</li>
+          <li>Acceso a una comunidad activa y comprometida en la protección de animales.</li>
+        </ul>
+        <p class="section-text" data-aos="fade-up" data-aos-delay="200">
+          La aplicación es fácil de usar, permite el reporte inmediato de mascotas perdidas y encontradas, además de la búsqueda avanzada de mascotas en adopción. ¡Sé parte de la solución!
+        </p>
+        <%= link_to 'Ver más', app_info_path, class: 'btn btn-primary btn-large custom-btn-found', 'data-aos' => 'zoom-in' %>
+      </div>
     </div>
-    <div class="col-md-6">
-      <h2 class="section-title">Encuentra Mascotas: Conectando a las Mascotas Perdidas con sus Dueños</h2>
-      <p class="section-text">
-        Con nuestra tecnología avanzada y geolocalización en tiempo real, Encuentra Mascotas ofrece una solución rápida y efectiva para la búsqueda y el reporte de mascotas perdidas. Únete a nuestra comunidad para ayudar a reunir a las mascotas con sus dueños.
-      </p>
-      <ul class="section-features">
-        <li>Geolocalización en tiempo real para ubicar mascotas perdidas.</li>
-        <li>Registro rápido y fácil de mascotas perdidas y encontradas.</li>
-        <li>Búsqueda avanzada por raza, color y características específicas.</li>
-        <li>Comunicación directa entre usuarios para agilizar el proceso de reencuentro.</li>
-        <li>Sección dedicada para mascotas en adopción.</li>
-        <li>Alertas y notificaciones de avistamientos cercanos a tu ubicación.</li>
-        <li>Acceso a una comunidad activa y comprometida en la protección de animales.</li>
-      </ul>
-      <p class="section-text">
-        La aplicación es fácil de usar, permite el reporte inmediato de mascotas perdidas y encontradas, además de la búsqueda avanzada de mascotas en adopción. ¡Sé parte de la solución!
-      </p>
-      <%= link_to 'Ver más', app_info_path, class: 'btn btn-primary btn-large custom-btn-found' %>
-    </div>
-  </div>
-</section>
+  </section>
 </div>
+
 
 
 <!-- Cards de Mascotas Encontradas -->
 <div class="fondo-azul-section">
-<section class="container mt-5">
-  <h2 class="text-center section-title"><i class="fa-solid fa-paw"></i> Mascotas Encontradas <i class="fa-solid fa-paw"></i></h2>
-  <div class="row">
-    <% if @petfounds.present? %> <!-- Evitar errores si no hay mascotas encontradas -->
-      <% @petfounds.each do |pet| %>
-        <div class="col-md-3">
-          <div class="card mb-4 shadow-sm">
-            <% if pet.photos.attached? %>
-              <%= image_tag pet.photos.first, class: 'card-img-top pet-image', alt: pet.breed %>
-            <% else %>
-              <%= image_tag 'default-image.png', class: 'card-img-top', alt: 'No image available' %>
-            <% end %>
-            <div class="card-body">
-              <h5 class="card-title"><%= pet.breed %></h5> <!-- Mostrando la raza del perro -->
-              <p class="card-text"><%= truncate(pet.details, length: 100) %></p>
-              <p><strong>Color:</strong> <%= pet.color %></p>
-              <p><strong>Señas:</strong> <%= pet.signs %></p>
-              <p><strong>Dirección:</strong> <%= pet.address %></p>
-              <!-- Agregar link si es necesario -->
-              <%= link_to 'Ver más', petfound_path(pet), class: 'btn btn-primary' %>
+  <section class="container mt-5">
+    <h2 class="text-center section-title" data-aos="fade-up"><i class="fa-solid fa-paw"></i> Mascotas Encontradas <i class="fa-solid fa-paw"></i></h2>
+    <div class="row mb-5">
+      <% if @petfounds.present? %> <!-- Evitar errores si no hay mascotas encontradas -->
+        <% @petfounds.each_with_index do |pet, index| %> <!-- Añadimos index para el retraso dinámico -->
+
+          <!-- Animación de cada tarjeta con retraso dinámico -->
+          <div class="col-md-3" data-aos="fade-up" data-aos-delay="<%= index * 100 %>">
+            <div class="card mb-4 shadow-sm">
+              <% if pet.photos.attached? %>
+                <%= image_tag pet.photos.first, class: 'card-img-top pet-image', alt: pet.breed %>
+              <% else %>
+                <%= image_tag 'default-image.png', class: 'card-img-top', alt: 'No image available' %>
+              <% end %>
+              <div class="card-body">
+                <h5 class="card-title"><%= pet.breed %></h5> <!-- Mostrando la raza del perro -->
+                <p class="card-text"><%= truncate(pet.details, length: 100) %></p>
+                <p><strong>Color:</strong> <%= pet.color %></p>
+                <p><strong>Señas:</strong> <%= pet.signs %></p>
+                <p><strong>Dirección:</strong> <%= pet.address %></p>
+                <!-- Agregar link si es necesario -->
+                <%= link_to 'Ver más', petfound_path(pet), class: 'btn btn-primary' %>
+              </div>
             </div>
           </div>
-        </div>
+        <% end %>
+      <% else %>
+        <p>No hay mascotas encontradas disponibles.</p> <!-- Mensaje alternativo si no hay datos -->
       <% end %>
-    <% else %>
-      <p>No hay mascotas encontradas disponibles.</p> <!-- Mensaje alternativo si no hay datos -->
-    <% end %>
+    </div>
+    <div class="d-flex justify-content-center mb-5 ">
+  <div class="mx-2" data-aos="fade-up">
+    <!-- Botón Mascotas Encontradas -->
+    <%= link_to 'Mascotas Encontradas', petfounds_path, class: 'btn btn-primary custom-btn-found' %>
   </div>
-</section>
 </div>
+  </section>
+</div>
+
 
 
 
 <!-- Reviews de Usuarios -->
 <div class="fondo-rosa-section">
-<section class="container mt-5">
-  <h2 class="text-center section-title"><i class="fa-solid fa-paw"></i> Encontraron a sus mascotas <i class="fa-solid fa-paw"></i></h2>
-  <div class="row">
-    <% if @reviews.present? %> <!-- Evitar errores si no hay reseñas -->
-      <% @reviews.each do |review| %>
-        <div class="col-md-4">
-          <div class="card mb-4 shadow-sm">
-            <div class="card-body">
-              <h5 class="card-title"><%= review.user_name %></h5> <!-- review.user_name debe existir -->
-              <p class="card-text"><%= review.content %></p> <!-- review.content debe existir -->
-              <div class="rating">
-                <% review.stars.times do %>
-                  <i class="fa fa-star"></i>
-                <% end %>
+  <section class="container mt-5">
+    <h2 class="text-center section-title" data-aos="fade-up"><i class="fa-solid fa-paw"></i> Encontraron a sus mascotas <i class="fa-solid fa-paw"></i></h2>
+    <div class="row">
+      <% if @reviews.present? %> <!-- Evitar errores si no hay reseñas -->
+        <% @reviews.each_with_index do |review, index| %> <!-- Añadimos index para retraso dinámico -->
+          <!-- Animación de cada tarjeta con retraso dinámico -->
+          <div class="col-md-4" data-aos="fade-up" data-aos-delay="<%= index * 100 %>">
+            <div class="card mb-4 shadow-sm">
+              <div class="card-body">
+                <h5 class="card-title"><%= review.user_name %></h5> <!-- review.user_name debe existir -->
+                <p class="card-text"><%= review.content %></p> <!-- review.content debe existir -->
+                <div class="rating">
+                  <% review.stars.times do %>
+                    <i class="fa fa-star"></i>
+                  <% end %>
+                </div>
               </div>
             </div>
           </div>
-        </div>
+        <% end %>
+      <% else %>
+        <p>No hay reseñas disponibles.</p> <!-- Mensaje alternativo si no hay reseñas -->
       <% end %>
-    <% else %>
-      <p>No hay reseñas disponibles.</p> <!-- Mensaje alternativo si no hay reseñas -->
-    <% end %>
-  </div>
-</section>
+    </div>
+  </section>
 </div>
