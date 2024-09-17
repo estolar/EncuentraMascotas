@@ -39,7 +39,7 @@
       <div class="container-option">
         <p class="form-label">Género</p>
         <div class="radio-container customed-radio-group">
-          <%= f.collection_radio_buttons :gender, [['Hembra', 'Hembra'], ['Macho', 'Macho']], :first, :last, checked: 'Hembra', item_label_class: 'label-modif' %>
+          <%= f.input :gender, as: :radio_buttons, collection:['Hembra', 'Macho'], item_label_class: 'label-modif' %>
         </div>
       </div>
 
