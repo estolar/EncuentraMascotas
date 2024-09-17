@@ -6,12 +6,18 @@ export default class extends Controller {
   connect() {
     console.log("alertas conectado!")
   }
-  showAlert() {
+  showAlert(event) {
+    event.preventDefault(); // Detenemos el envío del formulario
+
     Swal.fire({
-      title: '¡Hola!',
-      text: 'Registro exitoso',
+      title: '¡Registro actualizado!',
+      text: 'Esperamos ayudarte a encontrarlo(a) pronto',
       icon: 'success',
-      confirmButtonText: 'Ok'
+      timer: 2500,
+      timerProgressBar: true,
+      showConfirmButton: false
+    }).then(() => {
+      this.element.submit();
     });
   }
 }
