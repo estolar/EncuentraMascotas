@@ -81,6 +81,7 @@ class PetlostsController < ApplicationController
   end
 
   def user_pets_losts
+    authorize :petlost, :user_pets_losts?
     @petlosts = Petlost.all
     @petlosts = current_user.petlost.page(params[:page]).per(6)
   end

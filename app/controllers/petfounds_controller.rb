@@ -68,6 +68,7 @@ class PetfoundsController < ApplicationController
   end
 
   def user_pets_founds
+    authorize :petlost, :loading_screen?
     @petfounds = Petfound.all
     @petfounds = current_user.petfound.page(params[:page]).per(6)
   end

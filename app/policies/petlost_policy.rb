@@ -36,4 +36,8 @@ class PetlostPolicy < ApplicationPolicy
     true
   end
 
+  def user_pets_losts?
+    true
+  end
+
 end
