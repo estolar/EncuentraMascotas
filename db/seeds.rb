@@ -46,7 +46,6 @@ file3 = URI.open('https://res.cloudinary.com/dqx97scli/image/upload/v1726259355/
 petlost2.photos.attach(io: file1, filename: 'perrito1.jpg', content_type: 'image/jpg')
 petlost2.photos.attach(io: file2, filename: 'perrito2.jpg', content_type: 'image/jpg')
 petlost2.photos.attach(io: file3, filename: 'perrito3.jpg', content_type: 'image/jpg')
-petlost2.photos.attach(io: file4, filename: 'perrito3.jpg', content_type: 'image/jpg')
 petlost2.save
 
 petlost3 = Petlost.new(name: 'Rocky', finded: false, breed: 'Otros', color: ['Gris'].to_json, signs: 'Cicatriz en la pata', day_lost: Date.today - 7, user: user3, address: 'Avenida Javier Prado 1340, Surco, Lima')

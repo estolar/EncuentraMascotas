@@ -25,11 +25,7 @@
         <% end %>
     </div>
   <% end %>
-
-    <div data-controller='upl-image' data-upl-image-url-value=''>
-      <button id="upload_widget" type="button" data-action="upl-image#openWidget" class="cloudinary-button">Subir Imágenes</button>
-    </div>
-    <%# <%= f.input :photos, as: :file, label: 'Adjunta una foto', input_html: { multiple: true } %> %>
+    <%= f.input :photos, as: :file, label: 'Adjunta una foto', input_html: { multiple: true } %>
     <%= f.input :address, label: "Ingresa la dirección donde se perdió" %>
     <%= f.hidden_field :user_id, value:current_user.id %>
     <%= f.hidden_field :finded, value: false %>
