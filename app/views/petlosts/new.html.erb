@@ -1,9 +1,16 @@
-<div class = "container">
-  <div class = 'row justify-content-center'>
-    <div class = 'col-6'>
-      <h1>Mascota perdida</h1>
+<%= stylesheet_link_tag 'pet/form', media: 'all', 'data-turbolinks-track': 'reload' %>
 
-      <h5>Por favor, completa los datos de tu mascota perdida</h5>
+<div class="body-form">
+  <div class="signup-container">
+    <div class="left-container">
+    </div>
+
+    <div class='right-container'>
+      <div class="container-title">
+        <h1 class=mb-3>Mascota perdida</h1>
+
+        <h5>Por favor, completa los datos de tu mascota perdida</h5>
+      </div>
       <%= render "form", petlost: @petlost %>
     </div>
   </div>
