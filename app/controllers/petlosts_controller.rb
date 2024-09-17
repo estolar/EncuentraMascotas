@@ -1,10 +1,12 @@
 class PetlostsController < ApplicationController
   def new
     @petlost = Petlost.new
+    authorize @petlost
   end
 
   def create
     @petlost = Petlost.new(petlost_params)
+    authorize @petlost
     if @petlost.save
       redirect_to petlost_path(@petlost)
     else
@@ -14,10 +16,12 @@ class PetlostsController < ApplicationController
 
   def edit
     @petlost = Petlost.find(params[:id])
+    authorize @petlost
   end
 
   def update
     @petlost = Petlost.find(params[:id])
+    authorize @petlost
     if @petlost.update(petlost_params.except(:photos))
       if params[:petlost][:photos].present?
         params[:petlost][:photos].each do |photo|
@@ -31,7 +35,7 @@ class PetlostsController < ApplicationController
   end
 
   def index
-    @petlosts = Petlost.all
+    @petlosts = policy_scope(Petlost)
 
     if params[:raza].present?
       @petlosts = @petlosts.where("breed ILIKE ?", "%#{params[:raza]}%")
@@ -48,22 +52,28 @@ class PetlostsController < ApplicationController
     if params[:day_lost].present?
       @petlosts = @petlosts.where(day_lost: params[:day_lost])
     end
+
+    @petlosts = @petlosts.page(params[:page]).per(6)
   end
 
   def show
     @petlost = Petlost.find(params[:id])
+    authorize @petlost
   end
 
   def destroy
     @petlost = Petlost.find(params[:id])
+    authorize @petlost
     @petlost.destroy
     redirect_to petlosts_path, status: :see_other
   end
 
   def loading_screen
+    authorize :petlost, :loading_screen?
   end
 
   def nearby
+    authorize :petlost, :nearby?
     @petlosts = Petlost.geocoded
     respond_to do |format|
       format.html

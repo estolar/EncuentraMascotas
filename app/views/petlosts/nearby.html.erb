@@ -1,14 +1,136 @@
-<div class="container my-5 ">
+<style>
+  body {
+    background-image: url('<%= asset_path("fondo_map.jpg") %>');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+  }
+
+  .gato-sobre-mapa {
+    position: absolute;
+    top: 63px;
+    left: 50%;
+    transform: translateX(-520px);
+    z-index: 2;
+    width: 300px;
+    pointer-events: none; /* Evita que la imagen interfiera con los eventos del mouse */
+  }
+
+  .perro-sobre-mapa {
+    position: absolute;
+    top: 87px;
+    left: 50%;
+    transform: translateX(300px);
+    z-index: 2;
+    width: 300px;
+    pointer-events: none; /* Evita que la imagen interfiera con los eventos del mouse */
+  }
+
+  .map-container {
+    position: relative;
+    z-index: 1;
+  }
+
+  /* Estilo para los marcadores personalizados */
+  .marker {
+    background-size: cover;
+    width: 40px;
+    height: 40px;
+    cursor: pointer;
+  }
+
+  /* Estilo para las imágenes en los popups */
+  .popup-image {
+    width: 100%;
+    height: auto;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    object-fit: cover;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  /* Estilo para el contenedor de la card del popup */
+  .popup-card {
+    width: 150px;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    font-family: Arial, sans-serif;
+    background-color: #fff;
+  }
+
+  /* Estilo para el contenido textual en los popups */
+  .popup-content {
+    padding: 8px;
+    text-align: center;
+    background-color: #fff;
+  }
+
+  .popup-content strong {
+    display: block;
+    margin-top: 5px;
+    font-size: 12px;
+    color: #333;
+  }
+
+  /* Responsive Design para dispositivos móviles */
+  @media (max-width: 600px) {
+    .popup-card {
+      width: 120px;
+    }
+
+    .popup-content {
+      padding: 6px;
+    }
+
+    .popup-content strong {
+      font-size: 10px;
+    }
+
+    .popup-image {
+      width: 100%;
+      height: auto;
+    }
+
+    .gato-sobre-mapa {
+      transform: translateX(-200px);
+      width: 200px;
+    }
+
+    .perro-sobre-mapa {
+      transform: translateX(150px);
+      width: 200px;
+    }
+  }
+</style>
+
+<div class="container my-5">
+  <!-- Encabezado con botón "Volver" y título -->
   <div class="d-flex justify-content-between align-items-center mb-4">
-    <%= link_to 'Volver', petlosts_path, class: "btn btn-success btn-lg text-white" %>
-    <h1 class="text-center flex-grow-1 fw-bold mb-0 ">Mascotas perdidas cercanas</h1>
+    <%= link_to petlosts_path, class: "btn btn-success btn-lg text-white d-flex align-items-center justify-content-center" do %>
+      <%= image_tag 'icons8-home.png', alt: 'Volver', width: 32, height: 32 %>
+    <% end %>
+    <h1 class="text-center flex-grow-1 fw-bold mb-0">¡Ayudalos a volver!</h1>
   </div>
 
-  <div class="map-container rounded shadow">
-    <div id="nearby-map" style="height: 400px; width: 100%;"></div>
+  <!-- Imagen del gato y perro superpuesta sobre el mapa -->
+  <%= image_tag 'gato_form.png', alt: 'Gato sobre el mapa', class: 'gato-sobre-mapa' %>
+  <%= image_tag 'dog_form.png', alt: 'Perro sobre el mapa', class: 'perro-sobre-mapa' %>
+
+  <!-- Contenedor del mapa -->
+  <div class="map-container card rounded shadow mb-4">
+    <div class="card-header">
+      <h2 class="text-center flex-grow-1 fw-bold mb-0">Mascotas perdidas cercanas</h2>
+    </div>
+    <div class="card-body p-0">
+      <div id="nearby-map" style="height: 400px; width: 100%;"></div>
+    </div>
   </div>
 </div>
 
+<!-- Script para inicializar el mapa -->
 <script>
   document.addEventListener('turbo:load', function() {
     mapboxgl.accessToken = '<%= ENV['MAPBOX_API_KEY'] %>';
@@ -21,37 +143,50 @@
       const userLng = position.coords.longitude;
 
       const nearbyMap = new mapboxgl.Map({
-        container: 'nearby-map', // Cambiado el id aquí también
-        style: 'mapbox://styles/mapbox/outdoors-v11', // Usar un estilo con relieve
+        container: 'nearby-map',
+        style: 'mapbox://styles/mapbox/outdoors-v11',
         center: [userLng, userLat],
         zoom: 12,
-        pitch: 45, // Ajustar el ángulo de inclinación para ver el relieve
-        bearing: -17.6 // Ajustar el ángulo de rotación del mapa
+        pitch: 45,
+        bearing: -17.6
       });
 
       // Marcador de la ubicación del usuario
       new mapboxgl.Marker({ color: 'blue' })
         .setLngLat([userLng, userLat])
-        .setPopup(new mapboxgl.Popup().setText('Estás aquí'))
+        .setPopup(new mapboxgl.Popup({ anchor: 'bottom' }).setText('Estás aquí'))
         .addTo(nearbyMap);
 
       // Añadir marcadores para las mascotas perdidas
       <% @petlosts.each_with_index do |petlost, index| %>
-        const petlostMarker<%= index %> = document.createElement('div');
-        petlostMarker<%= index %>.className = 'marker';
-        petlostMarker<%= index %>.style.backgroundImage = 'url(<%= asset_path("heart.png") %>)';
-        petlostMarker<%= index %>.style.width = '40px';
-        petlostMarker<%= index %>.style.height = '40px';
-        petlostMarker<%= index %>.style.backgroundSize = '100%';
+        {
+          const petlostMarker<%= index %> = document.createElement('div');
+          petlostMarker<%= index %>.className = 'marker';
+          petlostMarker<%= index %>.style.backgroundImage = 'url("<%= asset_path("heart.png") %>")';
+          petlostMarker<%= index %>.style.width = '40px';
+          petlostMarker<%= index %>.style.height = '40px';
+          petlostMarker<%= index %>.style.backgroundSize = 'contain';
+          petlostMarker<%= index %>.style.cursor = 'pointer';
 
-        new mapboxgl.Marker(petlostMarker<%= index %>)
-          .setLngLat([<%= petlost.longitude %>, <%= petlost.latitude %>])
-          .setPopup(new mapboxgl.Popup().setHTML(`
-            <strong>Mascota perdida:</strong> <%= petlost.name %><br>
-            <strong>Perdido:</strong> <%= petlost.finded ? 'No' : 'Sí' %><br>
-            <strong>Fecha perdida:</strong> <%= petlost.day_lost.strftime('%d/%m/%Y') %>
-          `))
-          .addTo(nearbyMap);
+          let popupContent = `
+            <div class="popup-card">
+              <% if petlost.photos.attached? && petlost.photos.first.present? %>
+                <img src="<%= url_for(petlost.photos.first) %>" alt="<%= j(petlost.name) %>" class="popup-image" onerror="this.src='<%= asset_path("default-image.png") %>'" />
+              <% else %>
+                <img src="<%= asset_path("default-image.png") %>" alt="Imagen predeterminada" class="popup-image" />
+              <% end %>
+              <div class="popup-content">
+                <strong>Mascota perdida:</strong> <%= j(petlost.name) %><br>
+                <strong>Fecha perdida:</strong> <%= petlost.day_lost.strftime('%d/%m/%Y') %><br>
+              </div>
+            </div>
+          `;
+
+          new mapboxgl.Marker(petlostMarker<%= index %>)
+            .setLngLat([<%= petlost.longitude %>, <%= petlost.latitude %>])
+            .setPopup(new mapboxgl.Popup({ anchor: 'bottom' }).setHTML(popupContent))
+            .addTo(nearbyMap);
+        }
       <% end %>
 
       nearbyMap.on('load', function () {
