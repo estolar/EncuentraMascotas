@@ -80,6 +80,11 @@ class PetlostsController < ApplicationController
     end
   end
 
+  def user_pets_losts
+    @petlosts = Petlost.all
+    @petlosts = current_user.petlost.page(params[:page]).per(6)
+  end
+
   private
 
   def petlost_params

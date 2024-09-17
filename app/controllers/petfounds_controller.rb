@@ -67,6 +67,11 @@ class PetfoundsController < ApplicationController
     redirect_to petfound_path(@petfound)
   end
 
+  def user_pets_founds
+    @petfounds = Petfound.all
+    @petfounds = current_user.petfound.page(params[:page]).per(6)
+  end
+
   private
 
   def petfound_params
