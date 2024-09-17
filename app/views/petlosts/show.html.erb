@@ -1,179 +1,318 @@
-<!-- Meta etiqueta del viewport -->
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<!-- Enlace a FontAwesome para los iconos -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha384-..." crossorigin="anonymous">
-
 <body style="background: linear-gradient(to bottom, #0079c2, #ffffff);">
-
-  <!-- Contenedor principal ampliado -->
+  <!-- Contenedor principal -->
   <div class="container-fluid mt-1 p-2 rounded" style="max-width: 1200px; margin: 0 auto;">
 
-  <!-- Fila de navegación -->
-  <div class="row align-items-center mb-5">
-    <!-- Columna izquierda para 'Volver a la lista' con imagen -->
-    <div class="col text-start">
-      <%= link_to root_path, class: "btn btn-primary  text-white align-items-center justify-content-center" do %>
-        <%= image_tag 'icons8-home.png', alt: 'Volver', width: 32, height: 32, class: 'me-2' %> Volver
-      <% end %>
-    </div>
-
-    <!-- Columna central para el nombre del perro y la fecha -->
-    <div class="col text-center">
-      <h1 class="text-white mb-1" style="font-size: 2.5rem;"><%= @petlost.name %></h1>
-      <p class="text-white mb-0" style="font-size: 1.5rem;">Perdido el: <%= @petlost.day_lost %></p>
-    </div>
-
-    <!-- Columna derecha para 'Editar' y 'Eliminar' con íconos -->
-    <div class="col text-end">
-      <% if policy(@petlost).edit? %>
-        <%= link_to edit_petlost_path(@petlost), class: "btn btn-primary btn-lg me-1", style: "font-size: 1rem;" do %>
-          <i class="fa-solid fa-marker me-2"></i> Editar
+    <!-- Fila de navegación -->
+    <div class="row align-items-center mb-5">
+      <!-- Columna izquierda para 'Volver a la lista' con imagen -->
+      <div class="col text-start">
+        <%= link_to root_path, class: "btn btn-primary text-white align-items-center justify-content-center me-2" do %>
+          <%= image_tag 'icons8-home.png', alt: 'Volver', width: 32, height: 32, class: 'me-2' %> Volver
         <% end %>
-      <% end %>
+      </div>
 
-      <% if policy(@petlost).destroy? %>
-        <%= link_to petlost_path(@petlost), class: "btn btn-primary btn-lg text-white", data: { turbo_method: :delete, turbo_confirm: "¿Seguro que quieres eliminar?" }, style: "font-size: 1rem;" do %>
-          <i class="fa-regular fa-trash-can me-2"></i> Eliminar
-        <% end %>
-      <% end %>
-    </div>
-  </div>
+      <!-- Columna central para el nombre del perro y la fecha -->
+      <div class="col text-center">
+        <h1 class="text-white mb-1" style="font-size: 2.5rem;"><%= @petlost.name %></h1>
+        <p class="text-white mb-0" style="font-size: 1.5rem;">Perdido el: <%= @petlost.day_lost %></p>
+      </div>
 
-  <!-- Carrusel de imágenes con 3 imágenes simultáneas -->
-  <div class="row mb-3">
-    <div class="col">
-      <div id="carouselExample" class="carousel slide" data-bs-ride="carousel">
-        <!-- Indicadores del carrusel -->
-        <div class="carousel-indicators">
-          <% total_photos = @petlost.photos.to_a + Array.new(6 - @petlost.photos.count, 'default-image.png') %>
-          <% (total_photos.each_slice(3).to_a).each_with_index do |_, index| %>
-            <button type="button" data-bs-target="#carouselExample" data-bs-slide-to="<%= index %>" class="<%= 'active' if index == 0 %>" aria-current="<%= 'true' if index == 0 %>" aria-label="Slide <%= index + 1 %>"></button>
+      <!-- Columna derecha para botones -->
+      <div class="col text-end">
+        <div class="btn-group d-flex align-items-center justify-content-center" role="group" aria-label="Acciones">
+          <% if policy(@petlost).edit? %>
+            <%= link_to edit_petlost_path(@petlost), class: "btn btn-primary btn-sm me-2 text-white", style: "font-size: 1rem;" do %>
+              <i class="fa-solid fa-marker me-2"></i> Editar
+            <% end %>
+          <% end %>
+
+          <% if policy(@petlost).destroy? %>
+            <%= link_to petlost_path(@petlost), class: "btn btn-primary btn-sm me-4 text-white", data: { turbo_method: :delete, turbo_confirm: "¿Seguro que quieres eliminar?" }, style: "font-size: 1rem;" do %>
+              <i class="fa-regular fa-trash-can me-2"></i> Eliminar
+            <% end %>
+          <% end %>
+
+          <% if policy(@petlost).update? %>
+            <!-- Botón 'Lo encontré' -->
+            <button type="button" class="btn btn-primary btn-md text-white" id="loEncuenteButton" data-bs-toggle="modal" data-bs-target="#confirmModal">
+              <i class="fa-solid fa-dog me-2"></i> Lo encontré
+            </button>
           <% end %>
         </div>
-
-        <div class="carousel-inner">
-          <% total_photos.each_slice(3).with_index do |photos_group, index| %>
-            <div class="carousel-item <%= 'active' if index == 0 %>">
-              <div class="row">
-                <% photos_group.each do |photo| %>
-                  <div class="col-md-4">
-                    <% if photo.is_a?(String) %> <!-- Imagen por defecto -->
-                      <%= image_tag(photo, class: "d-block w-100 rounded-lg", style: "width: 400px; height: 250px; object-fit: cover;") %>
-                    <% else %> <!-- Imágenes subidas por el usuario -->
-                      <%= cl_image_tag(photo.key, class: "d-block w-100 rounded-lg", width: 400, height: 250, crop: "fill", gravity: "auto", style: "object-fit: cover;") %>
-                    <% end %>
-                  </div>
-                <% end %>
-              </div>
-            </div>
-          <% end %>
-        </div>
-
-        <!-- Controles de navegación -->
-        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
-          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-          <span class="visually-hidden">Anterior</span>
-        </button>
-        <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
-          <span class="carousel-control-next-icon" aria-hidden="true"></span>
-          <span class="visually-hidden">Siguiente</span>
-        </button>
       </div>
     </div>
-  </div>
 
-  <!-- Fila C: Datos del dueño y del perro -->
-  <div class="row">
-    <!-- Columna izquierda: Datos del dueño y del perro -->
-    <div class="col-md-6 h-100">
-      <!-- Tarjeta Datos del Dueño -->
-      <div class="mt-2 p-3 shadow rounded-lg bg-white w-100" style="border-radius: 20px; box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.3); overflow-wrap: break-word;">
-        <div class="row align-items-center">
-          <div class="col-9 text-start ps-3">
-          <h6 class="mb-1.4" style="font-size: 1rem; color: #0079c1;">Datos del dueño</h6>
-            <p class="mb-1" style="font-size: 0.8rem;"><i class="fas fa-user me-2" style="color: #0079c1;"></i><strong style="color: #0079c1;">Nombre:</strong> <span style="font-weight: normal;"><%= @petlost.user.name %></span></p>
-            <p class="mb-1" style="font-size: 0.8rem;"><i class="fas fa-envelope me-2" style="color: #0079c1;"></i><strong style="color: #0079c1;">Correo:</strong> <span style="font-weight: normal;"><%= @petlost.user.email %></span></p>
-            <p class="mb-0" style="font-size: 0.8rem;"><i class="fas fa-phone me-2" style="color: #0079c1;"></i><strong style="color: #0079c1;">Teléfono:</strong> <span style="font-weight: normal;"><%= @petlost.user.phone_number %></span></p>
-          </div>
-          <div class="col-3 text-start">
-            <% if @petlost.user.photo.attached? %>
-              <%= image_tag @petlost.user.photo, class: "img-fluid rounded-circle", style: "width: 70px; height: 70px; object-fit: cover; box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.3);" %>
-            <% else %>
-              <i class="fas fa-user-circle" style="font-size: 3rem; color: #0079c1;"></i>
+    <!-- Carrusel de imágenes con 3 imágenes simultáneas -->
+    <div class="row mb-3">
+      <div class="col">
+        <div id="carouselExample" class="carousel slide" data-bs-ride="carousel">
+          <!-- Indicadores del carrusel -->
+          <div class="carousel-indicators">
+            <% total_photos = @petlost.photos.to_a + Array.new([6 - @petlost.photos.count, 0].max, 'default-image.png') %>
+            <% (total_photos.each_slice(3).to_a).each_with_index do |_, index| %>
+              <button type="button" data-bs-target="#carouselExample" data-bs-slide-to="<%= index %>" class="<%= 'active' if index == 0 %>" aria-current="<%= 'true' if index == 0 %>" aria-label="Slide <%= index + 1 %>"></button>
             <% end %>
           </div>
-        </div>
-      </div>
 
-      <!-- Tarjeta Datos del Perro -->
-      <div class="mt-2 p-3 shadow rounded-lg bg-white w-100" style="border-radius: 20px; box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.3); overflow-wrap: break-word;">
-        <div class="row align-items-center">
-          <div class="col-10 text-start ps-3">
-            <h6 class="mb-1" style="font-size: 1rem; color: #0079c1;">Datos del perro</h6>
-            <p class="mb-1" style="font-size: 0.8rem;"><i class="fas fa-paw me-2" style="color: #0079c1;"></i><strong style="color: #0079c1;">Raza:</strong> <span style="font-weight: normal;"><%= @petlost.breed %></span></p>
-            <p class="mb-1" style="font-size: 0.8rem;"><i class="fas fa-calendar-alt me-2" style="color: #0079c1;"></i><strong style="color: #0079c1;">Perdido el:</strong> <span style="font-weight: normal;"><%= @petlost.day_lost %></span></p>
-            <p class="mb-0" style="font-size: 0.8rem;"><i class="fas fa-map-marker-alt me-2" style="color: #0079c1;"></i><strong style="color: #0079c1;">Se perdió en:</strong> <span style="font-weight: normal;"><%= @petlost.address %></span></p>
+          <div class="carousel-inner">
+            <% total_photos.each_slice(3).with_index do |photos_group, index| %>
+              <div class="carousel-item <%= 'active' if index == 0 %>">
+                <div class="row">
+                  <% photos_group.each do |photo| %>
+                    <div class="col-md-4">
+                      <% if photo.is_a?(String) %> <!-- Imagen por defecto -->
+                        <%= image_tag(photo, class: "d-block w-100 rounded-lg", style: "width: 400px; height: 250px; object-fit: cover;") %>
+                      <% else %> <!-- Imágenes subidas por el usuario -->
+                        <%= cl_image_tag(photo.key, class: "d-block w-100 rounded-lg", width: 400, height: 250, crop: "fill", gravity: "auto", style: "object-fit: cover;") %>
+                      <% end %>
+                    </div>
+                  <% end %>
+                </div>
+              </div>
+            <% end %>
           </div>
-          <div class="col-2 text-center">
-            <i class="fas fa-dog" style="font-size: 2.5rem; color: #0079c1;"></i>
-          </div>
+
+          <!-- Controles de navegación -->
+          <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Anterior</span>
+          </button>
+          <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Siguiente</span>
+          </button>
         </div>
       </div>
     </div>
 
-    <!-- Columna derecha: Mapa -->
-    <div class="col-md-6 mt-2">
-      <div class="p-1 shadow rounded-lg bg-white w-100" style="border-radius: 20px; box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.3);">
-        <div id="map" style="height: 250px; width: 100%; border-radius: 20px;"></div>
+    <!-- Fila de datos del dueño y del perro -->
+    <div class="row">
+      <!-- Columna izquierda: Datos del dueño y del perro -->
+      <div class="col-md-6 h-100">
+        <!-- Tarjeta Datos del Dueño -->
+        <div class="mt-2 p-3 shadow rounded-lg bg-white w-100" style="border-radius: 20px; box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.3);">
+          <div class="row align-items-center">
+            <div class="col-9 text-start ps-3">
+              <h6 class="mb-1.4" style="font-size: 1rem; color: #0079c1;">Datos del dueño</h6>
+              <p class="mb-1" style="font-size: 0.8rem;">
+                <i class="fas fa-user me-2" style="color: #0079c1;"></i>
+                <strong style="color: #0079c1;">Nombre:</strong> <span style="font-weight: normal;"><%= @petlost.user.name %></span>
+              </p>
+              <p class="mb-1" style="font-size: 0.8rem;">
+                <i class="fas fa-envelope me-2" style="color: #0079c1;"></i>
+                <strong style="color: #0079c1;">Correo:</strong> <span style="font-weight: normal;"><%= @petlost.user.email %></span>
+              </p>
+              <p class="mb-0" style="font-size: 0.8rem;">
+                <i class="fas fa-phone me-2" style="color: #0079c1;"></i>
+                <strong style="color: #0079c1;">Teléfono:</strong> <span style="font-weight: normal;"><%= @petlost.user.phone_number %></span>
+              </p>
+            </div>
+            <div class="col-3 text-start">
+              <% if @petlost.user.photo.attached? %>
+                <%= image_tag @petlost.user.photo, class: "img-fluid rounded-circle", style: "width: 70px; height: 70px; object-fit: cover; box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.3);" %>
+              <% else %>
+                <i class="fas fa-user-circle" style="font-size: 3rem; color: #0079c1;"></i>
+              <% end %>
+            </div>
+          </div>
+        </div>
+
+        <!-- Tarjeta Datos del Perro -->
+        <div class="mt-2 p-3 shadow rounded-lg bg-white w-100" style="border-radius: 20px; box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.3);">
+          <div class="row align-items-center">
+            <div class="col-10 text-start ps-3">
+              <h6 class="mb-1" style="font-size: 1rem; color: #0079c1;">Datos del perro</h6>
+              <p class="mb-1" style="font-size: 0.8rem;">
+                <i class="fas fa-paw me-2" style="color: #0079c1;"></i>
+                <strong style="color: #0079c1;">Raza:</strong> <span style="font-weight: normal;"><%= @petlost.breed %></span>
+              </p>
+              <p class="mb-1" style="font-size: 0.8rem;">
+                <i class="fas fa-calendar-alt me-2" style="color: #0079c1;"></i>
+                <strong style="color: #0079c1;">Perdido el:</strong> <span style="font-weight: normal;"><%= @petlost.day_lost %></span>
+              </p>
+              <p class="mb-0" style="font-size: 0.8rem;">
+                <i class="fas fa-map-marker-alt me-2" style="color: #0079c1;"></i>
+                <strong style="color: #0079c1;">Se perdió en:</strong> <span style="font-weight: normal;"><%= @petlost.address %></span>
+              </p>
+            </div>
+            <div class="col-2 text-center">
+              <i class="fas fa-dog" style="font-size: 2.5rem; color: #0079c1;"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Columna derecha: Mapa -->
+      <div class="col-md-6 mt-2">
+        <div class="p-1 shadow rounded-lg bg-white w-100" style="border-radius: 20px; box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.3);">
+          <div id="map" style="height: 250px; width: 100%; border-radius: 20px;"></div>
+        </div>
+      </div>
+    </div>
+  </div> <!-- Cierre del contenedor principal -->
+
+  <!-- Modales -->
+  <!-- Modal de Confirmación -->
+  <div class="modal fade" id="confirmModal" tabindex="-1" aria-labelledby="confirmModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <!-- Encabezado del modal -->
+        <div class="modal-header">
+          <h5 class="modal-title" id="confirmModalLabel">Confirmación</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+        </div>
+        <!-- Cuerpo del modal -->
+        <div class="modal-body">
+          <p>¿Encontraste tu mascota?</p>
+        </div>
+        <!-- Pie del modal -->
+        <div class="modal-footer">
+          <!-- Asegúrate de que todos los botones tienen la misma clase de tamaño y estilo -->
+          <button type="button" class="btn border border-dark" data-bs-dismiss="modal">No</button>
+          <button type="button" class="btn btn-success text-white" id="confirmYesButton">Sí</button>
+        </div>
       </div>
     </div>
   </div>
-</div> <!-- Cierre del contenedor principal -->
-</body>
 
-<!-- Estilos CSS -->
-<style>
-  /* Estilos para las imágenes y columnas del carrusel */
-  .carousel-item .col-md-4 {
-    padding: 0 5px;
-  }
+  <!-- Modal de Feedback -->
+  <div class="modal fade" id="feedbackModal" tabindex="-1" aria-labelledby="feedbackModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <!-- Encabezado del modal -->
+        <div class="modal-header">
+          <h5 class="modal-title" id="feedbackModalLabel">¡Qué gusto! Déjanos tu opinión de la página web</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+        </div>
+        <!-- Cuerpo del modal -->
+        <div class="modal-body">
+          <!-- Formulario -->
+          <form id="feedbackForm">
+            <div class="mb-3">
+              <label for="feedbackInput" class="form-label">Tu opinión</label>
+              <textarea class="form-control" id="feedbackInput" rows="3" placeholder="Escribe tu opinión aquí..."></textarea>
+            </div>
+            <!-- Pie del modal dentro del formulario -->
+            <div class="modal-footer">
+              <!-- Asegúrate de que los botones tienen las mismas clases -->
+              <button type="button" class="btn border border-dark" data-bs-dismiss="modal">Cancelar</button>
+              <button type="submit" class="btn btn-primary">Enviar</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
 
-  .carousel-item img {
-    width: 100%;
-    height: auto;
-  }
 
-  /* Ajustes para pantallas pequeñas */
-  @media (max-width: 768px) {
-    .carousel-item .col-md-4 {
-      flex: 0 0 100%;
-      max-width: 100%;
-    }
-  }
-</style>
+  <!-- Script para inicializar los modales y el mapa -->
+  <script>
+    document.addEventListener('turbo:load', function() {
+      // Inicializar el mapa
+      var mapElement = document.getElementById('map');
+      if (mapElement) {
+        mapboxgl.accessToken = '<%= ENV['MAPBOX_API_KEY'] %>';
 
-<!-- Scripts -->
-<script>
-  document.addEventListener('turbo:load', function() {
-    mapboxgl.accessToken = '<%= ENV['MAPBOX_API_KEY'] %>';
+        const map = new mapboxgl.Map({
+          container: 'map',
+          style: 'mapbox://styles/mapbox/streets-v11',
+          center: [<%= @petlost.longitude %>, <%= @petlost.latitude %>],
+          zoom: 13.5,
+        });
 
-    const map = new mapboxgl.Map({
-      container: 'map',
-      style: 'mapbox://styles/mapbox/streets-v11',
-      center: [<%= @petlost.longitude %>, <%= @petlost.latitude %>],
-      zoom: 13.5,
+        const el = document.createElement('div');
+        el.className = 'marker';
+
+        new mapboxgl.Marker(el)
+          .setLngLat([<%= @petlost.longitude %>, <%= @petlost.latitude %>])
+          .addTo(map);
+      }
+
+      // Inicializar los modales
+      var confirmModalEl = document.getElementById('confirmModal');
+      var feedbackModalEl = document.getElementById('feedbackModal');
+
+      var confirmModal = null;
+      var feedbackModal = null;
+
+      if (confirmModalEl) {
+        confirmModal = new bootstrap.Modal(confirmModalEl);
+      }
+
+      if (feedbackModalEl) {
+        feedbackModal = new bootstrap.Modal(feedbackModalEl);
+      }
+
+      // Manejar el clic en el botón "Sí" del confirmModal
+      var confirmYesButton = document.getElementById('confirmYesButton');
+      if (confirmYesButton && confirmModal) {
+        confirmYesButton.addEventListener('click', function() {
+          // Cerrar el confirmModal
+          confirmModal.hide();
+
+          // Escuchar el evento 'hidden.bs.modal' para abrir el feedbackModal después de que confirmModal se haya cerrado
+          confirmModalEl.addEventListener('hidden.bs.modal', function onHidden() {
+            if (feedbackModal) {
+              feedbackModal.show();
+            }
+            confirmModalEl.removeEventListener('hidden.bs.modal', onHidden);
+          });
+        });
+      }
+
+      // Manejar el envío del formulario en el feedbackModal
+      var feedbackForm = document.getElementById('feedbackForm');
+      if (feedbackForm && feedbackModal) {
+        feedbackForm.addEventListener('submit', function(event) {
+          event.preventDefault();
+          var feedbackText = document.getElementById('feedbackInput').value.trim();
+          alert('Gracias por tu opinión.');
+          feedbackForm.reset();
+          feedbackModal.hide();
+        });
+      }
+
+      // Quitar el foco del botón "Lo encontré" después de cerrar el modal
+      var loEncuenteButton = document.getElementById('loEncuenteButton');
+      if (loEncuenteButton && confirmModalEl) {
+        confirmModalEl.addEventListener('hidden.bs.modal', function () {
+          setTimeout(function() {
+            loEncuenteButton.blur();
+          }, 100);
+        });
+      }
     });
+  </script>
 
-    const el = document.createElement('div');
-    el.className = 'marker';
-    el.style.backgroundImage = 'url(<%= asset_path("icon.png") %>)';
-    el.style.width = '46px';
-    el.style.height = '46px';
-    el.style.backgroundSize = '100%';
 
-    new mapboxgl.Marker(el)
-      .setLngLat([<%= @petlost.longitude %>, <%= @petlost.latitude %>])
-      .addTo(map);
-  });
-</script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    .carousel-item .col-md-4 {
+      padding: 0 5px;
+    }
+    .carousel-item img {
+      width: 100%;
+      height: auto;
+      border: 1px solid #fff;;
+    }
+    @media (max-width: 768px) {
+      .carousel-item .col-md-4 {
+        flex: 0 0 100%;
+        max-width: 100%;
+      }
+    }
+
+    .marker {
+      background-image: url('<%= asset_path("icon.png") %>');
+      background-size: cover;
+      width: 46px;
+      height: 46px;
+      border-radius: 50%;
+      cursor: pointer;
+    }
+
+    .modal.fade .modal-dialog {
+      transition: transform 0.3s ease-out;
+    }
+  </style>
+</body>

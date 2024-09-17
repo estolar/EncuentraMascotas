@@ -13,15 +13,15 @@
   <div class="row align-items-center mb-5">
     <!-- Columna izquierda para 'Volver a la lista' con imagen -->
     <div class="col text-start">
-      <%= link_to petfounds_path, class: "btn btn-primary text-white align-items-center justify-content-center" do %>
+      <%= link_to petfounds_path, class: "btn btn-success text-white align-items-center justify-content-center" do %>
         <i class="fa-solid fa-house" style="font-size: 0.8rem;"></i> Volver
       <% end %>
     </div>
 
     <!-- Columna central para el nombre del perro y la fecha -->
     <div class="col text-center">
-      <h1 class="text-white mb-1" style="font-size: 2.5rem;"><%= @petfound.details %></h1>
-      <p class="text-white mb-0" style="font-size: 1.5rem;">Encontrado el: <%= @petfound.day_found %></p>
+      <h1 class=" mb-1" style="font-size: 2.5rem;"><%= @petfound.details %></h1>
+      <p class="text-black mb-0" style="font-size: 1.5rem;">Encontrado el: <%= @petfound.day_found %></p>
     </div>
 
     <!-- Columna derecha para 'Editar' y 'Eliminar' con íconos -->
@@ -148,6 +148,7 @@
   .carousel-item img {
     width: 100%;
     height: auto;
+    border: 1px solid #fff;;
   }
 
   /* Ajustes para pantallas pequeñas */
