@@ -73,9 +73,9 @@ ActiveRecord::Schema[7.2].define(version: 2024_09_17_172408) do
     t.float "latitude"
     t.float "longitude"
     t.string "address"
+    t.string "facts"
     t.string "type_pet"
     t.string "gender"
-    t.string "facts"
     t.index ["user_id"], name: "index_petfounds_on_user_id"
   end
 
