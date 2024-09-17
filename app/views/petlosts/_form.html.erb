@@ -16,6 +16,7 @@
                   datepicker_today_value: Date.today
                 }
               } %>
+
    <% if @petlost.photos.attached? %>
     <div class="current-photo">
       <p>Imagen actual:</p>
@@ -24,9 +25,9 @@
         <% end %>
     </div>
   <% end %>
-  <%= f.input :photos, as: :file, label: 'Adjunta una foto', input_html: { multiple: true } %>
-  <%= f.input :address, label: "Ingresa la dirección donde se perdió" %>
-  <%= f.hidden_field :user_id, value:current_user.id %>
-  <%= f.hidden_field :finded, value: false %>
-  <%= f.submit %>
-<% end %>
+    <%= f.input :photos, as: :file, label: 'Adjunta una foto', input_html: { multiple: true } %>
+    <%= f.input :address, label: "Ingresa la dirección donde se perdió" %>
+    <%= f.hidden_field :user_id, value:current_user.id %>
+    <%= f.hidden_field :finded, value: false %>
+    <%= f.submit %>
+  <% end %>
