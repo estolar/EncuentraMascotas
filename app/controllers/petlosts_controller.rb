@@ -1,4 +1,5 @@
 class PetlostsController < ApplicationController
+  skip_before_action :authenticate_user!, only: [:index, :show, :loading_screen, :nearby, :download,:preview,:rescued_pets]
   def new
     @petlost = Petlost.new
     authorize @petlost
@@ -84,7 +85,7 @@ class PetlostsController < ApplicationController
 
   def download
     @petlost = Petlost.find(params[:format])
-    authorize :petlost, :user_pets_losts?
+    authorize :petlost, :download?
 
     pdf = Prawn::Document.new
 
@@ -153,7 +154,7 @@ class PetlostsController < ApplicationController
 
   def preview
     @petlost = Petlost.find(params[:format])
-    authorize :petlost, :user_pets_losts?
+    authorize :petlost, :preview?
 
     pdf = Prawn::Document.new
 
