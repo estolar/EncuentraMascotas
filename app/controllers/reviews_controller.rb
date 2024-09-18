@@ -1,8 +1,6 @@
 class ReviewsController < ApplicationController
-  # Asegúrate de que Pundit está incluido en tu controlador
   include Pundit
 
-  # Si necesitas que todas las acciones requieran autorización
   after_action :verify_authorized, except: :index
 
   def create
@@ -12,7 +10,10 @@ class ReviewsController < ApplicationController
     # Autoriza la operación de creación de un review
     authorize @review
 
+    petlost = Petlost.find(params[:petlost_id]) # Asegúrate de que el petlost_id esté presente en el formulario
+
     if @review.save
+      petlost.update(finded: true)  # Actualizar el campo 'finded' a true
       redirect_to root_path, notice: "Tu opinión ha sido registrada correctamente."
     else
       redirect_to root_path, alert: "Hubo un error al enviar tu opinión."

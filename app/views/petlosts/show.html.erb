@@ -169,44 +169,46 @@
   </div>
 
   <!-- Modal de Feedback -->
-<div class="modal fade" id="feedbackModal" tabindex="-1" aria-labelledby="feedbackModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="feedbackModalLabel">¡Qué gusto! Déjanos tu opinión</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
-      </div>
-      <div class="modal-body">
-        <form id="feedbackForm" action="<%= reviews_path %>" method="post">
-          <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
+  <div class="modal fade" id="feedbackModal" tabindex="-1" aria-labelledby="feedbackModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="feedbackModalLabel">¡Qué gusto! Déjanos tu opinión</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+        </div>
+        <div class="modal-body">
+          <form id="feedbackForm" action="<%= reviews_path %>" method="post">
+            <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
+            <%= hidden_field_tag :petlost_id, @petlost.id %> <!-- Enviar el petlost_id -->
 
-          <div class="mb-3">
-            <label for="feedbackInput" class="form-label">Tu opinión</label>
-            <textarea class="form-control" id="feedbackInput" name="review[content]" rows="3" placeholder="Escribe tu opinión aquí..."></textarea>
-          </div>
-
-          <!-- Calificación con Estrellas -->
-          <div class="mb-3">
-            <label for="rating">Tu calificación</label>
-            <div id="rating" class="star-rating">
-              <% (1..5).reverse_each do |i| %> <!-- Reversa la generación de las estrellas -->
-                <input type="radio" id="star<%= i %>" name="review[rating]" value="<%= i %>" />
-                <label for="star<%= i %>" title="<%= i %> estrellas">
-                  <i class="fa fa-star"></i>
-                </label>
-              <% end %>
+            <div class="mb-3">
+              <label for="feedbackInput" class="form-label">Tu opinión</label>
+              <textarea class="form-control" id="feedbackInput" name="review[content]" rows="3" placeholder="Escribe tu opinión aquí..."></textarea>
             </div>
-          </div>
 
-          <div class="modal-footer">
-            <button type="button" class="btn border border-dark" data-bs-dismiss="modal">Cancelar</button>
-            <button type="submit" class="btn btn-primary">Enviar</button>
-          </div>
-        </form>
+            <!-- Calificación con Estrellas -->
+            <div class="mb-3">
+              <label for="rating">Tu calificación</label>
+              <div id="rating" class="star-rating">
+                <% (1..5).reverse_each do |i| %>
+                  <input type="radio" id="star<%= i %>" name="review[rating]" value="<%= i %>" />
+                  <label for="star<%= i %>" title="<%= i %> estrellas">
+                    <i class="fa fa-star"></i>
+                  </label>
+                <% end %>
+              </div>
+            </div>
+
+            <div class="modal-footer">
+              <button type="button" class="btn border border-dark" data-bs-dismiss="modal">Cancelar</button>
+              <button type="submit" class="btn btn-primary">Enviar</button>
+            </div>
+          </form>
+        </div>
       </div>
     </div>
   </div>
-</div>
+
   <!-- Script para inicializar los modales y el mapa -->
   <script>
     document.addEventListener('turbo:load', function() {
@@ -312,5 +314,5 @@
     .star-rating label:hover ~ label {
       color: #ffc107;
     }
-</style>
+  </style>
 </body>
