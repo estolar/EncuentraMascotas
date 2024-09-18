@@ -1,4 +1,16 @@
-<h1>Mascota perdida</h1>
+<%= stylesheet_link_tag 'pet/form', media: 'all', 'data-turbolinks-track': 'reload' %>
 
-<h5>Aquí puedes editar los datos de tu mascotita</h5>
-<%= render "form", petlost: @petlost %>
+<div class="body-form">
+  <div class="signup-container">
+    <div class="left-container">
+    </div>
+
+    <div class='right-container'>
+      <div class="container-title">
+        <h1 class=mb-3>Mascota perdida</h1>
+        <h5>Aquí puedes editar los datos de tu mascotita</h5>
+      </div>
+      <%= render "form", petlost: @petlost %>
+    </div>
+  </div>
+</div>

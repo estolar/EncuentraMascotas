@@ -15,10 +15,15 @@ Rails.application.routes.draw do
     collection do
       get :nearby
       get :loading_screen
+      get :user_pets_losts
     end
   end
-  
-  resources :petfounds
+
+  resources :petfounds do
+    collection do
+      get :user_pets_founds
+    end
+  end
 
   # , only: [:create, :new, :index, :destroy, :edit, :update, :show]
   # Defines the root path route ("/")

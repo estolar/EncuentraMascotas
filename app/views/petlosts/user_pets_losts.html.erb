@@ -1,0 +1,155 @@
+<body style="background: linear-gradient(to bottom, #0079c2, #ffffff);">
+  <div class="container mt-5">
+    <div class="d-flex justify-content-between mb-4">
+      <div>
+        <%= link_to root_path, class: "btn btn-primary btn-lg text-white d-flex align-items-center justify-content-center" do %>
+          <%= image_tag 'icons8-home.png', alt: 'Volver', width: 32, height: 32, class: 'me-2'  %> Volver
+        <% end %>
+      </div>
+      <div>
+        <%= link_to loading_screen_petlosts_path, class: 'btn btn-primary text-white' do %>
+          <i class="fa-solid fa-paw"></i>
+          <i class="fa-solid fa-location-dot me-2"></i>
+          Mascotas cerca
+        <% end %>
+        <%= link_to new_petlost_path, class: 'btn btn-primary text-white ms-2' do %>
+          <i class="fa-solid fa-dog me-2"></i>
+          Perdi mi mascota
+        <% end %>
+      </div>
+    </div>
+
+    <div class="row">
+      <!-- Columna para el filtro -->
+      <div class="col-md-3">
+        <div class="card" style="max-height: 400px; overflow-y: auto;">
+          <div class="card-header">
+            Filtro por búsqueda
+          </div>
+          <div class="card-body">
+            <%= form_with url: petlosts_path, method: :get, local: true do %>
+              <div class="form-group mb-2">
+                <%= label_tag :raza, "Raza" %>
+                <%= text_field_tag :raza, params[:raza], class: 'form-control' %>
+              </div>
+
+              <div class="form-group mb-2">
+                <%= label_tag :color, "Color" %>
+                <%= text_field_tag :color, params[:color], class: 'form-control' %>
+              </div>
+
+              <div class="form-group mb-2">
+                <%= label_tag :señas, "Señas particulares" %>
+                <%= text_field_tag :signs, params[:signs], class: 'form-control' %>
+              </div>
+
+              <div class="form-group mb-2">
+                <%= label_tag :fecha_perdido, "Fecha perdido" %>
+                <%= date_field_tag :day_lost, params[:day_lost], class: 'form-control' %>
+              </div>
+
+              <%= button_tag(type: 'submit', class: 'btn btn-success btn-block text-white') do %>
+                <i class="fa-solid fa-filter me-2"></i>
+                Filtrar
+              <% end %>
+
+            <% end %>
+          </div>
+        </div>
+
+        <!-- Video debajo del filtro -->
+        <div class="mt-4">
+          <video width="100%" height="auto" loop muted autoplay playsinline>
+            <source src="<%= asset_path('videoejemplo.mp4') %>" type="video/mp4">
+            Tu navegador no soporta la etiqueta de video.
+          </video>
+        </div>
+      </div>
+
+      <!-- Columna para las tarjetas -->
+      <div class="col-md-9">
+        <div class="row g-3">
+          <% if @petlosts.any? %>
+            <% @petlosts.each do |petlost| %>
+              <div class="col-md-4">
+                <div class="card mb-4 shadow-sm d-flex flex-column">
+                  <% if petlost.photos.any? %>
+                    <!-- Carrusel de fotos si hay más de una -->
+                    <div id="carouselPetlost<%= petlost.id %>" class="carousel slide" data-bs-ride="carousel">
+                      <div class="carousel-inner">
+                        <% petlost.photos.each_with_index do |photo, index| %>
+                          <div class="carousel-item <%= 'active' if index == 0 %>">
+                            <%= cl_image_tag photo.key, class: 'd-block w-100', style: 'height: 200px; object-fit: cover;', alt: petlost.name %>
+                          </div>
+                        <% end %>
+                      </div>
+                      <!-- Controles del carrusel -->
+                      <button class="carousel-control-prev" type="button" data-bs-target="#carouselPetlost<%= petlost.id %>" data-bs-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Anterior</span>
+                      </button>
+                      <button class="carousel-control-next" type="button" data-bs-target="#carouselPetlost<%= petlost.id %>" data-bs-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Siguiente</span>
+                      </button>
+                    </div>
+                  <% else %>
+                    <!-- Si no hay fotos, muestra una imagen predeterminada -->
+                    <%= image_tag 'default-image.png', class: 'card-img-top', style: 'height: 200px; object-fit: cover;', alt: 'No image available' %>
+                  <% end %>
+
+                  <div class="card-body d-flex flex-column">
+                    <h5 class="card-title mb-2"><%= petlost.name %></h5>
+
+                    <p class="card-text mb-1">
+                      <span class="fw-bold" style="color: #00629D;">Raza:</span>
+                      <span class="fw-normal text-dark"><%= petlost.breed %></span>
+                    </p>
+
+                    <% if petlost.color.present? %>
+                      <% colors_array = JSON.parse(petlost.color).reject(&:blank?) %>
+                      <p class="card-text mb-1">
+                        <span class="fw-bold" style="color: #00629D;">Color:</span>
+                        <span class="fw-normal text-dark"><%= colors_array.join(", ") %></span>
+                      </p>
+                    <% end %>
+
+                    <p class="card-text mb-1">
+                      <span class="fw-bold" style="color: #00629D;">Señas particulares:</span>
+                      <span class="fw-normal text-dark"><%= petlost.signs %></span>
+                    </p>
+
+                    <p class="card-text mb-1">
+                      <span class="fw-bold" style="color: #00629D;">Perdido el:</span>
+                      <span class="fw-normal text-dark"><%= petlost.day_lost %></span>
+                    </p>
+
+                    <p class="card-text mb-1">
+                      <span class="fw-bold" style="color: #00629D;">Dirección donde se perdió:</span>
+                      <span class="fw-normal text-dark"><%= petlost.address %></span>
+                    </p>
+
+                    <div class="mt-auto">
+                      <%= link_to petlost_path(petlost), class: 'btn btn-success text-white mb-2' do %>
+                        <i class="fa-solid fa-plus"></i>
+                        <i class="fa-solid fa-paw  me-2"></i>
+                        Ver
+                      <% end %>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            <% end %>
+          <% else %>
+            <p>No hay mascotas perdidas que coincidan con los filtros.</p>
+          <% end %>
+        </div>
+
+        <!-- Paginación -->
+        <div class="d-flex justify-content-center mt-4">
+          <%= paginate @petlosts %>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>

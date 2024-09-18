@@ -1,5 +1,4 @@
-$rosa-em: #F7C6C7; // Defining a variable
-$azul-em: #0079C2;
+@import "colors";
 $spacer: 8px;
 
 
@@ -21,38 +20,47 @@ $spacer: 8px;
   margin-right: 10px;
   transition: background-color 0.3s ease;
 }
+
 .filter-button:hover {
   background-color: $rosa-em;
   color: white;
 }
 
+.fondo-rosa-section{
+  background-color: $rosa-em4;
+  background-image: url('https://res.cloudinary.com/dhfv2yrux/image/upload/v1726517110/huellas-footer_f2ibj5.png'); /* Aquí va la imagen de fondo con las huellas */
+}
 
-/* Estilos para la sección de información de la App */
-.app-info-section {
-  background-color: #f8f9fa;
-  padding: 50px 0;
+.fondo-azul-section{
+  background-color: $azul-em4;
+  background-image: url('https://res.cloudinary.com/dhfv2yrux/image/upload/v1726517110/huellas-footer_f2ibj5.png'); /* Aquí va la imagen de fondo con las huellas */
+}
 
-  .section-title {
-    color: #0079C2;
-    font-size: 2rem;
-    margin-bottom: 20px;
-  }
+.fondo-rosa-section,
+.fondo-azul-section {
+  margin-top: 0;  /* Reduce el espacio superior */
+  margin-bottom: 0;  /* Reduce el espacio inferior */
+}
 
-  .section-text {
-    font-size: 1.2rem;
-    margin-bottom: 20px;
-  }
+.fondo-rosa-section,
+.fondo-azul-section {
+  padding-top: 20px;  /* Ajusta el relleno superior */
+  padding-bottom: 20px;  /* Ajusta el relleno inferior */
+}
 
-  .btn-large {
-    width: 300px;
-    height: 50px;
-    font-size: 1.1rem;
-    border-radius: 25px;
-    background-color: $azul-em;
-    border: none;
-  }
 
-  .btn-large:hover {
-    background-color: $rosa-em;
-  }
+.section-title {
+  color: $azul-em;
+  font-size: 2rem;
+  // margin-top: 30px;
+  // margin-bottom: 30px;
+  margin-top: 0px;  /* Ajusta según sea necesario */
+  margin-bottom: 40px;  /* Ajusta según sea necesario */
+}
+
+
+.app-image {
+  object-fit: cover; /* Ajusta la imagen dentro del contenedor sin deformarse */
+  display: block; /* Asegura que la imagen sea un bloque */
+  border-radius: 5px;
 }

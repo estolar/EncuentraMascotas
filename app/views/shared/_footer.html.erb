@@ -1,36 +1,40 @@
 <!-- Footer -->
-<footer class="footer mt-5">
+<footer class="footer p-4">
   <div class="container">
-    <div class="row">
-      <div class="col-md-4">
+    <div class="row justify-content-center">
+      <div class="col-md-4 d-flex align-items-center">
         <!-- Logo -->
-        <img src="<%= asset_path('https://res.cloudinary.com/dhfv2yrux/image/upload/v1726181623/logo-encuentramascotas_1_ikmg13.png') %>" alt="Encuentra Mascotas" class="footer-logo">
+        <img src="<%= asset_path('https://res.cloudinary.com/dhfv2yrux/image/upload/v1726490745/logo-encuentramascotas-footer_rl0ked.png') %>" alt="Encuentra Mascotas" class="footer-logo me-3">
         <p>Conectamos mascotas perdidas con sus dueños a través de tecnología y comunidad.</p>
       </div>
 
-      <div class="col-md-4">
+      <div class="col-md-4 text-center">
         <h5>Enlaces útiles</h5>
         <ul class="list-unstyled">
-          <li><%= link_to 'Mascotas Perdidas', petlosts_path %></li>
-          <li><%= link_to 'Mascotas Encontradas', petfounds_path %></li>
-          <li><%= link_to 'Términos y Condiciones', terms_path %></li>
-          <li><%= link_to 'Política de Privacidad', privacy_path %></li>
+          <li><i class="fa-solid fa-paw"></i> <%= link_to 'Mascotas Perdidas', petlosts_path %></li>
+          <li><i class="fa-solid fa-paw"></i> <%= link_to 'Mascotas Encontradas', petfounds_path %></li>
+          <li><i class="fa-solid fa-paw"></i> <%= link_to 'Términos y Condiciones', terms_path %></li>
+          <li><i class="fa-solid fa-paw"></i> <%= link_to 'Política de Privacidad', privacy_path %></li>
         </ul>
       </div>
 
-      <div class="col-md-4">
+      <div class="col-md-4 text-center">
         <h5>Síguenos</h5>
         <ul class="list-unstyled social-icons">
           <li><a href="https://www.facebook.com"><i class="fab fa-facebook-f"></i> Facebook</a></li>
           <li><a href="https://www.instagram.com"><i class="fab fa-instagram"></i> Instagram</a></li>
           <li><a href="https://www.tiktok.com"><i class="fab fa-tiktok"></i> TikTok</a></li>
-          <li><a href="https://chat.whatsapp.com/invite-code"><i class="fab fa-whatsapp"></i> Grupo de WhatsApp</a></li>
+          <li><a href="https://chat.whatsapp.com/invite-code"><i class="fab fa-whatsapp"></i> WhatsApp</a></li>
         </ul>
       </div>
     </div>
 
-    <div class="text-center mt-4">
-      <p>&copy; 2024 EncuentraMascotas - Todos los derechos reservados</p>
-    </div>
+    <!-- Línea de separación -->
+    <div class="separator"></div>
+
+<div class="text-center mt-4">
+  <p>&copy; 2024 <%= link_to 'EncuentraMascotas', 'https://www.encuentramascotas.org', target: '_blank', class: 'footer-link' %> - Todos los derechos reservados</p>
+</div>
+
   </div>
 </footer>

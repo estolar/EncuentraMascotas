@@ -1,8 +1,18 @@
+$rosa-em: #F7C6C7; // Defining a variable
+$azul-em: #0079C2;
+$rosa-em-sec: #FFF9F9;
+$azul-em-sec: #F4FBFF;
 /* Footer */
 .footer {
-  background-color: #0079C2; /* Fondo azul */
+  background-color: $azul-em; /* Fondo azul */
   color: #fff; /* Texto blanco */
-  padding: 40px 0;
+  background-image: url('huellas-footer.png'); /* Aquí va la imagen de fondo con las huellas */
+  background-repeat: repeat; /* Repetir el fondo */
+  background-size: contain; /* Ajustar el tamaño de las huellas */
+  padding-top: 0px;  /* Ajusta el relleno superior */
+  padding-bottom: 0px;  /* Ajusta el relleno inferior */
+  margin-top: 0px;
+  margin-bottom: 0px;
 }
 
 .footer-logo {
@@ -11,7 +21,7 @@
 }
 
 .footer h5 {
-  color: #F7C6C7; /* Títulos en rosa */
+  color: $rosa-em; /* Títulos en rosa */
 }
 
 .footer ul {
@@ -29,7 +39,16 @@
 }
 
 .footer ul li a:hover {
-  color: #F7C6C7; /* Cambia a rosa cuando se pasa el mouse */
+  color: $rosa-em; /* Cambia a rosa cuando se pasa el mouse */
+}
+
+.footer a {
+  color: white; /* El enlace será blanco */
+  text-decoration: none; /* Elimina el subrayado */
+}
+
+.footer a:hover {
+  color: $rosa-em; /* Cambia a un color rosa claro cuando pases el mouse por encima */
 }
 
 .social-icons {
@@ -48,4 +67,10 @@
 .text-center p {
   margin: 0;
   font-size: 14px;
+}
+
+/* Línea de separación en el footer */
+.footer .separator {
+  border-top: 1px solid $azul-em-sec; /* Color rosa clarito */
+  margin: 20px 0; /* Espacio arriba y abajo de la línea */
 }
