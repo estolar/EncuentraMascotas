@@ -3,6 +3,7 @@
   background: $azul-em4;
   box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
   z-index: 999;
+  transition: all 0.3s ease; /* Transición para el tamaño del navbar */
 }
 
 .navbar-lewagon .navbar-collapse {
@@ -11,5 +12,25 @@
 
 .navbar-lewagon .navbar-brand img {
   height: 80px;
-  width: 200px
+  width: 200px;
+  transition: all 0.3s ease
+}
+
+/* Estilo reducido del navbar */
+.navbar-lewagon.scrolled {
+  height: 60px; /* Reducir la altura del navbar */
+  background-color: rgba(220, 238, 249, 0.8) /* Cambiar el color de fondo si lo deseas */
+}
+
+/* Logo reducido */
+.navbar-lewagon.scrolled .navbar-brand img {
+  height: 50px;
+  width: 130px
+}
+
+/* Control de sticky top */
+.sticky-top {
+  position: sticky;
+  top: 0;
+  z-index: 1000
 }
