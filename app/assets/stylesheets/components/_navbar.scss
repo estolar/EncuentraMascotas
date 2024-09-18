@@ -16,6 +16,18 @@
   transition: all 0.3s ease
 }
 
+/* Estilo reducido del navbar */
+.navbar-lewagon.scrolled {
+  height: 60px; /* Reducir la altura del navbar */
+  background-color: rgba(220, 238, 249, 0.8) /* Cambiar el color de fondo si lo deseas */
+}
+
+/* Logo reducido */
+.navbar-lewagon.scrolled .navbar-brand img {
+  height: 50px;
+  width: 130px
+}
+
 /* Control de sticky top */
 .sticky-top {
   position: sticky;
