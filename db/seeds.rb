@@ -6,27 +6,27 @@ Petlost.destroy_all
 User.destroy_all
 
 # Crear usuarios individualmente y adjuntar las imágenes de perfil
-user1 = User.new(email: 'victorhuatucov@gmail.com', password: '123456', name: 'Victor Huatuco', phone_number: '943053632')
+user1 = User.new(email: 'victorhuatucov@gmail.com', password: '123456', name: 'Victor Huatuco', phone_number: '+51943053632')
 file1 = URI.open("https://res.cloudinary.com/dhfv2yrux/image/upload/v1726246388/development/plsmg0x2iti5he2f6itpmjbufn2m.png")
 user1.photo.attach(io: file1, filename: "avatar.png", content_type: "image/png")
 user1.save
 
-user2 = User.new(email: 'pamelamc23@gmail.com', password: '123456', name: 'Pamela Matías', phone_number: '949195838')
+user2 = User.new(email: 'pamelamc23@gmail.com', password: '123456', name: 'Pamela Matías', phone_number: '+51949195838')
 file2 = URI.open("https://res.cloudinary.com/dhfv2yrux/image/upload/v1726481548/pamela_tszf7g.jpg")
 user2.photo.attach(io: file2, filename: "avatar.png", content_type: "image/png")
 user2.save
 
-user3 = User.new(email: 'gslazar96@gmail.com', password: '123456', name: 'Gustavo Salazar', phone_number: '941455221')
+user3 = User.new(email: 'gslazar96@gmail.com', password: '123456', name: 'Gustavo Salazar', phone_number: '+51941455221')
 file3 = URI.open("https://res.cloudinary.com/dhfv2yrux/image/upload/v1726246392/development/6awylfov2eqz2z7qgyy6idde7i3h.png")
 user3.photo.attach(io: file3, filename: "avatar.png", content_type: "image/png")
 user3.save
 
-user4 = User.new(email: 'enrique7stolar@gmail.com', password: '123456', name: 'Enrique Stolar', phone_number: '969758460')
+user4 = User.new(email: 'enrique7stolar@gmail.com', password: '123456', name: 'Enrique Stolar', phone_number: '+51969758460')
 file4 = URI.open("https://res.cloudinary.com/dhfv2yrux/image/upload/v1726481309/yo_vvkviu.jpg")
 user4.photo.attach(io: file4, filename: "avatar.png", content_type: "image/png")
 user4.save
 
-user5 = User.new(email: 'luis@example.com', password: '123546', name: 'Luis Gorrion', phone_number: '943053632')
+user5 = User.new(email: 'luis@example.com', password: '123546', name: 'Luis Gorrion', phone_number: '+51943053632')
 user5.save
 
 puts "Usuarios creados y con imágenes adjuntas: #{[user1, user2, user3, user4, user5].inspect}"

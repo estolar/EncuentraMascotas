@@ -1,10 +1,8 @@
 <body style="background: linear-gradient(to bottom, #0079c2, #ffffff);">
   <!-- Contenedor principal -->
   <div class="container-fluid mt-1 p-2 rounded" style="max-width: 1200px; margin: 0 auto;">
-
     <!-- Fila de navegación -->
     <div class="row align-items-center mb-5">
-      <!-- Columna izquierda para 'Volver a la lista' con imagen -->
       <div class="col text-start">
         <%= link_to root_path, class: "btn btn-primary text-white align-items-center justify-content-center me-2" do %>
           <%= image_tag 'icons8-home.png', alt: 'Volver', width: 32, height: 32, class: 'me-2' %> Volver
@@ -27,9 +25,9 @@
           <% end %>
 
           <% if policy(@petlost).destroy? %>
-            <%= link_to petlost_path(@petlost), class: "btn btn-primary btn-sm me-4 text-white", data: { turbo_method: :delete, turbo_confirm: "¿Seguro que quieres eliminar?" }, style: "font-size: 1rem;" do %>
-              <i class="fa-regular fa-trash-can me-2"></i> Eliminar
-            <% end %>
+            <button type="button" class="btn btn-primary btn-md text-white" id="confirmDeleteButton" data-bs-toggle="modal" data-bs-target="#confirmDeleteModal">
+              <i class="fa-solid fa-dog me-2"></i> Eliminar
+            </button>
           <% end %>
 
           <% if policy(@petlost).update? %>
@@ -83,18 +81,6 @@
           </button>
         </div>
       </div>
-
-      <div class="d-flex justify-content-center mt-3">
-        <% if @petlost.user && @petlost.user.phone_number.present? %>
-          <%= link_to "https://wa.me/#{@petlost.user.phone_number}?text=Hola.%20Vengo%20de%20Encuentra%20Mascotas.%20Tengo%20información%20sobre%20tu%20mascota%20#{@petlost.name}:%20https://www.encuentramascotas.org/#{url_for(@petlost)}",
-                      class: "btn btn-success d-flex align-items-center justify-content-center px-4 py-2 text-white",
-                      target: "_blank" do %>
-            <i class="fab fa-whatsapp me-2" style="font-size: 1.5rem;"></i>
-            <span style="font-size: 1.2rem;">Contactar por WhatsApp</span>
-          <% end %>
-        <% end %>
-      </div>
-
     </div>
 
     <!-- Fila de datos del dueño y del perro -->
@@ -152,6 +138,18 @@
             </div>
           </div>
         </div>
+
+        <!-- Botón de WhatsApp -->
+        <div class="d-flex justify-content-center mt-3">
+          <% if @petlost.user && @petlost.user.phone_number.present? %>
+            <%= link_to "https://wa.me/#{@petlost.user.phone_number}?text=Hola.%20Vengo%20de%20Encuentra%20Mascotas.%20Me%20puedes%20ayudar%20a%20encontrar%20a%20mi%20mascota:%20https://www.encuentramascotas.org/#{url_for(@petlost)}",
+                        class: "btn btn-success d-flex align-items-center justify-content-center px-4 py-2",
+                        target: "_blank" do %>
+              <i class="fab fa-whatsapp me-2" style="font-size: 1.5rem;"></i>
+              <span style="font-size: 1.2rem;">Contactar por WhatsApp</span>
+            <% end %>
+          <% end %>
+        </div>
       </div>
 
       <!-- Columna derecha: Mapa -->
@@ -164,8 +162,10 @@
   </div> <!-- Cierre del contenedor principal -->
 
   <!-- Modales -->
-  <!-- Modal de Confirmación -->
-  <div class="modal fade" id="confirmModal" tabindex="-1" aria-labelledby="confirmModalLabel" aria-hidden="true">
+
+<%# modal para eliminar %>
+
+<div class="modal fade" id="confirmDeleteModal" tabindex="-1" aria-labelledby="confirmDeleteModal" aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content">
         <!-- Encabezado del modal -->
@@ -175,11 +175,33 @@
         </div>
         <!-- Cuerpo del modal -->
         <div class="modal-body">
-          <p>¿Encontraste tu mascota?</p>
+          <p>¿Eliminar a tu mascota?</p>
         </div>
         <!-- Pie del modal -->
         <div class="modal-footer">
           <!-- Asegúrate de que todos los botones tienen la misma clase de tamaño y estilo -->
+          <button type="button" class="btn border border-dark" data-bs-dismiss="modal">No</button>
+          <%= link_to "Sí", petlost_path(@petlost), class: "btn btn-primary btn-sm me-4 text-white", data: { turbo_method: :delete }, style: "font-size: 1rem;"%>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<%# fin modal %>
+
+
+  <!-- Modal de Confirmación -->
+  <div class="modal fade" id="confirmModal" tabindex="-1" aria-labelledby="confirmModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="confirmModalLabel">Confirmación</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+        </div>
+        <div class="modal-body">
+          <p>¿Encontraste tu mascota?</p>
+        </div>
+        <div class="modal-footer">
           <button type="button" class="btn border border-dark" data-bs-dismiss="modal">No</button>
           <button type="button" class="btn btn-success text-white" id="confirmYesButton">Sí</button>
         </div>
@@ -191,22 +213,34 @@
   <div class="modal fade" id="feedbackModal" tabindex="-1" aria-labelledby="feedbackModalLabel" aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content">
-        <!-- Encabezado del modal -->
         <div class="modal-header">
-          <h5 class="modal-title" id="feedbackModalLabel">¡Qué gusto! Déjanos tu opinión de la página web</h5>
+          <h5 class="modal-title" id="feedbackModalLabel">¡Qué gusto! Déjanos tu opinión</h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
         </div>
-        <!-- Cuerpo del modal -->
         <div class="modal-body">
-          <!-- Formulario -->
-          <form id="feedbackForm">
+          <form id="feedbackForm" action="<%= reviews_path %>" method="post">
+            <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
+            <%= hidden_field_tag :petlost_id, @petlost.id %> <!-- Enviar el petlost_id -->
+
             <div class="mb-3">
               <label for="feedbackInput" class="form-label">Tu opinión</label>
-              <textarea class="form-control" id="feedbackInput" rows="3" placeholder="Escribe tu opinión aquí..."></textarea>
+              <textarea class="form-control" id="feedbackInput" name="review[content]" rows="3" placeholder="Escribe tu opinión aquí..."></textarea>
             </div>
-            <!-- Pie del modal dentro del formulario -->
+
+            <!-- Calificación con Estrellas -->
+            <div class="mb-3">
+              <label for="rating">Tu calificación</label>
+              <div id="rating" class="star-rating">
+                <% (1..5).reverse_each do |i| %>
+                  <input type="radio" id="star<%= i %>" name="review[rating]" value="<%= i %>" />
+                  <label for="star<%= i %>" title="<%= i %> estrellas">
+                    <i class="fa fa-star"></i>
+                  </label>
+                <% end %>
+              </div>
+            </div>
+
             <div class="modal-footer">
-              <!-- Asegúrate de que los botones tienen las mismas clases -->
               <button type="button" class="btn border border-dark" data-bs-dismiss="modal">Cancelar</button>
               <button type="submit" class="btn btn-primary">Enviar</button>
             </div>
@@ -215,7 +249,6 @@
       </div>
     </div>
   </div>
-
 
   <!-- Script para inicializar los modales y el mapa -->
   <script>
@@ -244,58 +277,30 @@
       var confirmModalEl = document.getElementById('confirmModal');
       var feedbackModalEl = document.getElementById('feedbackModal');
 
-      var confirmModal = null;
-      var feedbackModal = null;
-
-      if (confirmModalEl) {
-        confirmModal = new bootstrap.Modal(confirmModalEl);
-      }
-
-      if (feedbackModalEl) {
-        feedbackModal = new bootstrap.Modal(feedbackModalEl);
-      }
+      var confirmModal = new bootstrap.Modal(confirmModalEl);
+      var feedbackModal = new bootstrap.Modal(feedbackModalEl);
 
       // Manejar el clic en el botón "Sí" del confirmModal
       var confirmYesButton = document.getElementById('confirmYesButton');
-      if (confirmYesButton && confirmModal) {
-        confirmYesButton.addEventListener('click', function() {
-          // Cerrar el confirmModal
-          confirmModal.hide();
+      confirmYesButton.addEventListener('click', function() {
+        confirmModal.hide();
+      });
 
-          // Escuchar el evento 'hidden.bs.modal' para abrir el feedbackModal después de que confirmModal se haya cerrado
-          confirmModalEl.addEventListener('hidden.bs.modal', function onHidden() {
-            if (feedbackModal) {
-              feedbackModal.show();
-            }
-            confirmModalEl.removeEventListener('hidden.bs.modal', onHidden);
-          });
-        });
-      }
+      // Abrir el modal de feedback después de cerrar el de confirmación
+      confirmModalEl.addEventListener('hidden.bs.modal', function () {
+        feedbackModal.show();
+      });
 
-      // Manejar el envío del formulario en el feedbackModal
+      // Manejar el envío del formulario de feedback
       var feedbackForm = document.getElementById('feedbackForm');
-      if (feedbackForm && feedbackModal) {
-        feedbackForm.addEventListener('submit', function(event) {
-          event.preventDefault();
-          var feedbackText = document.getElementById('feedbackInput').value.trim();
-          alert('Gracias por tu opinión.');
-          feedbackForm.reset();
-          feedbackModal.hide();
-        });
-      }
-
-      // Quitar el foco del botón "Lo encontré" después de cerrar el modal
-      var loEncuenteButton = document.getElementById('loEncuenteButton');
-      if (loEncuenteButton && confirmModalEl) {
-        confirmModalEl.addEventListener('hidden.bs.modal', function () {
-          setTimeout(function() {
-            loEncuenteButton.blur();
-          }, 100);
-        });
-      }
+      feedbackForm.addEventListener('submit', function(event) {
+        var feedbackText = document.getElementById('feedbackInput').value.trim();
+        if (feedbackText) {
+          feedbackForm.submit();
+        }
+      });
     });
   </script>
-
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
@@ -305,7 +310,7 @@
     .carousel-item img {
       width: 100%;
       height: auto;
-      border: 1px solid #fff;;
+      border: 1px solid #fff;
     }
     @media (max-width: 768px) {
       .carousel-item .col-md-4 {
@@ -313,7 +318,6 @@
         max-width: 100%;
       }
     }
-
     .marker {
       background-image: url('<%= asset_path("icon.png") %>');
       background-size: cover;
@@ -322,9 +326,34 @@
       border-radius: 50%;
       cursor: pointer;
     }
-
     .modal.fade .modal-dialog {
       transition: transform 0.3s ease-out;
+    }
+
+    /* Estilos para las estrellas */
+    .star-rating {
+      display: flex;
+      justify-content: center;
+      direction: rtl; /* Esto asegura que las estrellas se llenen de derecha a izquierda */
+    }
+
+    .star-rating input[type="radio"] {
+      display: none;
+    }
+
+    .star-rating label {
+      font-size: 2rem;
+      color: #ddd;
+      cursor: pointer;
+    }
+
+    .star-rating input[type="radio"]:checked ~ label {
+      color: #ffc107;
+    }
+
+    .star-rating label:hover,
+    .star-rating label:hover ~ label {
+      color: #ffc107;
     }
   </style>
 </body>

@@ -22,6 +22,8 @@ document.addEventListener('turbo:load', function() {
     duration: 1000, // Duración de las animaciones en milisegundos
     once: true, // Animar solo una vez
   });
+    // Sticky navbar funcionalidad
+    // var navbar = document.querySelector('.navbar');
 
   // Sticky navbar funcionalidad
   var navbar = document.querySelector('.navbar-lewagon');

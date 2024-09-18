@@ -205,33 +205,43 @@
 </div>
 
 
-
-
 <!-- Reviews de Usuarios -->
 <div class="fondo-rosa-section">
   <section class="container mt-5">
     <h2 class="text-center section-title" data-aos="fade-up"><i class="fa-solid fa-paw"></i> Encontraron a sus mascotas <i class="fa-solid fa-paw"></i></h2>
-    <div class="row">
-      <% if @reviews.present? %> <!-- Evitar errores si no hay reseñas -->
-        <% @reviews.each_with_index do |review, index| %> <!-- Añadimos index para retraso dinámico -->
-          <!-- Animación de cada tarjeta con retraso dinámico -->
-          <div class="col-md-4" data-aos="fade-up" data-aos-delay="<%= index * 100 %>">
-            <div class="card mb-4 shadow-sm">
-              <div class="card-body">
-                <h5 class="card-title"><%= review.user_name %></h5> <!-- review.user_name debe existir -->
-                <p class="card-text"><%= review.content %></p> <!-- review.content debe existir -->
-                <div class="rating">
-                  <% review.stars.times do %>
-                    <i class="fa fa-star"></i>
+
+    <turbo-frame id="reviews_frame">
+      <div class="row">
+        <% if @reviews.present? %> <!-- Evitar errores si no hay reseñas -->
+          <% @reviews.each_with_index do |review, index| %> <!-- Añadimos index para retraso dinámico -->
+            <div class="col-md-4" data-aos="fade-up" data-aos-delay="<%= index * 100 %>">
+              <div class="card mb-4 shadow-sm">
+                <div class="card-body text-center">
+                  <!-- Mostrar la foto del usuario -->
+                  <% if review.user.photo.attached? %>
+                    <%= image_tag review.user.photo, class: "img-fluid rounded-circle mb-3", style: "width: 80px; height: 80px; object-fit: cover;" %>
+                  <% else %>
+                    <i class="fas fa-user-circle" style="font-size: 3rem; color: #0079c1;"></i>
                   <% end %>
+
+                  <h5 class="card-title"><%= review.user.name %></h5> <!-- Mostrar el nombre del usuario -->
+                  <p class="card-text"><%= review.content %></p> <!-- Mostrar la opinión -->
+
+                  <!-- Mostrar las estrellas de la calificación -->
+                  <div class="rating">
+                    <% rating_value = review.rating || 0 %> <!-- Asignar 0 si el rating es nil -->
+                    <% 5.times do |i| %>
+                      <i class="fa fa-bone <%= 'text-warning' if i < rating_value %>"></i> <!-- Pintar estrellas -->
+                    <% end %>
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
+          <% end %>
+        <% else %>
+          <p>No hay reseñas disponibles.</p> <!-- Mensaje alternativo si no hay reseñas -->
         <% end %>
-      <% else %>
-        <p>No hay reseñas disponibles.</p> <!-- Mensaje alternativo si no hay reseñas -->
-      <% end %>
-    </div>
+      </div>
+    </turbo-frame>
   </section>
 </div>

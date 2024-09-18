@@ -76,6 +76,6 @@ class PetfoundsController < ApplicationController
   private
 
   def petfound_params
-    params.require(:petfound).permit(:breed, :type_pet, :facts, :signs, :details, :day_found, :user_id, :address , photos: [], color: [])
+    params.require(:petfound).permit(:type_pet, :breed, :gender, :facts, :signs, :details, :day_found, :user_id, :address, photos: [], color: [])
   end
 end
