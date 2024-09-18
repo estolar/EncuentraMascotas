@@ -1,7 +1,6 @@
 <body style="background: linear-gradient(to bottom, #0079c2, #ffffff);">
   <!-- Contenedor principal -->
   <div class="container-fluid mt-1 p-2 rounded" style="max-width: 1200px; margin: 0 auto;">
-
     <!-- Fila de navegación -->
     <div class="row align-items-center mb-5">
       <div class="col text-start">
@@ -180,10 +179,27 @@
         <div class="modal-body">
           <form id="feedbackForm" action="<%= reviews_path %>" method="post">
             <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
+
             <div class="mb-3">
               <label for="feedbackInput" class="form-label">Tu opinión</label>
               <textarea class="form-control" id="feedbackInput" name="review[content]" rows="3" placeholder="Escribe tu opinión aquí..."></textarea>
             </div>
+
+            <!-- Calificación con Estrellas -->
+            <div class="mb-3">
+              <label for="rating">Tu calificación</label>
+              <div id="rating" class="star-rating">
+                <% (1..5).each do |i| %>
+                  <input type="radio" id="star<%= i %>" name="review[rating]" value="<%= i %>" />
+                  <label for="star<%= i %>" title="<%= i %> estrellas">
+                    <i class="fa fa-star"></i>
+                  </label>
+                <% end %>
+              </div>
+            </div>
+
+
+
             <div class="modal-footer">
               <button type="button" class="btn border border-dark" data-bs-dismiss="modal">Cancelar</button>
               <button type="submit" class="btn btn-primary">Enviar</button>
@@ -240,7 +256,6 @@
       feedbackForm.addEventListener('submit', function(event) {
         var feedbackText = document.getElementById('feedbackInput').value.trim();
         if (feedbackText) {
-          // Enviar el formulario
           feedbackForm.submit();
         }
       });
@@ -274,5 +289,36 @@
     .modal.fade .modal-dialog {
       transition: transform 0.3s ease-out;
     }
+
+    /* Estilos para las estrellas */
+    .star-rating {
+      display: flex;
+      justify-content: center;
+      direction: rtl; /* Esto invierte el orden visual */
+    }
+
+    .star-rating input[type="radio"] {
+      display: none;
+    }
+
+    .star-rating label {
+      font-size: 2rem;
+      color: #ddd;
+      cursor: pointer;
+    }
+
+    .star-rating input[type="radio"]:checked ~ label {
+      color: #ffc107;
+    }
+
+    .star-rating label:hover,
+    .star-rating label:hover ~ label {
+      color: #ffc107;
+    }
+
+    .star-rating label {
+      order: 1; /* Asegura que las etiquetas se alineen correctamente */
+    }
+
   </style>
 </body>

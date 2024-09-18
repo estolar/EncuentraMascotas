@@ -13,7 +13,7 @@ class ReviewsController < ApplicationController
     authorize @review
 
     if @review.save
-      redirect_to root_path  # Puedes cambiar la redirección según lo necesites
+      redirect_to root_path, notice: "Tu opinión ha sido registrada correctamente."
     else
       redirect_to root_path, alert: "Hubo un error al enviar tu opinión."
     end
@@ -22,6 +22,6 @@ class ReviewsController < ApplicationController
   private
 
   def review_params
-    params.require(:review).permit(:content)
+    params.require(:review).permit(:content, :rating)  # Asegúrate de permitir el campo :rating
   end
 end
