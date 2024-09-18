@@ -34,3 +34,62 @@
   transform: scale(1.05); /* Levemente más grande cuando el usuario pasa el ratón */
   transition: transform 0.3s ease; /* Transición suave al hacer hover */
 }
+
+.custom-share-modal {
+  background-color: white;
+  padding: 20px;
+  border-radius: 8px;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1000;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.custom-share-modal ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.custom-share-modal ul li {
+  margin-bottom: 10px;
+}
+
+.custom-share-modal ul li a {
+  color: #007bff;
+  text-decoration: none;
+}
+
+.custom-share-modal ul li a:hover {
+  text-decoration: underline;
+}
+
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 999;
+}
+
+.share-button {
+  background-color: $rosa-em;
+  //display: flex; /* Aseguramos que tenga el mismo comportamiento de caja */
+  align-items: center;
+  justify-content: center;
+  color: $azul-em;
+  height: 36px; /* Igualamos la altura con los otros botones */
+  // border-radius: 5px; /* Puedes ajustar el borde redondeado si lo necesitas */
+  //padding: 0 15px; /* Añadimos un padding para el contenido interno */
+  margin-left: 10px; /* Añadimos un margen izquierdo para separar del botón "Ver más" */
+  border: none; /* Eliminamos el borde */
+  box-shadow: none; /* Eliminamos la sombra si existe */
+}
+
+.share-button:hover {
+  background-color: $azul-em;
+  color: $rosa-em;
+}
