@@ -6,13 +6,14 @@ export default class extends Controller {
     console.log("alertas conectado!")
   }
   showAlert(event) {
+
     event.preventDefault();
     console.log('turbo end conectado')
     // console.log(event.detail)
-    console.log(event.detail.success)
+    // console.log(event.detail.success)
     // console.log(event.detail.formSubmission)
-    console.log(event.detail.formSubmission.result.success)
-    console.log(Swal)
+    // console.log(event.detail.formSubmission.result.success)
+    // console.log(Swal)
     // event.preventDefault();
     const mode = this.element.dataset.mode;
     let title, text;
@@ -25,31 +26,62 @@ export default class extends Controller {
     }
 
 
-    if (event.detail.formSubmission.result.success) {
+    // if (event.detail.formSubmission.result.success) {
+    //   console.log("hecho!");
+    //   Swal.fire({
+    //     title: 'Success',
+    //     text: 'You are connected',
+    //     icon: 'success',
+    //     timer: 5000,
+    //     timerProgressBar: true
+    //   }).then(() => {
+    //     // Redirige después de que la alerta se ha mostrado
+    //     this.element.submit();
+    //   });
+    // } else {
+    //   console.log("error");
+    //   Swal.fire({
+    //     icon: "error",
+    //     title: "Oops...",
+    //     text: "Something went wrong!",
+    //     footer: '<a href="#">Why do I have this issue?</a>',
+    //     timer: 5000,
+    //     timerProgressBar: true
+    //   }).then(() => {
+    //     // Redirige o maneja el error después de que la alerta se ha mostrado
+    //     this.element.submit();
+    //   });
+    // }
+
+    const swalOptions = {
+      title: title,
+      text: text,
+      icon: 'success',
+      timer: 2200,
+      timerProgressBar: true,
+      showConfirmButton: false
+    };
+
+    // if (event.detail.formSubmission.result.success) {
       console.log("hecho!");
-      Swal.fire({
-        title: 'Success',
-        text: 'You are connected',
-        icon: 'success',
-        timer: 5000,
-        timerProgressBar: true
-      }).then(() => {
+      Swal.fire(swalOptions).then(() => {
         // Redirige después de que la alerta se ha mostrado
         this.element.submit();
       });
-    } else {
-      console.log("error");
-      Swal.fire({
-        icon: "error",
-        title: "Oops...",
-        text: "Something went wrong!",
-        footer: '<a href="#">Why do I have this issue?</a>',
-        timer: 5000,
-        timerProgressBar: true
-      }).then(() => {
-        // Redirige o maneja el error después de que la alerta se ha mostrado
-        this.element.submit();
-      });
-    }
+    // } else {
+    //   console.log("error");
+    //   Swal.fire({
+    //     icon: "error",
+    //     title: "Oops...",
+    //     text: "Something went wrong!",
+    //     footer: '<a href="#">Why do I have this issue?</a>',
+    //     timer: 5000,
+    //     timerProgressBar: true,
+    //     showConfirmButton: false
+    //   }).then(() => {
+    //     // Redirige después de que la alerta se ha mostrado
+    //     this.element.submit();
+    //   });
+    // }
   }
 }

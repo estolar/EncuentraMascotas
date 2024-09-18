@@ -1,6 +1,6 @@
 <%= stylesheet_link_tag 'pet/form', media: 'all', 'data-turbolinks-track': 'reload' %>
 
-<%= simple_form_for(petlost, html: { data: { controller: "alert", action: "turbo:submit-end->alert#showAlert", mode: petlost.new_record? ? "new" : "edit" } }) do |f| %>
+<%= simple_form_for(petlost, html: { data: { controller: "alert", action: "submit->alert#showAlert", mode: petlost.new_record? ? "new" : "edit" } }) do |f| %>
 
   <div class="container-large">
     <div class="set">
