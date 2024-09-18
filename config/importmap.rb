@@ -9,3 +9,4 @@ pin "bootstrap", to: "bootstrap.min.js", preload: true
 pin "@popperjs/core", to: "popper.js", preload: true
 pin "tom-select", to: "https://ga.jspm.io/npm:tom-select@2.2.2/dist/js/tom-select.complete.js"
 pin "flatpickr" # @4.6.13
+pin "sweetalert2", to: "https://cdn.jsdelivr.net/npm/sweetalert2@11.7.1/+esm"

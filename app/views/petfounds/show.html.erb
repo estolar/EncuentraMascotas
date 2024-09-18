@@ -33,12 +33,39 @@
       <% end %>
 
       <% if policy(@petfound).destroy? %>
-        <%= link_to petfound_path(@petfound), class: "btn btn-primary btn-lg text-white", data: { turbo_method: :delete, turbo_confirm: "¿Seguro que quieres eliminar?" }, style: "font-size: 1rem;" do %>
-          <i class="fa-regular fa-trash-can me-2"></i> Eliminar
-        <% end %>
+          <button type="button" class="btn btn-primary btn-md text-white" id="confirmDeleteButtonPetfound" data-bs-toggle="modal" data-bs-target="#confirmDeleteModalPetfound">
+            <i class="fa-solid fa-dog me-2"></i> Eliminar
+          </button>
       <% end %>
     </div>
   </div>
+
+  <%# modal para eliminar %>
+
+  <div class="modal fade" id="confirmDeleteModalPetfound" tabindex="-1" aria-labelledby="confirmDeleteModalPetfound" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <!-- Encabezado del modal -->
+          <div class="modal-header">
+            <h5 class="modal-title" id="confirmModalLabel">Confirmación</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+          </div>
+          <!-- Cuerpo del modal -->
+          <div class="modal-body">
+            <p>¿Deseas eliminar este reporte?</p>
+          </div>
+          <!-- Pie del modal -->
+          <div class="modal-footer">
+            <!-- Asegúrate de que todos los botones tienen la misma clase de tamaño y estilo -->
+            <button type="button" class="btn border border-dark" data-bs-dismiss="modal">No</button>
+            <%= link_to "Sí", petfound_path(@petfound), class: "btn btn-primary btn-sm me-4 text-white", data: { turbo_method: :delete }, style: "font-size: 1rem;"%>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  <%# fin modal %>
+
 
   <!-- Carrusel de imágenes con 3 imágenes simultáneas -->
   <div class="row mb-3">
