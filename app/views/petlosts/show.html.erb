@@ -84,17 +84,34 @@
         </div>
       </div>
 
-      <div class="d-flex justify-content-center mt-3">
-        <% if @petlost.user && @petlost.user.phone_number.present? %>
-          <%= link_to "https://wa.me/#{@petlost.user.phone_number}?text=Hola.%20Vengo%20de%20Encuentra%20Mascotas.%20Tengo%20información%20sobre%20tu%20mascota%20#{@petlost.name}:%20https://www.encuentramascotas.org/#{url_for(@petlost)}",
-                      class: "btn btn-success d-flex align-items-center justify-content-center px-4 py-2 text-white",
-                      target: "_blank" do %>
-            <i class="fab fa-whatsapp me-2" style="font-size: 1.5rem;"></i>
-            <span style="font-size: 1.2rem;">Contactar por WhatsApp</span>
+      <div class="d-flex justify-content-between mt-3">
+        <div>
+            <% if @petlost.user && @petlost.user.phone_number.present? %>
+            <%= link_to "https://wa.me/#{@petlost.user.phone_number}?text=Hola.%20Vengo%20de%20Encuentra%20Mascotas.%20Tengo%20información%20sobre%20tu%20mascota%20#{@petlost.name}:%20https://www.encuentramascotas.org/#{url_for(@petlost)}",
+                        class: "btn btn-success d-flex align-items-center justify-content-center px-4 py-2 text-white mx-2",
+                        target: "_blank" do %>
+              <i class="fab fa-whatsapp me-2" style="font-size: 1.5rem;"></i>
+              <span style="font-size: 1.2rem;">Contactar por WhatsApp</span>
+            <% end %>
           <% end %>
-        <% end %>
-        <%= link_to "Download", download_petlosts_path(@petlost) %>
-        <%= link_to "Preview", preview_petlosts_path(@petlost) %>
+        </div>
+
+        <div class="d-flex">
+
+          <div class="d-flex align-items-center me-3">
+            <h1 class="text-white mb-1" style="font-size: 2rem;">Cartel de búsqueda:</h1>
+          </div>
+
+          <%= link_to download_petlosts_path(@petlost), class: "btn btn-success d-flex align-items-center justify-content-center px-4 py-2 text-white mx-2" do %>
+            <i class="fas fa-download me-2" style="font-size: 1.5rem;"></i>
+            <span style="font-size: 1.2rem;">Descargar</span>
+          <% end %>
+
+          <%= link_to preview_petlosts_path(@petlost), class: "btn btn-success d-flex align-items-center justify-content-center px-4 py-2 text-white mx-2" do %>
+            <i class="fas fa-eye me-2" style="font-size: 1.5rem;"></i>
+            <span style="font-size: 1.2rem;"> Vista previa</span>
+          <% end %>
+        </div>
       </div>
 
     </div>
