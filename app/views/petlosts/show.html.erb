@@ -1,10 +1,12 @@
+<%= stylesheet_link_tag 'pet/showstyle', media: 'all', 'data-turbolinks-track': 'reload' %>
+
 <body style="background: linear-gradient(to bottom, #0079c2, #ffffff);">
   <!-- Contenedor principal -->
   <div class="container-fluid mt-1 p-2 rounded" style="max-width: 1200px; margin: 0 auto;">
     <!-- Fila de navegación -->
     <div class="row align-items-center mb-5">
       <div class="col text-start">
-        <%= link_to root_path, class: "btn btn-primary text-white align-items-center justify-content-center me-2" do %>
+        <%= link_to petlosts_path, class: "btn btn-primary text-white align-items-center justify-content-center me-2" do %>
           <%= image_tag 'icons8-home.png', alt: 'Volver', width: 32, height: 32, class: 'me-2' %> Volver
         <% end %>
       </div>
@@ -12,7 +14,12 @@
       <!-- Columna central para el nombre del perro y la fecha -->
       <div class="col text-center">
         <h1 class="text-white mb-1" style="font-size: 2.5rem;"><%= @petlost.name %></h1>
-        <p class="text-white mb-0" style="font-size: 1.5rem;">Perdido el: <%= @petlost.day_lost %></p>
+        <p class="text-white mb-0" style="font-size: 1.5rem;">Perdido el <%= @petlost.day_lost.strftime("%d/%m/%Y") %></p>
+          <% current_date = Date.today %>
+          <% @petlost.day_lost  %>
+          <% conteo_dias = (current_date - @petlost.day_lost).to_i %>
+          <% dia = conteo_dias > 1 ? "días" : "día" %>
+        <p class="text-white mb-0">Lleva <%=conteo_dias%> <%=dia%> lejos de casa</p>
       </div>
 
       <!-- Columna derecha para botones -->
@@ -118,15 +125,22 @@
         <!-- Tarjeta Datos del Perro -->
         <div class="mt-2 p-3 shadow rounded-lg bg-white w-100" style="border-radius: 20px; box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.3);">
           <div class="row align-items-center">
-            <div class="col-10 text-start ps-3">
-              <h6 class="mb-1" style="font-size: 1rem; color: #0079c1;">Datos del perro</h6>
-              <p class="mb-1" style="font-size: 0.8rem;">
-                <i class="fas fa-paw me-2" style="color: #0079c1;"></i>
-                <strong style="color: #0079c1;">Raza:</strong> <span style="font-weight: normal;"><%= @petlost.breed %></span>
-              </p>
+            <div class="col-10 text-start ps-3 info-group">
+              <h6 class="mb-1" style="font-size: 1rem; color: #0079c1;">Datos de la mascota</h6>
+
+              <div class="d-flex align-items-center info-item">
+                <div>
+                  <i class="fas fa-paw me-2"></i>
+                </div>
+                <div class="d-flex flex-column">
+                  <p class="mb-1" style="font-size: 0.8rem;"><strong style="color: #0079c1;">Raza:</strong></p>
+                  <span style="font-weight: normal;"><%= @petlost.breed %></span>
+                </div>
+              </div>
+
               <p class="mb-1" style="font-size: 0.8rem;">
                 <i class="fas fa-calendar-alt me-2" style="color: #0079c1;"></i>
-                <strong style="color: #0079c1;">Perdido el:</strong> <span style="font-weight: normal;"><%= @petlost.day_lost %></span>
+                <strong style="color: #0079c1;">Perdido el:</strong> <span style="font-weight: normal;"><%= @petlost.day_lost.strftime("%d/%m/%Y") %></span>
               </p>
               <p class="mb-0" style="font-size: 0.8rem;">
                 <i class="fas fa-map-marker-alt me-2" style="color: #0079c1;"></i>
