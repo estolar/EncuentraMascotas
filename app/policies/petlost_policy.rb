@@ -40,4 +40,8 @@ class PetlostPolicy < ApplicationPolicy
     true
   end
 
+  def rescued_pets?
+    true  # O añade lógica de autorización si es necesario
+  end
+
 end
