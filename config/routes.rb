@@ -16,6 +16,8 @@ Rails.application.routes.draw do
       get :nearby
       get :loading_screen
       get :user_pets_losts
+      get :download
+      get :preview
     end
   end
 

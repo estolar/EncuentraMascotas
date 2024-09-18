@@ -40,4 +40,11 @@ class PetlostPolicy < ApplicationPolicy
     true
   end
 
+  def download?
+    record.user == user
+  end
+
+  def preview?
+    record.user == user
+  end
 end
