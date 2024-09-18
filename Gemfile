@@ -72,3 +72,5 @@ end
 gem 'cloudinary'
 gem 'kaminari', '~> 1.2.2'
 gem "pundit"
+gem "prawn", "~> 2.4"
+gem 'open-uri'
