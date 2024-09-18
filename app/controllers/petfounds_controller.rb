@@ -1,4 +1,5 @@
 class PetfoundsController < ApplicationController
+  skip_before_action :authenticate_user!, only: [:index, :show]
   def index
     @petfounds = policy_scope(Petfound)
 
@@ -68,7 +69,7 @@ class PetfoundsController < ApplicationController
   end
 
   def user_pets_founds
-    authorize :petlost, :loading_screen?
+    authorize :petlost, :user_pets_founds?
     @petfounds = Petfound.all
     @petfounds = current_user.petfound.page(params[:page]).per(6)
   end

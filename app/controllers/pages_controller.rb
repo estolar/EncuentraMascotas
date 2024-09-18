@@ -1,5 +1,5 @@
 class PagesController < ApplicationController
-  skip_before_action :authenticate_user!, only: [:home]
+  skip_before_action :authenticate_user!, only: [:home, :app_info, :terms, :privacy]
 
   def home
     authorize :page, :home?
@@ -11,11 +11,14 @@ class PagesController < ApplicationController
   end
   # @found_pets = Petfound.all # Carga todas las mascotas encontradas
   def app_info
+    authorize :page, :app_info?
   end
 
   def terms
+    authorize :page, :terms?
   end
 
   def privacy
+    authorize :page, :privacy?
   end
 end
