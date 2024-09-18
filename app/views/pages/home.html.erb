@@ -205,7 +205,7 @@
                   <div class="rating">
                     <% rating_value = review.rating || 0 %> <!-- Asignar 0 si el rating es nil -->
                     <% 5.times do |i| %>
-                      <i class="fa fa-star <%= 'text-warning' if i < rating_value %>"></i> <!-- Pintar estrellas -->
+                      <i class="fa fa-bone <%= 'text-warning' if i < rating_value %>"></i> <!-- Pintar estrellas -->
                     <% end %>
                   </div>
                 </div>
@@ -219,4 +219,3 @@
     </turbo-frame>
   </section>
 </div>
-
