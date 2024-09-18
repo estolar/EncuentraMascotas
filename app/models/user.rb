@@ -6,4 +6,5 @@ class User < ApplicationRecord
   has_many :petlost
   has_many :petfound
   has_one_attached :photo
+  has_many :reviews
 end

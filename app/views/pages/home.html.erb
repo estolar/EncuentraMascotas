@@ -179,8 +179,6 @@
 </div>
 
 
-
-
 <!-- Reviews de Usuarios -->
 <div class="fondo-rosa-section">
   <section class="container mt-5">
@@ -192,13 +190,13 @@
           <div class="col-md-4" data-aos="fade-up" data-aos-delay="<%= index * 100 %>">
             <div class="card mb-4 shadow-sm">
               <div class="card-body">
-                <h5 class="card-title"><%= review.user_name %></h5> <!-- review.user_name debe existir -->
-                <p class="card-text"><%= review.content %></p> <!-- review.content debe existir -->
-                <div class="rating">
-                  <% review.stars.times do %>
-                    <i class="fa fa-star"></i>
-                  <% end %>
-                </div>
+                <h5 class="card-title"><%= review.user.name %></h5> <!-- Nombre del usuario -->
+                <% if review.user.photo.attached? %> <!-- Foto del usuario -->
+                  <%= image_tag review.user.photo, class: "img-fluid rounded-circle", style: "width: 70px; height: 70px; object-fit: cover; box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.3);" %>
+                <% else %>
+                  <i class="fas fa-user-circle" style="font-size: 3rem; color: #0079c1;"></i>
+                <% end %>
+                <p class="card-text mt-2"><%= review.content %></p> <!-- Contenido de la review -->
               </div>
             </div>
           </div>
