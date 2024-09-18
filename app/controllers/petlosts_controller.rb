@@ -35,26 +35,22 @@ class PetlostsController < ApplicationController
   end
 
   def index
-    @petlosts = policy_scope(Petlost)
-
+    @petlosts = policy_scope(Petlost).where(finded: false) # Filtrar solo los que no han sido encontrados
     if params[:raza].present?
       @petlosts = @petlosts.where("breed ILIKE ?", "%#{params[:raza]}%")
     end
-
     if params[:color].present?
       @petlosts = @petlosts.where("color ILIKE ?", "%#{params[:color]}%")
     end
-
     if params[:signs].present?
       @petlosts = @petlosts.where("signs ILIKE ?", "%#{params[:signs]}%")
     end
-
     if params[:day_lost].present?
       @petlosts = @petlosts.where(day_lost: params[:day_lost])
     end
-
     @petlosts = @petlosts.page(params[:page]).per(6)
   end
+
 
   def show
     @petlost = Petlost.find(params[:id])
@@ -84,6 +80,11 @@ class PetlostsController < ApplicationController
     authorize :petlost, :user_pets_losts?
     @petlosts = Petlost.all
     @petlosts = current_user.petlost.page(params[:page]).per(6)
+  end
+
+  def rescued_pets
+    @petlosts = policy_scope(Petlost).where(finded: true).page(params[:page]).per(6) # Solo los que han sido rescatados
+    authorize :petlost, :rescued_pets? # Asegúrate de autorizar la acción si usas Pundit
   end
 
   private
