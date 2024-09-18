@@ -58,7 +58,9 @@
 <!-- Cards de Mascotas Perdidas -->
 <div class="fondo-azul-section">
   <section class="container mt-5">
-    <h2 class="text-center section-title" data-aos="fade-up"><i class="fa-solid fa-paw"></i> Mascotas Perdidas <i class="fa-solid fa-paw"></i></h2>
+    <h2 class="text-center section-title" data-aos="fade-up">
+      <i class="fa-solid fa-paw"></i> Mascotas Perdidas <i class="fa-solid fa-paw"></i>
+    </h2>
     <div class="row g-3 mb-5"> <!-- Agregamos g-3 para espacio entre las tarjetas -->
       <% if @petlosts.present? %>
         <% @petlosts.each_with_index do |pet, index| %> <!-- Añadimos index para controlar el retraso -->
@@ -82,10 +84,25 @@
               <% end %>
               <div class="card-body">
                 <h5 class="card-title"><%= pet.name %></h5>
-                <p class="card-text"><strong>Color: </strong><%= truncate(text,length: 100) %></p>
+                <p class="card-text"><strong>Color: </strong><%= truncate(text, length: 100) %></p>
                 <p><strong>Señas:</strong> <%= pet.signs %></p>
                 <p><strong>Dirección:</strong> <%= pet.address %></p>
-                <%= link_to 'Ver más', petlost_path(pet), class: 'btn btn-success text-white' %>
+
+                <!-- Contenedor para alinear los botones -->
+                <div class="d-flex justify-content-center align-items-center mt-2">
+                  <%= link_to 'Ver más', petlost_path(pet), class: 'btn btn-success text-white' %>
+
+                  <!-- Botón Compartir -->
+                  <button class="btn btn-secondary share-button"
+                          data-title="¡Ayuda a encontrar a <%= pet.name %>!"
+                          data-text="Se ha perdido una mascota llamada <%= pet.name %> en <%= pet.address %>. Colores: <%= text %>. Señas: <%= pet.signs %>."
+                          data-url="<%= petlost_url(pet) %>"
+                          data-image-url="<%= pet.photos.attached? ? url_for(pet.photos.first) : '' %>">
+                    <i class="fa-solid fa-share-nodes"></i>
+                  </button>
+
+                </div>
+
               </div>
             </div>
           </div>
@@ -94,14 +111,9 @@
         <p>No hay mascotas perdidas disponibles.</p>
       <% end %>
     </div>
-    <div class="d-flex justify-content-center mb-5 ">
-  <div class="mx-2" data-aos="fade-up">
-    <!-- Botón Mascotas Perdidas -->
-    <%= link_to 'Mascotas Perdidas', petlosts_path, class: 'btn btn-primary custom-btn-lost' %>
-  </div>
-</div>
   </section>
 </div>
+
 
 
 
@@ -140,7 +152,9 @@
 <!-- Cards de Mascotas Encontradas -->
 <div class="fondo-azul-section">
   <section class="container mt-5">
-    <h2 class="text-center section-title" data-aos="fade-up"><i class="fa-solid fa-paw"></i> Mascotas Encontradas <i class="fa-solid fa-paw"></i></h2>
+    <h2 class="text-center section-title" data-aos="fade-up">
+      <i class="fa-solid fa-paw"></i> Mascotas Encontradas <i class="fa-solid fa-paw"></i>
+    </h2>
     <div class="row mb-5">
       <% if @petfounds.present? %> <!-- Evitar errores si no hay mascotas encontradas -->
         <% @petfounds.each_with_index do |pet, index| %> <!-- Añadimos index para el retraso dinámico -->
@@ -155,8 +169,19 @@
               <% end %>
               <div class="card-body">
                 <h5 class="card-title"><%= pet.breed %></h5> <!-- Mostrando la raza del perro -->
-                <p class="card-text"><%= truncate(pet.details, length: 100) %></p>
-                <p><strong>Color:</strong> <%= pet.color %></p>
+
+                <% if pet.color.present? %>
+                  <% colors_array = JSON.parse(pet.color).reject(&:blank?) %>
+                  <% if colors_array.size == 1 %>
+                    <% color_text = colors_array.join %>
+                  <% else %>
+                    <% color_text = colors_array.join(", ") %>
+                  <% end %>
+                <% else %>
+                  <% color_text = "No especificado" %>
+                <% end %>
+
+                <p class="card-text"><strong>Color:</strong> <%= color_text %></p>
                 <p><strong>Señas:</strong> <%= pet.signs %></p>
                 <p><strong>Dirección:</strong> <%= pet.address %></p>
                 <!-- Agregar link si es necesario -->
@@ -169,43 +194,54 @@
         <p>No hay mascotas encontradas disponibles.</p> <!-- Mensaje alternativo si no hay datos -->
       <% end %>
     </div>
-    <div class="d-flex justify-content-center mb-5 ">
-  <div class="mx-2" data-aos="fade-up">
+
     <!-- Botón Mascotas Encontradas -->
-    <%= link_to 'Mascotas Encontradas', petfounds_path, class: 'btn btn-primary custom-btn-found' %>
-  </div>
-</div>
+    <div class="d-flex justify-content-center mb-5">
+      <div class="mx-2" data-aos="fade-up">
+        <%= link_to 'Mascotas Encontradas', petfounds_path, class: 'btn btn-primary custom-btn-found' %>
+      </div>
+    </div>
   </section>
 </div>
-
-
 
 
 <!-- Reviews de Usuarios -->
 <div class="fondo-rosa-section">
   <section class="container mt-5">
     <h2 class="text-center section-title" data-aos="fade-up"><i class="fa-solid fa-paw"></i> Encontraron a sus mascotas <i class="fa-solid fa-paw"></i></h2>
-    <div class="row">
-      <% if @reviews.present? %> <!-- Evitar errores si no hay reseñas -->
-        <% @reviews.each_with_index do |review, index| %> <!-- Añadimos index para retraso dinámico -->
-          <!-- Animación de cada tarjeta con retraso dinámico -->
-          <div class="col-md-4" data-aos="fade-up" data-aos-delay="<%= index * 100 %>">
-            <div class="card mb-4 shadow-sm">
-              <div class="card-body">
-                <h5 class="card-title"><%= review.user_name %></h5> <!-- review.user_name debe existir -->
-                <p class="card-text"><%= review.content %></p> <!-- review.content debe existir -->
-                <div class="rating">
-                  <% review.stars.times do %>
-                    <i class="fa fa-star"></i>
+
+    <turbo-frame id="reviews_frame">
+      <div class="row">
+        <% if @reviews.present? %> <!-- Evitar errores si no hay reseñas -->
+          <% @reviews.each_with_index do |review, index| %> <!-- Añadimos index para retraso dinámico -->
+            <div class="col-md-4" data-aos="fade-up" data-aos-delay="<%= index * 100 %>">
+              <div class="card mb-4 shadow-sm">
+                <div class="card-body text-center">
+                  <!-- Mostrar la foto del usuario -->
+                  <% if review.user.photo.attached? %>
+                    <%= image_tag review.user.photo, class: "img-fluid rounded-circle mb-3", style: "width: 80px; height: 80px; object-fit: cover;" %>
+                  <% else %>
+                    <i class="fas fa-user-circle" style="font-size: 3rem; color: #0079c1;"></i>
                   <% end %>
+
+                  <h5 class="card-title"><%= review.user.name %></h5> <!-- Mostrar el nombre del usuario -->
+                  <p class="card-text"><%= review.content %></p> <!-- Mostrar la opinión -->
+
+                  <!-- Mostrar las estrellas de la calificación -->
+                  <div class="rating">
+                    <% rating_value = review.rating || 0 %> <!-- Asignar 0 si el rating es nil -->
+                    <% 5.times do |i| %>
+                      <i class="fa fa-bone <%= 'text-warning' if i < rating_value %>"></i> <!-- Pintar estrellas -->
+                    <% end %>
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
+          <% end %>
+        <% else %>
+          <p>No hay reseñas disponibles.</p> <!-- Mensaje alternativo si no hay reseñas -->
         <% end %>
-      <% else %>
-        <p>No hay reseñas disponibles.</p> <!-- Mensaje alternativo si no hay reseñas -->
-      <% end %>
-    </div>
+      </div>
+    </turbo-frame>
   </section>
 </div>

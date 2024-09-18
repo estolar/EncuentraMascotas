@@ -47,4 +47,8 @@ class PetlostPolicy < ApplicationPolicy
   def preview?
     record.user == user
   end
+  def rescued_pets?
+    true  # O añade lógica de autorización si es necesario
+  end
+
 end

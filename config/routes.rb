@@ -18,6 +18,7 @@ Rails.application.routes.draw do
       get :user_pets_losts
       get :download
       get :preview
+      get :rescued_pets
     end
   end
 
@@ -35,5 +36,6 @@ Rails.application.routes.draw do
 
   # Ruta para la vista detallada de la app Encuentra Mascotas
   get 'app_info', to: 'pages#app_info', as: :app_info
+  resources :reviews, only: [:create]  # Solo habilitamos la acción 'create'
 
 end
