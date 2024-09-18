@@ -27,9 +27,9 @@
           <% end %>
 
           <% if policy(@petlost).destroy? %>
-            <%= link_to petlost_path(@petlost), class: "btn btn-primary btn-sm me-4 text-white", data: { turbo_method: :delete, turbo_confirm: "¿Seguro que quieres eliminar?" }, style: "font-size: 1rem;" do %>
-              <i class="fa-regular fa-trash-can me-2"></i> Eliminar
-            <% end %>
+            <button type="button" class="btn btn-primary btn-md text-white" id="confirmDeleteButton" data-bs-toggle="modal" data-bs-target="#confirmDeleteModal">
+              <i class="fa-solid fa-dog me-2"></i> Eliminar
+            </button>
           <% end %>
 
           <% if policy(@petlost).update? %>
@@ -164,6 +164,34 @@
   </div> <!-- Cierre del contenedor principal -->
 
   <!-- Modales -->
+
+<%# prueb %>
+
+<div class="modal fade" id="confirmDeleteModal" tabindex="-1" aria-labelledby="confirmDeleteModal" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <!-- Encabezado del modal -->
+        <div class="modal-header">
+          <h5 class="modal-title" id="confirmModalLabel">Confirmación</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+        </div>
+        <!-- Cuerpo del modal -->
+        <div class="modal-body">
+          <p>¿Eliminar a tu mascota?</p>
+        </div>
+        <!-- Pie del modal -->
+        <div class="modal-footer">
+          <!-- Asegúrate de que todos los botones tienen la misma clase de tamaño y estilo -->
+          <button type="button" class="btn border border-dark" data-bs-dismiss="modal">No</button>
+          <%= link_to "Sí", petlost_path(@petlost), class: "btn btn-primary btn-sm me-4 text-white", data: { turbo_method: :delete }, style: "font-size: 1rem;"%>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<%# fin prueba %>
+
+
   <!-- Modal de Confirmación -->
   <div class="modal fade" id="confirmModal" tabindex="-1" aria-labelledby="confirmModalLabel" aria-hidden="true">
     <div class="modal-dialog">
@@ -328,3 +356,5 @@
     }
   </style>
 </body>
+
+<% console %>

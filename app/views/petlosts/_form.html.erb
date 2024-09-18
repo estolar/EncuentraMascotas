@@ -1,6 +1,6 @@
 <%= stylesheet_link_tag 'pet/form', media: 'all', 'data-turbolinks-track': 'reload' %>
 
-<%= simple_form_for(petlost, html: { data: { controller: "alert", action: "submit->alert#showAlert" } }) do |f| %>
+<%= simple_form_for(petlost, html: { data: { controller: "alert", action: "turbo:submit-end->alert#showAlert", mode: petlost.new_record? ? "new" : "edit" } }) do |f| %>
 
   <div class="container-large">
     <div class="set">
@@ -95,7 +95,7 @@
 
   <div class="custom-buttoms-form">
     <%# <button data-controller='alert' data-action="click->alert#showAlert">Click me</button> %>
-    <%= link_to "Regresar", root_path, id: "back-home", class:"button-customed" %>
+    <%= link_to "Regresar", petlosts_path, id: "back-home", class:"button-customed" %>
     <%= f.submit "Enviar", id: "submit-form", class:"button-customed"%>
   </div>
 <% end %>
