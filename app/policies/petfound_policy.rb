@@ -28,5 +28,8 @@ class PetfoundPolicy < ApplicationPolicy
     record.user == user
   end
 
+  def user_pets_founds?
+    true
+  end
 
 end
