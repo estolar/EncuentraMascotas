@@ -156,27 +156,78 @@
         <!-- Tarjeta Datos del Perro -->
         <div class="mt-2 p-3 shadow rounded-lg bg-white w-100" style="border-radius: 20px; box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.3);">
           <div class="row align-items-center">
-            <div class="col-10 text-start ps-3 info-group">
               <h6 class="mb-1" style="font-size: 1rem; color: #0079c1;">Datos de la mascota</h6>
+            <div class="col-10 text-start ps-3 info-group">
 
-              <div class="d-flex align-items-center info-item">
-                <div>
-                  <i class="fas fa-paw me-2"></i>
-                </div>
-                <div class="d-flex flex-column">
-                  <p class="mb-1" style="font-size: 0.8rem;"><strong style="color: #0079c1;">Raza:</strong></p>
-                  <span style="font-weight: normal;"><%= @petlost.breed %></span>
+              <div class="info-item">
+                <i class="fas fa-map-marker-alt me-2"></i>
+                <div class="d-flex flex-column container-details">
+                  <p class="m-0 text"><strong>Especie</strong></p>
+                  <p class= "m-0"><%= @petlost.type_pet %></p>
                 </div>
               </div>
 
-              <p class="mb-1" style="font-size: 0.8rem;">
-                <i class="fas fa-calendar-alt me-2" style="color: #0079c1;"></i>
-                <strong style="color: #0079c1;">Perdido el:</strong> <span style="font-weight: normal;"><%= @petlost.day_lost.strftime("%d/%m/%Y") %></span>
-              </p>
-              <p class="mb-0" style="font-size: 0.8rem;">
-                <i class="fas fa-map-marker-alt me-2" style="color: #0079c1;"></i>
-                <strong style="color: #0079c1;">Se perdió en:</strong> <span style="font-weight: normal;"><%= @petlost.address %></span>
-              </p>
+              <div class="info-item">
+                <i class="fas fa-paw me-2"></i>
+                <div class="d-flex flex-column container-details">
+                  <p class="m-0 text"><strong>Raza:</strong></p>
+                  <p class= "m-0"><%= @petlost.breed %></p>
+                </div>
+              </div>
+
+              <div class="info-item">
+                <i class="fas fa-map-marker-alt me-2"></i>
+                <div class="d-flex flex-column container-details">
+                  <p class="m-0 text"><strong>Género</strong></p>
+                  <p class= "m-0"><%= @petlost.gender %></p>
+                </div>
+              </div>
+
+              <div class="info-item">
+                <i class="fas fa-calendar-alt me-2"></i>
+                <div class="d-flex flex-column container-details">
+                  <p class="m-0 text"><strong>Perdido el</strong></p>
+                  <p class= "m-0"><%= @petlost.day_lost.strftime("%d/%m/%Y") %></p>
+                </div>
+              </div>
+
+              <div class="info-item">
+                <i class="fas fa-map-marker-alt me-2"></i>
+                <div class="d-flex flex-column container-details">
+                  <p class="m-0 text"><strong>Se perdió en</strong></p>
+                  <p class= "m-0"><%= @petlost.address.capitalize %></p>
+                </div>
+              </div>
+
+              <div class="info-item">
+                <i class="fas fa-palette me-2"></i>
+                <%# <i class="fas fa-map-marker-alt me-2"></i> %>
+                <div class="d-flex flex-column container-details">
+                  <p class="m-0 text"><strong>Color</strong></p>
+                  <% if @petlost.color.present? %>
+                    <% colors_array = JSON.parse(@petlost.color).reject(&:blank?) %>
+                  <p class="mb-0"><%= colors_array.join(", ") %></p>
+                  <% end %>
+                </div>
+              </div>
+
+              <div class="info-item">
+                <i class="fas fa-map-marker-alt me-2"></i>
+                <div class="d-flex flex-column container-details">
+                  <p class="m-0 text"><strong>Estado</strong></p>
+                  <% status_pet = @petlost.finded == false ? "Encontrado!" : "Perdido" %>
+                  <p class= "m-0"><%= status_pet %></p>
+                </div>
+              </div>
+
+              <div class="info-item">
+                <i class="fas fa-map-marker-alt me-2"></i>
+                <div class="d-flex flex-column container-details">
+                  <p class="m-0 text"><strong>Señas particulares</strong></p>
+                  <p class= "m-0"><%= @petlost.signs %></p>
+                </div>
+              </div>
+
             </div>
             <div class="col-2 text-center">
               <i class="fas fa-dog" style="font-size: 2.5rem; color: #0079c1;"></i>
