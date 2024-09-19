@@ -1,4 +1,4 @@
-<body style="background: linear-gradient(to bottom, #f7c6c7, #ffffff);">
+<div class="fondo-rosa-section">
   <div class="container mt-5">
     <!-- Botones de navegación superior -->
     <div class="d-flex justify-content-between mb-4">
@@ -10,7 +10,7 @@
       <div>
         <%= link_to new_petfound_path, class: 'btn btn-success text-white ms-2' do %>
           <i class="fa-solid fa-dog me-2"></i>
-          Encontre una mascota
+          Encontré una mascota
         <% end %>
       </div>
     </div>
@@ -66,7 +66,7 @@
                       <div class="carousel-inner">
                         <% petfound.photos.each_with_index do |photo, index| %>
                           <div class="carousel-item <%= 'active' if index == 0 %>">
-                            <%= cl_image_tag photo.key, class: 'd-block w-100', style: 'height: 200px; object-fit: cover;', alt: petfound.details %>
+                            <%= cl_image_tag photo.key, class: 'd-block w-100 pet-image', style: 'height: 200px; object-fit: cover;', alt: petfound.details %>
                           </div>
                         <% end %>
                       </div>
@@ -88,6 +88,21 @@
                   <div class="card-body d-flex flex-column">
                     <h5 class="card-title mb-2"><%= petfound.details %></h5>
 
+                    <div class="container-details d-flex justify-content-center mb-2">
+                      <span class="m-0 badge" style="background-color: #f7c6c7; color:#000000; line-height: 1.5"><%= petfound.type_pet %></span>
+                      <span class="m-0 badge" style="background-color: #0079c1; color:#FFFFFF; line-height: 1.5"><%= petfound.gender %></span>
+                    </div>
+                    <p class="card-text mb-1">
+                      <span class="fw-bold" style="color: #00629D;">Reporte:</span>
+                      <% if petfound.facts=="Le estoy dando refugio" %>
+                        <span class="fw-normal text-dark"><%= petfound.facts %> desde el <%= petfound.day_found.strftime("%d/%m/%Y") %></span>
+                      <% elsif petfound.facts=="Iba pasando por la zona y lo vi" %>
+                        <span class="fw-normal text-dark"><%= petfound.facts %> el <%= petfound.day_found.strftime("%d/%m/%Y") %></span>
+                      <% elsif petfound.facts=="Otras circunstancias" %>
+                        <span class="fw-normal text-dark"><%= petfound.facts %> - Fecha: <%= petfound.day_found.strftime("%d/%m/%Y") %></span>
+                      <% end %>
+                    </p>
+
                     <p class="card-text mb-1">
                       <span class="fw-bold" style="color: #00629D;">Raza:</span>
                       <span class="fw-normal text-dark"><%= petfound.breed %></span>
@@ -104,11 +119,6 @@
                     <p class="card-text mb-1">
                       <span class="fw-bold" style="color: #00629D;">Señas particulares:</span>
                       <span class="fw-normal text-dark"><%= petfound.signs %></span>
-                    </p>
-
-                    <p class="card-text mb-1">
-                      <span class="fw-bold" style="color: #00629D;">Encontrado el:</span>
-                      <span class="fw-normal text-dark"><%= petfound.day_found %></span>
                     </p>
 
                     <p class="card-text mb-1">
@@ -139,4 +149,4 @@
       </div>
     </div>
   </div>
-</body>
+</div>
