@@ -41,11 +41,11 @@ class PetlostPolicy < ApplicationPolicy
   end
 
   def download?
-    record.user == user
+    true
   end
 
   def preview?
-    record.user == user
+    true
   end
   def rescued_pets?
     true  # O añade lógica de autorización si es necesario
