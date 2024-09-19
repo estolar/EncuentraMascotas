@@ -15,4 +15,16 @@ class PagePolicy < ApplicationPolicy
   def home?
     true
   end
+
+  def app_info?
+    true
+  end
+
+  def terms?
+    true
+  end
+
+  def privacy?
+    true
+  end
 end
