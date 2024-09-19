@@ -1,13 +1,26 @@
 .title{
   color: #0079c1;
-  font-size: 50px;
+  font-size: 40px;
   margin-bottom: 2px;
 }
+
+.title2{
+  color: #0079c1;
+  font-size: 25px;
+  margin-bottom: 2px;
+}
+
 
 .subtitle{
   color: black;
   margin: 0px;
   font-size: 25px;
+}
+
+.subtitle-2{
+  color: black;
+  margin: 0px;
+  font-size: 18px;
 }
 
 .info-group {
@@ -176,4 +189,33 @@
 
 .list_thumb:hover .hover_text {
   opacity: 0;
+}
+
+.border-gradient {
+  position: relative;
+  padding: 10px;
+  border: none; /* Sin bordes tradicionales */
+  // background-color: white; /* Ajusta el color de fondo si es necesario */
+
+  /* Box shadow para simular el borde con gradiente */
+  box-shadow: inset 0 3px 3px -3px rgba(250, 217, 217, 1),  /* Parte superior del borde */
+              inset 0 -3px 3px -3px rgba(250, 217, 217, 1); /* Parte inferior del borde */
+
+  /* Añade gradiente lateral */
+  &::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    border-top: 2px solid transparent;
+    border-bottom: 2px solid transparent;
+    // background: linear-gradient(to right, rgba(250, 217, 217, 0), rgba(250, 217, 217, 1), rgba(250, 217, 217, 0));
+    pointer-events: none; /* Permite la interacción con el contenido */
+  }
+}
+
+.fondo-rosa-section {
+  padding-top: 5px;
 }

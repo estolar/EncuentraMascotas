@@ -28,6 +28,7 @@
           </div>
           <div class="card-body">
             <%= form_with url: petlosts_path, method: :get, local: true do %>
+
               <div class="form-group mb-2">
                 <%= label_tag :raza, "Raza" %>
                 <%= text_field_tag :raza, params[:raza], class: 'form-control' %>
@@ -101,6 +102,16 @@
                   <div class="card-body d-flex flex-column">
                     <h5 class="card-title mb-2"><%= petlost.name %></h5>
 
+                    <div class="container-details d-flex justify-content-center mb-2">
+                      <span class="m-0 badge" style="background-color: #f7c6c7; color:#000000; line-height: 1.5"><%= petlost.type_pet %></span>
+                      <span class="m-0 badge" style="background-color: #0079c1; color:#FFFFFF; line-height: 1.5"><%= petlost.gender %></span>
+                    </div>
+
+                    <p class="card-text mb-1">
+                      <span class="fw-bold" style="color: #00629D;">Perdido el:</span>
+                      <span class="fw-normal text-dark"><%= petlost.day_lost.strftime("%d/%m/%Y") %></span>
+                    </p>
+
                     <p class="card-text mb-1">
                       <span class="fw-bold" style="color: #00629D;">Raza:</span>
                       <span class="fw-normal text-dark"><%= petlost.breed %></span>
@@ -117,11 +128,6 @@
                     <p class="card-text mb-1">
                       <span class="fw-bold" style="color: #00629D;">Señas particulares:</span>
                       <span class="fw-normal text-dark"><%= petlost.signs %></span>
-                    </p>
-
-                    <p class="card-text mb-1">
-                      <span class="fw-bold" style="color: #00629D;">Perdido el:</span>
-                      <span class="fw-normal text-dark"><%= petlost.day_lost %></span>
                     </p>
 
                     <p class="card-text mb-1">
