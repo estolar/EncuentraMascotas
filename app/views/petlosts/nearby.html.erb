@@ -1,3 +1,4 @@
+<!-- app/views/petlosts/nearby.html.erb -->
 <style>
   body {
     background-image: url('<%= asset_path("fondo_map.jpg") %>');
@@ -44,6 +45,14 @@
     cursor: pointer;
   }
 
+  /* Estilo para los marcadores de mascotas encontradas */
+  .marker-found {
+    background-size: cover;
+    width: 40px;
+    height: 40px;
+    cursor: pointer;
+  }
+
   /* Estilo para las imágenes en los popups */
   .popup-image {
     width: 100%;
@@ -80,7 +89,40 @@
     color: #333;
   }
 
-  /* Responsive Design para dispositivos móviles */
+  /* Estilos para la leyenda */
+  .map-legend {
+    position: absolute;
+    bottom: 30px; /* Ajusta la posición según tus preferencias */
+    left: 10px;
+    background-color: rgba(255, 255, 255, 0.8);
+    padding: 10px;
+    border-radius: 5px;
+    font-family: Arial, sans-serif;
+    z-index: 1001; /* Asegúrate de que esté por encima del mapa */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+
+  .map-legend h4 {
+    margin: 0 0 5px 0;
+    font-size: 14px;
+    text-align: center;
+  }
+
+  .legend-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 5px;
+  }
+
+  .legend-icon {
+    width: 20px;
+    height: 20px;
+    background-size: contain;
+    background-repeat: no-repeat;
+    margin-right: 8px;
+  }
+
+  /* Opcional: ajustar el tamaño en dispositivos móviles */
   @media (max-width: 600px) {
     .popup-card {
       width: 120px;
@@ -108,8 +150,26 @@
       transform: translateX(150px);
       width: 200px;
     }
+
+    .map-legend {
+      bottom: 20px;
+      left: 5px;
+      padding: 8px;
+    }
+
+    .map-legend h4 {
+      font-size: 12px;
+    }
+
+    .legend-icon {
+      width: 16px;
+      height: 16px;
+      margin-right: 6px;
+    }
   }
 </style>
+
+<% @petfounds = Petfound.all %> <!-- Consultar las mascotas encontradas -->
 
 <div class="container my-5">
   <!-- Encabezado con botón "Volver" y título -->
@@ -117,20 +177,38 @@
     <%= link_to petlosts_path, class: "btn btn-success btn-lg text-white d-flex align-items-center justify-content-center" do %>
       <%= image_tag 'icons8-home.png', alt: 'Volver', width: 32, height: 32 %>
     <% end %>
-    <h1 class="text-center flex-grow-1 fw-bold mb-0">¡Ayudalos a volver!</h1>
+    <h1 class="text-center flex-grow-1 fw-bold mb-0">¡Ayúdalos a Volver!</h1>
   </div>
 
   <!-- Imagen del gato y perro superpuesta sobre el mapa -->
   <%= image_tag 'gato_form.png', alt: 'Gato sobre el mapa', class: 'gato-sobre-mapa' %>
   <%= image_tag 'dog_form.png', alt: 'Perro sobre el mapa', class: 'perro-sobre-mapa' %>
 
-  <%# <!-- Contenedor del mapa --> Aqui hacer cambios %>
-  <div class="map-container card rounded shadow mb-4" id="no-hover-card">
+  <!-- Contenedor del mapa -->
+  <div class="map-container card rounded shadow mb-4" id="no-hover-card" style="position: relative;">
     <div class="card-header">
-      <h2 class="text-center flex-grow-1 fw-bold mb-0">Mascotas perdidas cercanas</h2>
+      <h2 class="text-center flex-grow-1 fw-bold mb-0">Mascotas Perdidas y Encontradas Cercanas</h2>
     </div>
     <div class="card-body p-0">
       <div id="nearby-map" style="height: 400px; width: 100%;"></div>
+
+      <!-- Leyenda del mapa -->
+      <div class="map-legend">
+        <div class="legend-item">
+          <div class="legend-icon" style="background-image: url('<%= asset_path("icon.png") %>');"></div>
+          <h4>Mascota Perdida</h4>
+        </div>
+        <div class="legend-item">
+          <div class="legend-icon" style="background-image: url('<%= asset_path("heart.png") %>');"></div>
+          <h4>Mascota Encontrada</h4>
+        </div>
+        <div class="legend-item">
+          <div class="legend-icon" style="background-image: url('https://docs.mapbox.com/help/demos/custom-markers-gl-js/mapbox-icon.png');"></div>
+          <h4>Tu Ubicación</h4>
+        </div>
+      </div>
+      <!-- Fin de la Leyenda -->
+
     </div>
   </div>
 </div>
@@ -162,36 +240,58 @@
         .setPopup(new mapboxgl.Popup({ anchor: 'bottom' }).setText('Estás aquí'))
         .addTo(nearbyMap);
 
-      // Añadir marcadores para las mascotas perdidas
-      <% @petlosts.each_with_index do |petlost, index| %>
-        {
-          const petlostMarker<%= index %> = document.createElement('div');
-          petlostMarker<%= index %>.className = 'marker';
-          petlostMarker<%= index %>.style.backgroundImage = 'url("<%= asset_path("heart.png") %>")';
-          petlostMarker<%= index %>.style.width = '40px';
-          petlostMarker<%= index %>.style.height = '40px';
-          petlostMarker<%= index %>.style.backgroundSize = 'contain';
-          petlostMarker<%= index %>.style.cursor = 'pointer';
+      // Función para crear marcadores
+      function createMarker(markerClass, iconPath, pet, isFound) {
+        const marker = document.createElement('div');
+        marker.className = markerClass;
+        marker.style.backgroundImage = `url("${iconPath}")`;
+        marker.style.width = '40px';
+        marker.style.height = '40px';
+        marker.style.backgroundSize = 'contain';
+        marker.style.cursor = 'pointer';
 
-          let popupContent = `
-            <div class="popup-card">
-              <% if petlost.photos.attached? && petlost.photos.first.present? %>
-                <img src="<%= url_for(petlost.photos.first) %>" alt="<%= j(petlost.name) %>" class="popup-image" onerror="this.src='<%= asset_path("default-image.png") %>'" />
-              <% else %>
-                <img src="<%= asset_path("default-image.png") %>" alt="Imagen predeterminada" class="popup-image" />
-              <% end %>
-              <div class="popup-content">
-                <strong>Mascota perdida:</strong> <%= j(petlost.name) %><br>
-                <strong>Fecha perdida:</strong> <%= petlost.day_lost.strftime('%d/%m/%Y') %><br>
-              </div>
+        let popupContent = `
+          <div class="popup-card">
+            ${pet.photos_attached && pet.photos_url ? `
+              <img src="${pet.photos_url}" alt="${isFound ? pet.details : pet.name}" class="popup-image" onerror="this.src='<%= asset_path("default-image.png") %>'" />
+            ` : `
+              <img src="<%= asset_path("default-image.png") %>" alt="Imagen predeterminada" class="popup-image" />
+            `}
+            <div class="popup-content">
+              <strong>${isFound ? 'Mascota Encontrada:' : 'Mascota Perdida:'}</strong> ${isFound ? pet.details : pet.name}<br>
+              <strong>${isFound ? 'Fecha Encontrada:' : 'Fecha Perdida:'}</strong> ${pet.date}<br>
             </div>
-          `;
+          </div>
+        `;
 
-          new mapboxgl.Marker(petlostMarker<%= index %>)
-            .setLngLat([<%= petlost.longitude %>, <%= petlost.latitude %>])
-            .setPopup(new mapboxgl.Popup({ anchor: 'bottom' }).setHTML(popupContent))
-            .addTo(nearbyMap);
-        }
+        new mapboxgl.Marker(marker)
+          .setLngLat([pet.longitude, pet.latitude])
+          .setPopup(new mapboxgl.Popup({ anchor: 'bottom' }).setHTML(popupContent))
+          .addTo(nearbyMap);
+      }
+
+      // Añadir marcadores para las mascotas perdidas
+      <% @petlosts.each do |petlost| %>
+        createMarker('marker', '<%= asset_path("icon.png") %>', {
+          name: "<%= j(petlost.name) %>",
+          photos_attached: <%= petlost.photos.attached? %>,
+          photos_url: "<%= petlost.photos.attached? && petlost.photos.first.present? ? url_for(petlost.photos.first) : asset_path("default-image.png") %>",
+          date: "<%= petlost.day_lost.strftime('%d/%m/%Y') %>",
+          longitude: <%= petlost.longitude %>,
+          latitude: <%= petlost.latitude %>
+        }, false);
+      <% end %>
+
+      // Añadir marcadores para las mascotas encontradas
+      <% @petfounds.each do |petfound| %>
+        createMarker('marker-found', '<%= asset_path("heart.png") %>', {
+          details: "<%= j(petfound.details) %>", // Usar 'details' en lugar de 'name'
+          photos_attached: <%= petfound.photos.attached? %>,
+          photos_url: "<%= petfound.photos.attached? && petfound.photos.first.present? ? url_for(petfound.photos.first) : asset_path("default-image.png") %>",
+          date: "<%= petfound.day_found.strftime('%d/%m/%Y') %>",
+          longitude: <%= petfound.longitude %>,
+          latitude: <%= petfound.latitude %>
+        }, true);
       <% end %>
 
       nearbyMap.on('load', function () {
