@@ -1,6 +1,3 @@
-<!-- Navbar -->
-<%# <%= render 'shared/navbar' %>
-
 <!-- Carrusel que ocupa todo el ancho -->
 <div id="carouselExampleCaptions" class="carousel slide" data-bs-ride="carousel" style="height: 500px;">
   <div class="carousel-indicators">
@@ -93,13 +90,14 @@
                   <%= link_to 'Ver más', petlost_path(pet), class: 'btn btn-success text-white' %>
 
                   <!-- Botón Compartir -->
-                  <button class="btn btn-secondary share-button"
-                          data-title="¡Ayuda a encontrar a <%= pet.name %>!"
-                          data-text="Se ha perdido una mascota llamada <%= pet.name %> en <%= pet.address %>. Colores: <%= text %>. Señas: <%= pet.signs %>."
-                          data-url="<%= petlost_url(pet) %>"
-                          data-image-url="<%= pet.photos.attached? ? url_for(pet.photos.first) : '' %>">
-                    <i class="fa-solid fa-share-nodes"></i>
-                  </button>
+<!-- Botón Compartir -->
+<button class="btn btn-secondary share-button"
+        data-title="¡Ayuda a encontrar a <%= pet.name %>!"
+        data-text="Hola, soy <%= pet.name %>. Soy un <%= pet.breed %> de color <%= text %>. Me perdí el <%= pet.day_lost.strftime('%d/%m/%Y') %> en <%= pet.address %>. ¡Ayúdame a volver a casa!"
+        data-url="<%= petlost_url(pet) %>"
+        data-image-url="<%= pet.photos.attached? ? url_for(pet.photos.first) : '' %>">
+  <i class="fa-solid fa-share-nodes"></i>
+</button>
 
                 </div>
 

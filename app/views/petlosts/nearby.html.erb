@@ -1,27 +1,27 @@
 <style>
   body {
-    background-image: url('<%= asset_path("fondo_map.jpg") %>');
+    /* background-image: url('<%= asset_path("fondo_map.jpg") %>');
     background-size: cover;
     background-position: center;
-    background-repeat: no-repeat;
+    background-repeat: no-repeat; */
   }
 
   .gato-sobre-mapa {
     position: absolute;
-    top: 63px;
+    top: 170px;
     left: 50%;
     transform: translateX(-520px);
-    z-index: 2;
+    z-index: 1000;
     width: 300px;
     pointer-events: none; /* Evita que la imagen interfiera con los eventos del mouse */
   }
 
   .perro-sobre-mapa {
     position: absolute;
-    top: 87px;
+    top: 200px;
     left: 50%;
     transform: translateX(300px);
-    z-index: 2;
+    z-index: 1000;
     width: 300px;
     pointer-events: none; /* Evita que la imagen interfiera con los eventos del mouse */
   }
@@ -110,14 +110,14 @@
     }
   }
 </style>
-
-<div class="container my-5">
+<div class="fondo-rosa-section">
+<div class="container mt-5">
   <!-- Encabezado con botón "Volver" y título -->
   <div class="d-flex justify-content-between align-items-center mb-4">
     <%= link_to petlosts_path, class: "btn btn-success btn-lg text-white d-flex align-items-center justify-content-center" do %>
       <%= image_tag 'icons8-home.png', alt: 'Volver', width: 32, height: 32 %>
     <% end %>
-    <h1 class="text-center flex-grow-1 fw-bold mb-0">¡Ayudalos a volver!</h1>
+    <h1 class="text-center flex-grow-1 fw-bold mt-5">¡Ayúdanos a volver!</h1>
   </div>
 
   <!-- Imagen del gato y perro superpuesta sobre el mapa -->
@@ -125,7 +125,7 @@
   <%= image_tag 'dog_form.png', alt: 'Perro sobre el mapa', class: 'perro-sobre-mapa' %>
 
   <%# <!-- Contenedor del mapa --> Aqui hacer cambios %>
-  <div class="map-container card rounded shadow mb-4" id="no-hover-card">
+  <div class="map-container card rounded shadow mt-5 mb-4" id="no-hover-card">
     <div class="card-header">
       <h2 class="text-center flex-grow-1 fw-bold mb-0">Mascotas perdidas cercanas</h2>
     </div>
@@ -225,3 +225,4 @@
     });
   });
 </script>
+</div>

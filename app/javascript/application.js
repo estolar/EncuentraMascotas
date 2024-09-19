@@ -93,27 +93,29 @@ document.addEventListener('turbo:load', function() {
   });
 });
 
-// Función para mostrar un modal personalizado para compartir
-function showShareModal(title, text, url, imageUrl) {
-  const modalHtml = `
-    <div class="custom-share-modal">
-      <h5>Compartir en:</h5>
-      <ul>
-        <li><a href="https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}" target="_blank">Facebook</a></li>
-        <li><a href="https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(url)}" target="_blank">Twitter</a></li>
-        <li><a href="https://api.whatsapp.com/send?text=${encodeURIComponent(text)} ${encodeURIComponent(url)}" target="_blank">WhatsApp</a></li>
-      </ul>
-      <button class="btn btn-secondary close-share-modal">Cerrar</button>
-    </div>
-  `;
+  // Función para mostrar un modal personalizado para compartir
+  function showShareModal(title, text, url, imageUrl) {
+    const modalHtml = `
+      <div class="custom-share-modal">
+        <h5>Compartir en:</h5>
+        <ul>
+          <li><a href="https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}&quote=${encodeURIComponent(text)}" target="_blank">Facebook</a></li>
+          <li><a href="https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(url)}" target="_blank">Twitter</a></li>
+          <li><a href="https://api.whatsapp.com/send?text=${encodeURIComponent(text)} ${encodeURIComponent(url)}" target="_blank">WhatsApp</a></li>
+          <!-- Si Instagram es relevante, los usuarios deben copiar manualmente el enlace ya que no hay un API directo -->
+          <li><a href="${encodeURIComponent(url)}" target="_blank">Copiar enlace</a></li>
+        </ul>
+        <button class="btn btn-secondary close-share-modal">Cerrar</button>
+      </div>
+    `;
 
-  const modalContainer = document.createElement('div');
-  modalContainer.classList.add('modal-overlay');
-  modalContainer.innerHTML = modalHtml;
-  document.body.appendChild(modalContainer);
+    const modalContainer = document.createElement('div');
+    modalContainer.classList.add('modal-overlay');
+    modalContainer.innerHTML = modalHtml;
+    document.body.appendChild(modalContainer);
 
-  // Cerrar el modal
-  document.querySelector('.close-share-modal').addEventListener('click', function() {
-    document.body.removeChild(modalContainer);
-  });
-};
+    // Cerrar el modal
+    document.querySelector('.close-share-modal').addEventListener('click', function() {
+      document.body.removeChild(modalContainer);
+    });
+}
