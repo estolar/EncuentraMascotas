@@ -1,4 +1,4 @@
-<body style="background: linear-gradient(to bottom, #0079c2, #ffffff);">
+<div class="fondo-azul-section">
   <div class="container mt-5">
     <div class="d-flex justify-content-between mb-4">
       <div>
@@ -79,7 +79,7 @@
                       <div class="carousel-inner">
                         <% petlost.photos.each_with_index do |photo, index| %>
                           <div class="carousel-item <%= 'active' if index == 0 %>">
-                            <%= cl_image_tag photo.key, class: 'd-block w-100', style: 'height: 200px; object-fit: cover;', alt: petlost.name %>
+                            <%= cl_image_tag photo.key, class: 'd-block w-100 card-img-top pet-image', style: 'height: 200px; object-fit: cover;', alt: petlost.name %>
                           </div>
                         <% end %>
                       </div>
@@ -151,4 +151,4 @@
       </div>
     </div>
   </div>
-</body>
+</div>
