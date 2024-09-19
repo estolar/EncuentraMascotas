@@ -1,196 +1,313 @@
-<body style="background: linear-gradient(to bottom, #0079c2, #ffffff);">
+<%= stylesheet_link_tag 'pet/showstyle', media: 'all', 'data-turbolinks-track': 'reload' %>
+
+<div class="fondo-rosa-section">
   <!-- Contenedor principal -->
-  <div class="container-fluid mt-1 p-2 rounded" style="max-width: 1200px; margin: 0 auto;">
+
+      <!-- Carrusel de imágenes con 3 imágenes simultáneas -->
+  <div class='mt-3'>
+    <div id="carouselExample" class="carousel slide" data-bs-ride="carousel">
+      <!-- Indicadores del carrusel -->
+      <div class="carousel-indicators">
+        <% total_photos = @petlost.photos.to_a + Array.new([6 - @petlost.photos.count, 0].max, 'default-image.png') %>
+        <% (total_photos.each_slice(3).to_a).each_with_index do |_, index| %>
+          <button type="button" data-bs-target="#carouselExample" data-bs-slide-to="<%= index %>" class="<%= 'active' if index == 0 %>" aria-current="<%= 'true' if index == 0 %>" aria-label="Slide <%= index + 1 %>"></button>
+        <% end %>
+      </div>
+
+      <div class="carousel-inner">
+        <% total_photos.each_slice(3).with_index do |photos_group, index| %>
+          <div class="carousel-item <%= 'active' if index == 0 %>">
+            <div class="row">
+              <% photos_group.each do |photo| %>
+                <div class="col-md-4">
+                  <div class="image-container"> <!-- Contenedor de la imagen -->
+                    <% if photo.is_a?(String) %> <!-- Imagen por defecto -->
+                      <%= image_tag(photo, class: "carousel-image rounded-lg") %>
+                    <% else %> <!-- Imágenes subidas por el usuario -->
+                      <%= cl_image_tag(photo.key, class: "carousel-image rounded-lg", crop: "fill", gravity: "auto") %>
+                    <% end %>
+                  </div>
+                </div>
+              <% end %>
+            </div>
+          </div>
+        <% end %>
+      </div>
+
+      <!-- Controles de navegación -->
+      <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Anterior</span>
+      </button>
+      <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Siguiente</span>
+      </button>
+    </div>
+  </div>
+
+  <style>
+    .image-container {
+      height: 250px; /* Establece la altura fija */
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      overflow: hidden; /* Asegura que las imágenes no se desborden */
+    }
+
+    .carousel-image {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    /* Elimina el flexbox en .carousel-item para evitar la superposición */
+    .carousel-item {
+      /* Eliminamos el uso de display: flex para que el carrusel funcione correctamente */
+    }
+  </style>
+
+
+
+  <div class="container-fluid p-2 rounded" style="max-width: 1300px; margin: 0 auto;">
     <!-- Fila de navegación -->
     <div class="row align-items-center mb-5">
       <div class="col text-start">
-        <%= link_to root_path, class: "btn btn-primary text-white align-items-center justify-content-center me-2" do %>
+        <%= link_to petlosts_path, class: "btn btn-primary text-white align-items-center justify-content-center me-2" do %>
           <%= image_tag 'icons8-home.png', alt: 'Volver', width: 32, height: 32, class: 'me-2' %> Volver
         <% end %>
       </div>
 
       <!-- Columna central para el nombre del perro y la fecha -->
-      <div class="col text-center">
-        <h1 class="text-white mb-1" style="font-size: 2.5rem;"><%= @petlost.name %></h1>
-        <p class="text-white mb-0" style="font-size: 1.5rem;">Perdido el: <%= @petlost.day_lost %></p>
+      <div class="col-6 text-center">
+        <div class="title">Hola! Soy <%= @petlost.name %></div>
+        <div class="subtitle">Me perdí el <%= @petlost.day_lost.strftime("%d/%m/%Y") %></div>
+          <% current_date = Date.today %>
+          <% @petlost.day_lost  %>
+          <% conteo_dias = (current_date - @petlost.day_lost).to_i %>
+          <% dia = conteo_dias > 1 ? "días" : "día" %>
+        <div class='subtitle' style="background: linear-gradient(to right, rgba(247, 198, 199, 0), rgba(247, 198, 199, 0.75), rgba(247, 198, 199, 0));">Llevo <%=conteo_dias%> <%=dia%> lejos de casa</div>
       </div>
 
       <!-- Columna derecha para botones -->
-      <div class="col text-end">
-        <div class="btn-group d-flex align-items-center justify-content-center" role="group" aria-label="Acciones">
+      <div class="col text-end d-flex justify-content-end align-items-center">
+        <div class="btn-group me-2" role="group" aria-label="Acciones">
           <% if policy(@petlost).edit? %>
-            <%= link_to edit_petlost_path(@petlost), class: "btn btn-primary btn-sm me-2 text-white", style: "font-size: 1rem;" do %>
-              <i class="fa-solid fa-marker me-2"></i> Editar
+            <%= link_to edit_petlost_path(@petlost), class: "btn btn-primary btn-md text-white d-flex align-items-center" do %>
+              <i class="fa-solid fa-marker me-2"></i>
+              <p class="m-0"> Editar </p>
             <% end %>
           <% end %>
 
           <% if policy(@petlost).destroy? %>
-            <button type="button" class="btn btn-primary btn-md text-white" id="confirmDeleteButton" data-bs-toggle="modal" data-bs-target="#confirmDeleteModal">
-              <i class="fa-solid fa-dog me-2"></i> Eliminar
+            <button type="button" class="btn btn-primary btn-md text-white d-flex align-items-center" id="confirmDeleteButton" data-bs-toggle="modal" data-bs-target="#confirmDeleteModal">
+              <i class="fa-solid fa-dog me-2"></i>
+              <p class="m-0"> Eliminar </p>
             </button>
           <% end %>
+        </div>
 
           <% if policy(@petlost).update? %>
             <!-- Botón 'Lo encontré' -->
-            <button type="button" class="btn btn-primary btn-md text-white" id="loEncuenteButton" data-bs-toggle="modal" data-bs-target="#confirmModal">
-              <i class="fa-solid fa-dog me-2"></i> Lo encontré
+            <button type="button" class="btn btn-success btn-md text-white d-flex align-items-center" id="loEncuenteButton" data-bs-toggle="modal" data-bs-target="#confirmModal">
+              <i class="fa-solid fa-dog me-2"></i>
+              <p class="m-0"> Lo encontré</p>
             </button>
           <% end %>
-        </div>
       </div>
     </div>
 
-    <!-- Carrusel de imágenes con 3 imágenes simultáneas -->
-    <div class="row mb-3">
-      <div class="col">
-        <div id="carouselExample" class="carousel slide" data-bs-ride="carousel">
-          <!-- Indicadores del carrusel -->
-          <div class="carousel-indicators">
-            <% total_photos = @petlost.photos.to_a + Array.new([6 - @petlost.photos.count, 0].max, 'default-image.png') %>
-            <% (total_photos.each_slice(3).to_a).each_with_index do |_, index| %>
-              <button type="button" data-bs-target="#carouselExample" data-bs-slide-to="<%= index %>" class="<%= 'active' if index == 0 %>" aria-current="<%= 'true' if index == 0 %>" aria-label="Slide <%= index + 1 %>"></button>
-            <% end %>
-          </div>
 
-          <div class="carousel-inner">
-            <% total_photos.each_slice(3).with_index do |photos_group, index| %>
-              <div class="carousel-item <%= 'active' if index == 0 %>">
-                <div class="row">
-                  <% photos_group.each do |photo| %>
-                    <div class="col-md-4">
-                      <% if photo.is_a?(String) %> <!-- Imagen por defecto -->
-                        <%= image_tag(photo, class: "d-block w-100 rounded-lg", style: "width: 400px; height: 250px; object-fit: cover;") %>
-                      <% else %> <!-- Imágenes subidas por el usuario -->
-                        <%= cl_image_tag(photo.key, class: "d-block w-100 rounded-lg", width: 400, height: 250, crop: "fill", gravity: "auto", style: "object-fit: cover;") %>
-                      <% end %>
-                    </div>
-                  <% end %>
-                </div>
-              </div>
-            <% end %>
-          </div>
 
-          <!-- Controles de navegación -->
-          <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
-            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Anterior</span>
-          </button>
-          <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
-            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Siguiente</span>
-          </button>
-        </div>
-      </div>
+    <%# <div class="row mb-3">
 
       <div class="d-flex justify-content-between mt-3">
-        <div>
-            <% if @petlost.user && @petlost.user.phone_number.present? %>
-            <%= link_to "https://wa.me/#{@petlost.user.phone_number}?text=Hola.%20Vengo%20de%20Encuentra%20Mascotas.%20Tengo%20información%20sobre%20tu%20mascota%20#{@petlost.name}:%20https://www.encuentramascotas.org/#{url_for(@petlost)}",
-                        class: "btn btn-success d-flex align-items-center justify-content-center px-4 py-2 text-white mx-2",
-                        target: "_blank" do %>
-              <i class="fab fa-whatsapp me-2" style="font-size: 1.5rem;"></i>
-              <span style="font-size: 1.2rem;">Contactar por WhatsApp</span>
-            <% end %>
-          <% end %>
-        </div>
 
-        <div class="d-flex">
 
-          <div class="d-flex align-items-center me-3">
-            <h1 class="text-white mb-1" style="font-size: 2rem;">Cartel de búsqueda:</h1>
-          </div>
-
-          <%= link_to download_petlosts_path(@petlost), class: "btn btn-success d-flex align-items-center justify-content-center px-4 py-2 text-white mx-2" do %>
-            <i class="fas fa-download me-2" style="font-size: 1.5rem;"></i>
-            <span style="font-size: 1.2rem;">Descargar</span>
-          <% end %>
-
-          <%= link_to preview_petlosts_path(@petlost), class: "btn btn-success d-flex align-items-center justify-content-center px-4 py-2 text-white mx-2" do %>
-            <i class="fas fa-eye me-2" style="font-size: 1.5rem;"></i>
-            <span style="font-size: 1.2rem;"> Vista previa</span>
-          <% end %>
-        </div>
       </div>
 
-    </div>
+    </div> %>
 
     <!-- Fila de datos del dueño y del perro -->
     <div class="row">
       <!-- Columna izquierda: Datos del dueño y del perro -->
       <div class="col-md-6 h-100">
-        <!-- Tarjeta Datos del Dueño -->
+
         <div class="mt-2 p-3 shadow rounded-lg bg-white w-100" style="border-radius: 20px; box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.3);">
-          <div class="row align-items-center">
-            <div class="col-9 text-start ps-3">
-              <h6 class="mb-1.4" style="font-size: 1rem; color: #0079c1;">Datos del dueño</h6>
-              <p class="mb-1" style="font-size: 0.8rem;">
-                <i class="fas fa-user me-2" style="color: #0079c1;"></i>
-                <strong style="color: #0079c1;">Nombre:</strong> <span style="font-weight: normal;"><%= @petlost.user.name %></span>
-              </p>
-              <p class="mb-1" style="font-size: 0.8rem;">
-                <i class="fas fa-envelope me-2" style="color: #0079c1;"></i>
-                <strong style="color: #0079c1;">Correo:</strong> <span style="font-weight: normal;"><%= @petlost.user.email %></span>
-              </p>
-              <p class="mb-0" style="font-size: 0.8rem;">
-                <i class="fas fa-phone me-2" style="color: #0079c1;"></i>
-                <strong style="color: #0079c1;">Teléfono:</strong> <span style="font-weight: normal;"><%= @petlost.user.phone_number %></span>
-              </p>
+          <div class="row align-items-center container-general-datos">
+
+            <div class="d-flex my-3 justify-content-between">
+              <h6 class="m-0">Datos de la mascota</h6>
+
+                <div class="container-details d-flex justify-content-end">
+                  <span class="m-0 badge" style="background-color: #f7c6c7; color:#000000; line-height: 1.5"><strong>Estado:</strong></span>
+                  <% status_pet = @petlost.finded == false ? "Perdido" : "Encontrado!" %>
+                  <p class= "m-0 border border-start-0 px-3" style="border-radius:0.125rem;"><%= status_pet %></p>
+                </div>
             </div>
-            <div class="col-3 text-start">
+            <!-- Tarjeta Datos del Perro -->
+
+            <div class="col-10 text-start px-4 info-group">
+
+              <div class="info-item">
+                <i class="fas fa-map-marker-alt me-3"></i>
+                <div class="d-flex flex-column container-details">
+                  <p class="m-0 text"><strong>Especie</strong></p>
+                  <p class= "m-0"><%= @petlost.type_pet %></p>
+                </div>
+              </div>
+
+              <div class="info-item">
+                <i class="fas fa-paw me-3"></i>
+                <div class="d-flex flex-column container-details">
+                  <p class="m-0 text"><strong>Raza:</strong></p>
+                  <p class= "m-0"><%= @petlost.breed %></p>
+                </div>
+              </div>
+
+              <div class="info-item">
+                <i class="fas fa-map-marker-alt me-3"></i>
+                <div class="d-flex flex-column container-details">
+                  <p class="m-0 text"><strong>Género</strong></p>
+                  <p class= "m-0"><%= @petlost.gender %></p>
+                </div>
+              </div>
+
+              <div class="info-item">
+                <i class="fas fa-calendar-alt me-3"></i>
+                <div class="d-flex flex-column container-details">
+                  <p class="m-0 text"><strong>Perdido el</strong></p>
+                  <p class= "m-0"><%= @petlost.day_lost.strftime("%d/%m/%Y") %></p>
+                </div>
+              </div>
+
+              <div class="info-item">
+                <i class="fas fa-palette me-3"></i>
+                <%# <i class="fas fa-map-marker-alt me-3"></i> %>
+                <div class="d-flex flex-column container-details">
+                  <p class="m-0 text"><strong>Color</strong></p>
+                  <% if @petlost.color.present? %>
+                    <% colors_array = JSON.parse(@petlost.color).reject(&:blank?) %>
+                  <p class="mb-0"><%= colors_array.join(", ") %></p>
+                  <% end %>
+                </div>
+              </div>
+              <div class="info-item">
+                <i class="fas fa-map-marker-alt me-3"></i>
+                <div class="d-flex flex-column container-details">
+                  <p class="m-0 text"><strong>Señas particulares</strong></p>
+                  <p class= "m-0"><%= @petlost.signs %></p>
+                </div>
+              </div>
+
+
+            </div>
+            <div class="col-2 text-center">
+              <i class="fas fa-dog" style="font-size: 2.5rem; color: #0079c1;"></i>
+            </div>
+            <%# datos del dueño %>
+              <h6 class="my-3">Datos del dueño</h6>
+            <div class="col-10 text-start px-4 info-group">
+
+              <div class="info-item">
+                <i class="fas fa-map-marker-alt me-3"></i>
+                <div class="d-flex flex-column container-details">
+                  <p class="m-0 text"><strong>Nombre</strong></p>
+                  <p class= "m-0"><%= @petlost.user.name %></p>
+                </div>
+              </div>
+
+              <div class="info-item">
+                <i class="fas fa-map-marker-alt me-3"></i>
+                <div class="d-flex flex-column container-details">
+                  <p class="m-0 text"><strong>Correo</strong></p>
+                  <p class= "m-0"><%= @petlost.user.email %></p>
+                </div>
+              </div>
+
+              <div class="info-item">
+                <i class="fas fa-map-marker-alt me-3"></i>
+                <div class="d-flex flex-column container-details">
+                  <p class="m-0 text"><strong>Teléfono</strong></p>
+                  <p class= "m-0"><%= @petlost.user.phone_number %></p>
+                </div>
+              </div>
+            </div>
+            <div class="col-2 text-center">
               <% if @petlost.user.photo.attached? %>
                 <%= image_tag @petlost.user.photo, class: "img-fluid rounded-circle", style: "width: 70px; height: 70px; object-fit: cover; box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.3);" %>
               <% else %>
                 <i class="fas fa-user-circle" style="font-size: 3rem; color: #0079c1;"></i>
               <% end %>
             </div>
+
+            <%# fin datos del dueño %>
+
           </div>
         </div>
-
-        <!-- Tarjeta Datos del Perro -->
-        <div class="mt-2 p-3 shadow rounded-lg bg-white w-100" style="border-radius: 20px; box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.3);">
-          <div class="row align-items-center">
-            <div class="col-10 text-start ps-3">
-              <h6 class="mb-1" style="font-size: 1rem; color: #0079c1;">Datos del perro</h6>
-              <p class="mb-1" style="font-size: 0.8rem;">
-                <i class="fas fa-paw me-2" style="color: #0079c1;"></i>
-                <strong style="color: #0079c1;">Raza:</strong> <span style="font-weight: normal;"><%= @petlost.breed %></span>
-              </p>
-              <p class="mb-1" style="font-size: 0.8rem;">
-                <i class="fas fa-calendar-alt me-2" style="color: #0079c1;"></i>
-                <strong style="color: #0079c1;">Perdido el:</strong> <span style="font-weight: normal;"><%= @petlost.day_lost %></span>
-              </p>
-              <p class="mb-0" style="font-size: 0.8rem;">
-                <i class="fas fa-map-marker-alt me-2" style="color: #0079c1;"></i>
-                <strong style="color: #0079c1;">Se perdió en:</strong> <span style="font-weight: normal;"><%= @petlost.address %></span>
-              </p>
-            </div>
-            <div class="col-2 text-center">
-              <i class="fas fa-dog" style="font-size: 2.5rem; color: #0079c1;"></i>
-            </div>
-          </div>
-        </div>
-
-        <!-- Botón de WhatsApp -->
-        <div class="d-flex justify-content-center mt-3">
-          <% if @petlost.user && @petlost.user.phone_number.present? %>
-            <%= link_to "https://wa.me/#{@petlost.user.phone_number}?text=Hola.%20Vengo%20de%20Encuentra%20Mascotas.%20Me%20puedes%20ayudar%20a%20encontrar%20a%20mi%20mascota:%20https://www.encuentramascotas.org/#{url_for(@petlost)}",
-                        class: "btn btn-success d-flex align-items-center justify-content-center px-4 py-2",
-                        target: "_blank" do %>
-              <i class="fab fa-whatsapp me-2" style="font-size: 1.5rem;"></i>
-              <span style="font-size: 1.2rem;">Contactar por WhatsApp</span>
-            <% end %>
-          <% end %>
-        </div>
+        <%# fin datos del perro %>
       </div>
 
+
       <!-- Columna derecha: Mapa -->
-      <div class="col-md-6 mt-2">
+      <div class="col-md-6 align-content-center">
+
+      <div class="d-flex justify-content-between mb-4">
+
+          <div class="d-flex align-items-center me-3">
+            <h1 class="subtitle">Cartel de búsqueda:</h1>
+          </div>
+
+      <div class= "d-flex">
+          <%= link_to download_petlosts_path(@petlost), class: "btn btn-primary btn-md text-white" do %>
+            <i class="fas fa-download me-2"></i>
+            <span>Descargar</span>
+          <% end %>
+
+          <%= link_to preview_petlosts_path(@petlost), class: "btn btn-success btn-md text-white" do %>
+            <i class="fas fa-eye me-2"></i>
+            <span> Vista previa</span>
+          <% end %>
+      </div>
+        </div>
+
         <div class="p-1 shadow rounded-lg bg-white w-100" style="border-radius: 20px; box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.3);">
-          <div id="map" style="height: 250px; width: 100%; border-radius: 20px;"></div>
+          <div id="map" style="height: 340px; width: 100%; border-radius: 20px;"></div>
+        </div>
+        <div class="info-item-customed mt-2 p-3 shadow rounded-lg bg-white w-100" style="border-radius: 20px; box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.3);">
+          <i class="fas fa-map-marker-alt me-3"></i>
+          <div class="d-flex">
+            <p class="m-0 text me-3">Se perdió en</p>
+            <p class= "m-0"><%= @petlost.address.capitalize %></p>
+          </div>
         </div>
       </div>
     </div>
+
   </div> <!-- Cierre del contenedor principal -->
+
+<div>
+  <% if @petlost.user && @petlost.user.phone_number.present? %>
+    <%= link_to "https://wa.me/#{@petlost.user.phone_number}?text=Hola.%20Vengo%20de%20Encuentra%20Mascotas.%20Me%20puedes%20ayudar%20a%20encontrar%20a%20mi%20mascota:%20https://www.encuentramascotas.org/#{url_for(@petlost)}",
+          class: "list_thumb",
+          target: "_blank" do %>
+            <div class="list_thumb_description" style="background: rgba(247, 198, 199,.75);">
+              <div class="box_align_thumb">
+                <p><strong>Ayúdame a volver! Me esperan en casita.</strong></p>
+                <i class="fab fa-whatsapp me-3" style="font-size: 30px;"></i>
+                <span> Comunícate al WhatsApp </span>
+                <p> Cualquier información es sumamente valiosa! </p>
+              </div>
+            </div>
+            <div class="list_thumb_img">
+              <div class="box_align_thumb hover_text">
+                  <p class="m-0"><strong>¿Me viste?</strong></p>
+                  <p class="m-0"> Por favor, comunícate aquí! </p>
+                </div>
+            </div>
+          <% end %>
+  <% end %>
+</div>
 
   <!-- Modales -->
 
@@ -387,4 +504,5 @@
       color: #ffc107;
     }
   </style>
-</body>
+
+</div>
