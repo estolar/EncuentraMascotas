@@ -1,15 +1,16 @@
 <!-- app/views/petlosts/nearby.html.erb -->
 <style>
-  body {
-    /* background-image: url('<%= asset_path("fondo_map.jpg") %>');
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat; */
-  }
+body {
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  overflow-y: hidden; /* Evita el scroll vertical */
+}
+
 
   .gato-sobre-mapa {
     position: absolute;
-    top: 170px;
+    top: 65px;
     left: 50%;
     transform: translateX(-520px);
     z-index: 1000;
@@ -19,7 +20,7 @@
 
   .perro-sobre-mapa {
     position: absolute;
-    top: 200px;
+    top: 86px;
     left: 50%;
     transform: translateX(300px);
     z-index: 1000;
@@ -177,7 +178,7 @@
     <%= link_to petlosts_path, class: "btn btn-success btn-lg text-white d-flex align-items-center justify-content-center" do %>
       <%= image_tag 'icons8-home.png', alt: 'Volver', width: 32, height: 32 %>
     <% end %>
-    <h1 class="text-center flex-grow-1 fw-bold mb-0">¡Ayúdalos a Volver!</h1>
+    <h1 class="text-center flex-grow-1 fw-bold mb-0">¡Ayúdanos a Volver!</h1>
   </div>
 
   <!-- Imagen del gato y perro superpuesta sobre el mapa -->

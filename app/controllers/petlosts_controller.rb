@@ -49,6 +49,11 @@ class PetlostsController < ApplicationController
     if params[:day_lost].present?
       @petlosts = @petlosts.where(day_lost: params[:day_lost])
     end
+
+    if params[:type_pet].present?
+      @petlosts = @petlosts.where("LOWER(type_pet) LIKE ?", "%#{params[:type_pet].downcase}%")
+    end
+
     @petlosts = @petlosts.page(params[:page]).per(6)
   end
 
