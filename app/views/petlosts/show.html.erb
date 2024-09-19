@@ -13,13 +13,13 @@
 
       <!-- Columna central para el nombre del perro y la fecha -->
       <div class="col text-center">
-        <h1 class="text-white mb-1" style="font-size: 2.5rem;"><%= @petlost.name %></h1>
-        <p class="text-white mb-0" style="font-size: 1.5rem;">Perdido el <%= @petlost.day_lost.strftime("%d/%m/%Y") %></p>
+        <div class="title">Hola! Soy <%= @petlost.name %></div>
+        <div class="subtitle">Me perdí el <%= @petlost.day_lost.strftime("%d/%m/%Y") %></div>
           <% current_date = Date.today %>
           <% @petlost.day_lost  %>
           <% conteo_dias = (current_date - @petlost.day_lost).to_i %>
           <% dia = conteo_dias > 1 ? "días" : "día" %>
-        <p class="text-white mb-0">Lleva <%=conteo_dias%> <%=dia%> lejos de casa</p>
+        <div class='subtitle'>Llevo <%=conteo_dias%> <%=dia%> lejos de casa</div>
       </div>
 
       <!-- Columna derecha para botones -->
@@ -104,7 +104,7 @@
         <div class="d-flex">
 
           <div class="d-flex align-items-center me-3">
-            <h1 class="text-white mb-1" style="font-size: 2rem;">Cartel de búsqueda:</h1>
+            <h1 class="subtitle">Cartel de búsqueda:</h1>
           </div>
 
           <%= link_to download_petlosts_path(@petlost), class: "btn btn-success d-flex align-items-center justify-content-center px-4 py-2 text-white mx-2" do %>
@@ -125,42 +125,16 @@
     <div class="row">
       <!-- Columna izquierda: Datos del dueño y del perro -->
       <div class="col-md-6 h-100">
-        <!-- Tarjeta Datos del Dueño -->
-        <div class="mt-2 p-3 shadow rounded-lg bg-white w-100" style="border-radius: 20px; box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.3);">
-          <div class="row align-items-center">
-            <div class="col-9 text-start ps-3">
-              <h6 class="mb-1.4" style="font-size: 1rem; color: #0079c1;">Datos del dueño</h6>
-              <p class="mb-1" style="font-size: 0.8rem;">
-                <i class="fas fa-user me-2" style="color: #0079c1;"></i>
-                <strong style="color: #0079c1;">Nombre:</strong> <span style="font-weight: normal;"><%= @petlost.user.name %></span>
-              </p>
-              <p class="mb-1" style="font-size: 0.8rem;">
-                <i class="fas fa-envelope me-2" style="color: #0079c1;"></i>
-                <strong style="color: #0079c1;">Correo:</strong> <span style="font-weight: normal;"><%= @petlost.user.email %></span>
-              </p>
-              <p class="mb-0" style="font-size: 0.8rem;">
-                <i class="fas fa-phone me-2" style="color: #0079c1;"></i>
-                <strong style="color: #0079c1;">Teléfono:</strong> <span style="font-weight: normal;"><%= @petlost.user.phone_number %></span>
-              </p>
-            </div>
-            <div class="col-3 text-start">
-              <% if @petlost.user.photo.attached? %>
-                <%= image_tag @petlost.user.photo, class: "img-fluid rounded-circle", style: "width: 70px; height: 70px; object-fit: cover; box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.3);" %>
-              <% else %>
-                <i class="fas fa-user-circle" style="font-size: 3rem; color: #0079c1;"></i>
-              <% end %>
-            </div>
-          </div>
-        </div>
 
-        <!-- Tarjeta Datos del Perro -->
         <div class="mt-2 p-3 shadow rounded-lg bg-white w-100" style="border-radius: 20px; box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.3);">
-          <div class="row align-items-center">
-              <h6 class="mb-1" style="font-size: 1rem; color: #0079c1;">Datos de la mascota</h6>
-            <div class="col-10 text-start ps-3 info-group">
+          <div class="row align-items-center container-general-datos">
+
+            <!-- Tarjeta Datos del Perro -->
+              <h6 class="mt-3">Datos de la mascota</h6>
+            <div class="col-10 text-start px-4 info-group">
 
               <div class="info-item">
-                <i class="fas fa-map-marker-alt me-2"></i>
+                <i class="fas fa-map-marker-alt me-3"></i>
                 <div class="d-flex flex-column container-details">
                   <p class="m-0 text"><strong>Especie</strong></p>
                   <p class= "m-0"><%= @petlost.type_pet %></p>
@@ -168,7 +142,7 @@
               </div>
 
               <div class="info-item">
-                <i class="fas fa-paw me-2"></i>
+                <i class="fas fa-paw me-3"></i>
                 <div class="d-flex flex-column container-details">
                   <p class="m-0 text"><strong>Raza:</strong></p>
                   <p class= "m-0"><%= @petlost.breed %></p>
@@ -176,7 +150,7 @@
               </div>
 
               <div class="info-item">
-                <i class="fas fa-map-marker-alt me-2"></i>
+                <i class="fas fa-map-marker-alt me-3"></i>
                 <div class="d-flex flex-column container-details">
                   <p class="m-0 text"><strong>Género</strong></p>
                   <p class= "m-0"><%= @petlost.gender %></p>
@@ -184,7 +158,7 @@
               </div>
 
               <div class="info-item">
-                <i class="fas fa-calendar-alt me-2"></i>
+                <i class="fas fa-calendar-alt me-3"></i>
                 <div class="d-flex flex-column container-details">
                   <p class="m-0 text"><strong>Perdido el</strong></p>
                   <p class= "m-0"><%= @petlost.day_lost.strftime("%d/%m/%Y") %></p>
@@ -192,16 +166,8 @@
               </div>
 
               <div class="info-item">
-                <i class="fas fa-map-marker-alt me-2"></i>
-                <div class="d-flex flex-column container-details">
-                  <p class="m-0 text"><strong>Se perdió en</strong></p>
-                  <p class= "m-0"><%= @petlost.address.capitalize %></p>
-                </div>
-              </div>
-
-              <div class="info-item">
-                <i class="fas fa-palette me-2"></i>
-                <%# <i class="fas fa-map-marker-alt me-2"></i> %>
+                <i class="fas fa-palette me-3"></i>
+                <%# <i class="fas fa-map-marker-alt me-3"></i> %>
                 <div class="d-flex flex-column container-details">
                   <p class="m-0 text"><strong>Color</strong></p>
                   <% if @petlost.color.present? %>
@@ -210,9 +176,15 @@
                   <% end %>
                 </div>
               </div>
-
               <div class="info-item">
-                <i class="fas fa-map-marker-alt me-2"></i>
+                <i class="fas fa-map-marker-alt me-3"></i>
+                <div class="d-flex flex-column container-details">
+                  <p class="m-0 text"><strong>Señas particulares</strong></p>
+                  <p class= "m-0"><%= @petlost.signs %></p>
+                </div>
+              </div>
+              <div class="info-item">
+                <i class="fas fa-map-marker-alt me-3"></i>
                 <div class="d-flex flex-column container-details">
                   <p class="m-0 text"><strong>Estado</strong></p>
                   <% status_pet = @petlost.finded == false ? "Encontrado!" : "Perdido" %>
@@ -220,42 +192,93 @@
                 </div>
               </div>
 
-              <div class="info-item">
-                <i class="fas fa-map-marker-alt me-2"></i>
-                <div class="d-flex flex-column container-details">
-                  <p class="m-0 text"><strong>Señas particulares</strong></p>
-                  <p class= "m-0"><%= @petlost.signs %></p>
-                </div>
-              </div>
-
             </div>
             <div class="col-2 text-center">
               <i class="fas fa-dog" style="font-size: 2.5rem; color: #0079c1;"></i>
             </div>
+            <%# datos del dueño %>
+              <h6 class="my-3">Datos del dueño</h6>
+            <div class="col-10 text-start px-4 info-group">
+
+              <div class="info-item">
+                <i class="fas fa-map-marker-alt me-3"></i>
+                <div class="d-flex flex-column container-details">
+                  <p class="m-0 text"><strong>Nombre</strong></p>
+                  <p class= "m-0"><%= @petlost.user.name %></p>
+                </div>
+              </div>
+
+              <div class="info-item">
+                <i class="fas fa-map-marker-alt me-3"></i>
+                <div class="d-flex flex-column container-details">
+                  <p class="m-0 text"><strong>Correo</strong></p>
+                  <p class= "m-0"><%= @petlost.user.email %></p>
+                </div>
+              </div>
+
+              <div class="info-item">
+                <i class="fas fa-map-marker-alt me-3"></i>
+                <div class="d-flex flex-column container-details">
+                  <p class="m-0 text"><strong>Teléfono</strong></p>
+                  <p class= "m-0"><%= @petlost.user.phone_number %></p>
+                </div>
+              </div>
+            </div>
+            <div class="col-2 text-center">
+              <% if @petlost.user.photo.attached? %>
+                <%= image_tag @petlost.user.photo, class: "img-fluid rounded-circle", style: "width: 70px; height: 70px; object-fit: cover; box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.3);" %>
+              <% else %>
+                <i class="fas fa-user-circle" style="font-size: 3rem; color: #0079c1;"></i>
+              <% end %>
+            </div>
+
+            <%# fin datos del dueño %>
+
           </div>
         </div>
-
-        <!-- Botón de WhatsApp -->
-        <div class="d-flex justify-content-center mt-3">
-          <% if @petlost.user && @petlost.user.phone_number.present? %>
-            <%= link_to "https://wa.me/#{@petlost.user.phone_number}?text=Hola.%20Vengo%20de%20Encuentra%20Mascotas.%20Me%20puedes%20ayudar%20a%20encontrar%20a%20mi%20mascota:%20https://www.encuentramascotas.org/#{url_for(@petlost)}",
-                        class: "btn btn-success d-flex align-items-center justify-content-center px-4 py-2",
-                        target: "_blank" do %>
-              <i class="fab fa-whatsapp me-2" style="font-size: 1.5rem;"></i>
-              <span style="font-size: 1.2rem;">Contactar por WhatsApp</span>
-            <% end %>
-          <% end %>
-        </div>
+        <%# fin datos del perro %>
       </div>
+
 
       <!-- Columna derecha: Mapa -->
       <div class="col-md-6 mt-2">
         <div class="p-1 shadow rounded-lg bg-white w-100" style="border-radius: 20px; box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.3);">
           <div id="map" style="height: 250px; width: 100%; border-radius: 20px;"></div>
         </div>
+        <div class="info-item-customed mt-2 p-3 shadow rounded-lg bg-white w-100" style="border-radius: 20px; box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.3);">
+          <i class="fas fa-map-marker-alt me-3"></i>
+          <div class="d-flex">
+            <p class="m-0 text me-3">Se perdió en</p>
+            <p class= "m-0"><%= @petlost.address.capitalize %></p>
+          </div>
+        </div>
       </div>
     </div>
+
   </div> <!-- Cierre del contenedor principal -->
+
+<div>
+  <% if @petlost.user && @petlost.user.phone_number.present? %>
+    <%= link_to "https://wa.me/#{@petlost.user.phone_number}?text=Hola.%20Vengo%20de%20Encuentra%20Mascotas.%20Me%20puedes%20ayudar%20a%20encontrar%20a%20mi%20mascota:%20https://www.encuentramascotas.org/#{url_for(@petlost)}",
+          class: "list_thumb",
+          target: "_blank" do %>
+            <div class="list_thumb_description" style="background: rgba(247, 198, 199,.75);">
+              <div class="box_align_thumb">
+                <p><strong>Ayúdame a volver! Me esperan en casita.</strong></p>
+                <i class="fab fa-whatsapp me-3" style="font-size: 1.5rem;"></i>
+                <span> Comunícate al WhatsApp </span>
+                <p> Cualquier información es sumamente valiosa! </p>
+              </div>
+            </div>
+            <div class="list_thumb_img">
+              <div class="box_align_thumb hover_text">
+                  <p class="m-0"><strong>¿Me viste?</strong></p>
+                  <p class="m-0"> Por favor, comunícate aquí! </p>
+                </div>
+            </div>
+          <% end %>
+  <% end %>
+</div>
 
   <!-- Modales -->
 
@@ -452,4 +475,5 @@
       color: #ffc107;
     }
   </style>
+
 </body>
