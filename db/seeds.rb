@@ -46,9 +46,9 @@ petlost6.photos.attach(io: file3, filename: 'perrito3.jpg', content_type: 'image
 petlost6.save
 
 petlost2 = Petlost.new(name: 'Mimi', finded: false, breed: 'siamés', color: ['Blanco', 'Negro'].to_json, signs: 'Tiene ojos azules', day_lost: Date.today - 3, user: user2, address: 'Calle Los Pinos 120, Surco, Lima', type_pet: 'Cat', gender: 'Female')
-file1 = URI.open('https://res.cloudinary.com/dqx97scli/image/upload/v1726762996/Imagen_de_WhatsApp_2024-09-19_a_las_10.54.23_4629dda4_bzgfkc.jpg')
-file2 = URI.open('https://res.cloudinary.com/dqx97scli/image/upload/v1726762996/Imagen_de_WhatsApp_2024-09-19_a_las_10.54.33_38a5c8db_gvme1j.jpg')
-file3 = URI.open('https://res.cloudinary.com/dqx97scli/image/upload/v1726762995/Imagen_de_WhatsApp_2024-09-19_a_las_10.54.47_ea4bac9b_nljjju.jpg')
+file1 = URI.open('https://res.cloudinary.com/dhfv2yrux/image/upload/v1726781917/Mimi1_bmadde.jpg')
+file2 = URI.open('https://res.cloudinary.com/dhfv2yrux/image/upload/v1726781917/Mimi2_niwju5.jpg')
+file3 = URI.open('https://res.cloudinary.com/dhfv2yrux/image/upload/v1726781926/Mimi3_d9qwou.jpg')
 petlost2.photos.attach(io: file1, filename: 'gato1.jpg', content_type: 'image/jpg')
 petlost2.photos.attach(io: file2, filename: 'gato2.jpg', content_type: 'image/jpg')
 petlost2.photos.attach(io: file3, filename: 'gato2.jpg', content_type: 'image/jpg')
@@ -74,8 +74,8 @@ petlost4.photos.attach(io: file3, filename: 'perrito3.jpg', content_type: 'image
 petlost4.save
 
 petlost5 = Petlost.new(name: 'Pechocho', finded: false, breed: 'Otros', color: ['Blanco'].to_json, signs: 'Estaba quieto', day_lost: Date.today - 2, user: user1, address: 'Av. Tomás Valle 671, San Martín de Porres', type_pet: 'Otro', gender: 'Female')
-file1 = URI.open('https://res.cloudinary.com/dqx97scli/image/upload/v1726762999/Imagen_de_WhatsApp_2024-09-19_a_las_11.00.36_a921e9cf_mxytjm.jpg')
-file2 = URI.open('https://res.cloudinary.com/dqx97scli/image/upload/v1726762998/Imagen_de_WhatsApp_2024-09-19_a_las_11.00.49_1b40d3bc_twv79f.jpg')
+file1 = URI.open('https://res.cloudinary.com/dhfv2yrux/image/upload/v1726781926/Pechocho1_mfzhkw.jpg')
+file2 = URI.open('https://res.cloudinary.com/dhfv2yrux/image/upload/v1726781926/Pechocho2_snqxgz.jpg')
 petlost5.photos.attach(io: file1, filename: 'gato_encontrado1.jpg', content_type: 'image/jpg')
 petlost5.photos.attach(io: file2, filename: 'gato_encontrado1.jpg', content_type: 'image/jpg')
 petlost5.save
@@ -89,20 +89,20 @@ petlost7.save
 
 
 petlost8 = Petlost.new(name: 'Tita', finded: false, breed: 'bosque de noruega', color: ['Blanco', 'Plomo'].to_json, signs: 'Es delgada', day_lost: Date.today - 3, user: user4, address: 'Av. Cascanueces 103, Santa Anita, Lima', type_pet: 'Cat', gender: 'Female')
-file1 = URI.open('https://res.cloudinary.com/dqx97scli/image/upload/v1726762995/Imagen_de_WhatsApp_2024-09-19_a_las_10.55.03_524ea643_uhk1cn.jpg')
+file1 = URI.open('https://res.cloudinary.com/dhfv2yrux/image/upload/v1726781937/Tita1_s2qjfg.jpg')
 petlost8.photos.attach(io: file1, filename: 'gato1.jpg', content_type: 'image/jpg')
 petlost8.save
 
 petlost9 = Petlost.new(name: 'Pelusa', finded: false, breed: 'otros', color: ['Blanco', 'mostaza'].to_json, signs: 'Tiene ojos verdes', day_lost: Date.today - 3, user: user1, address: 'Av. Enrique Meiggs 956, Lima', type_pet: 'Cat', gender: 'Male')
-file1 = URI.open('https://res.cloudinary.com/dqx97scli/image/upload/v1726763008/Imagen_de_WhatsApp_2024-09-19_a_las_10.55.16_33d14a5c_nax3ym.jpg')
+file1 = URI.open('https://res.cloudinary.com/dhfv2yrux/image/upload/v1726781937/Pelusa_fyotwn.jpg')
 petlost9.photos.attach(io: file1, filename: 'gato1.jpg', content_type: 'image/jpg')
 petlost9.save
 
 
 petlost10 = Petlost.new(name: 'Pepe', finded: false, breed: 'otros', color: ['Rojo', 'azul', 'amarillo'].to_json, signs: 'Tiene las puntas de las alas azules', day_lost: Date.today - 3, user: user2, address: 'Av. Independencia 1457, Arequipa', type_pet: 'Otro', gender: 'Male')
-file1 = URI.open('https://res.cloudinary.com/dqx97scli/image/upload/v1726763003/Imagen_de_WhatsApp_2024-09-19_a_las_10.58.19_e464fe5b_jazbkp.jpg')
-file2 = URI.open('https://res.cloudinary.com/dqx97scli/image/upload/v1726763004/Imagen_de_WhatsApp_2024-09-19_a_las_10.57.57_ead6fff8_bduanl.jpg')
-file3 = URI.open('https://res.cloudinary.com/dqx97scli/image/upload/v1726763003/Imagen_de_WhatsApp_2024-09-19_a_las_10.58.19_e464fe5b_jazbkp.jpg')
+file1 = URI.open('https://res.cloudinary.com/dhfv2yrux/image/upload/v1726781935/Pepe3_xesqqm.jpg')
+file2 = URI.open('https://res.cloudinary.com/dhfv2yrux/image/upload/v1726781935/Pepe1_oqy52h.jpg')
+file3 = URI.open('https://res.cloudinary.com/dhfv2yrux/image/upload/v1726781933/Pepe2_ankxyo.jpg')
 petlost10.photos.attach(io: file1, filename: 'gato1.jpg', content_type: 'image/jpg')
 petlost10.photos.attach(io: file2, filename: 'gato1.jpg', content_type: 'image/jpg')
 petlost10.photos.attach(io: file3, filename: 'gato1.jpg', content_type: 'image/jpg')
@@ -138,8 +138,8 @@ petfound3.photos.attach(io: file2, filename: 'perrito2.jpg', content_type: 'imag
 petfound3.save
 
 petfound4 = Petfound.new(details: "Estaba en un árbol", breed: 'Canario amarillo', color: ['Amarillo'].to_json, signs: 'Se acercaba mucho', day_found: Date.today - 6, user: user4, address: 'Av. de la Marina 2355, San Miguel, Lima', facts: "le estoy dando refugio! :)", type_pet: 'Otro', gender: 'Male')
-file1 = URI.open('https://res.cloudinary.com/dqx97scli/image/upload/v1726763002/Imagen_de_WhatsApp_2024-09-19_a_las_10.59.03_5b046ecc_r79zcz.jpg')
-file2 = URI.open('https://res.cloudinary.com/dqx97scli/image/upload/v1726763001/Imagen_de_WhatsApp_2024-09-19_a_las_10.59.17_44b69325_pxwdlc.jpg')
+file1 = URI.open('https://res.cloudinary.com/dhfv2yrux/image/upload/v1726781916/Estaba_en_un_arbol2_ymm2rp.jpg')
+file2 = URI.open('https://res.cloudinary.com/dhfv2yrux/image/upload/v1726781916/Estaba_en_un_arbol_x5svct.jpg')
 petfound4.photos.attach(io: file1, filename: 'loro_encontrado1.jpg', content_type: 'image/jpg')
 petfound4.photos.attach(io: file2, filename: 'loro_encontrado1.jpg', content_type: 'image/jpg')
 petfound4.save
@@ -153,15 +153,15 @@ petfound5.photos.attach(io: file2, filename: 'perrito2.jpg', content_type: 'imag
 petfound5.save
 
 petfound6 = Petfound.new(details: "Lo vi escondido bajo un auto", breed: 'Persa', color: ['Gris'].to_json, signs: 'Parecía asustado', day_found: Date.today - 2, user: user2, address: 'Jiron Las Violetas 432, San Borja, Lima', facts: "solo lo vi mientras pasaba :(", type_pet: 'Cat', gender: 'Female')
-file1 = URI.open('https://res.cloudinary.com/dqx97scli/image/upload/v1726763006/Imagen_de_WhatsApp_2024-09-19_a_las_10.56.31_e85c771e_clua1t.jpg')
-file2 = URI.open('https://res.cloudinary.com/dqx97scli/image/upload/v1726763007/Imagen_de_WhatsApp_2024-09-19_a_las_10.55.52_9478c2e0_njibmy.jpg')
+file1 = URI.open('https://res.cloudinary.com/dhfv2yrux/image/upload/v1726781916/bajo_un_auto2_oegvs8.jpg')
+file2 = URI.open('https://res.cloudinary.com/dhfv2yrux/image/upload/v1726775568/development/b9c8wb3ti9zie21irr60nucr09iv.jpg')
 petfound6.photos.attach(io: file1, filename: 'gato_encontrado1.jpg', content_type: 'image/jpg')
 petfound6.photos.attach(io: file2, filename: 'gato_encontrado1.jpg', content_type: 'image/jpg')
 petfound6.save
 
 petfound9 = Petfound.new(details: "Estaba en un arbol", breed: 'Loro verde', color: ['Verde'].to_json, signs: 'Mi lorito habla bastante', day_found: Date.today - 15, user: user1, address: 'Avenida Los Lirios 980, San Isidro, Lima', facts: "solo lo vi mientras pasaba :(", type_pet: 'Otro', gender: 'Male')
-file1 = URI.open('https://res.cloudinary.com/dqx97scli/image/upload/v1726763001/Imagen_de_WhatsApp_2024-09-19_a_las_11.00.04_f7901738_snmvnt.jpg')
-file2 = URI.open('https://res.cloudinary.com/dqx97scli/image/upload/v1726763001/Imagen_de_WhatsApp_2024-09-19_a_las_10.59.41_6d864b08_jrhpmy.jpg')
+file1 = URI.open('https://res.cloudinary.com/dhfv2yrux/image/upload/v1726781917/Imagen_de_WhatsApp_2024-09-19_a_las_11.00.04_f7901738_pwpnwf.jpg')
+file2 = URI.open('https://res.cloudinary.com/dhfv2yrux/image/upload/v1726781916/Imagen_de_WhatsApp_2024-09-19_a_las_10.59.41_6d864b08_szfu8q.jpg')
 petfound9.photos.attach(io: file1, filename: 'loro1.jpg', content_type: 'image/jpg')
 petfound9.photos.attach(io: file2, filename: 'loro2.jpg', content_type: 'image/jpg')
 petfound9.save
