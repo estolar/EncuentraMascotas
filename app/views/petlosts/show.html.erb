@@ -86,7 +86,7 @@
           <% @petlost.day_lost  %>
           <% conteo_dias = (current_date - @petlost.day_lost).to_i %>
           <% dia = conteo_dias > 1 ? "días" : "día" %>
-        <div class='subtitle'>Llevo <%=conteo_dias%> <%=dia%> lejos de casa</div>
+        <div class='subtitle' style="background: linear-gradient(to right, rgba(247, 198, 199, 0), rgba(247, 198, 199, 0.75), rgba(247, 198, 199, 0));">Llevo <%=conteo_dias%> <%=dia%> lejos de casa</div>
       </div>
 
       <!-- Columna derecha para botones -->
