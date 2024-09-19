@@ -4,8 +4,8 @@
 <!-- Enlace a FontAwesome para los iconos -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha384-..." crossorigin="anonymous">
 
-<body style="background: linear-gradient(to bottom, #f7c6c7, #ffffff);">
 
+<div class="fondo-rosa-section">
   <!-- Contenedor principal ampliado -->
   <div class="container-fluid mt-1 p-2 rounded" style="max-width: 1200px; margin: 0 auto;">
 
@@ -20,7 +20,7 @@
 
     <!-- Columna central para el nombre del perro y la fecha -->
     <div class="col text-center">
-      <h1 class=" mb-1" style="font-size: 2.5rem;"><%= @petfound.details %></h1>
+      <h1 class=" mb-1" style="font-size: 2.2rem;"><%= @petfound.details %></h1>
       <p class="text-black mb-0" style="font-size: 1.5rem;">Encontrado el: <%= @petfound.day_found %></p>
     </div>
 
@@ -223,3 +223,4 @@
       .addTo(map);
   });
 </script>
+</div>
