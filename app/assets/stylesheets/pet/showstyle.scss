@@ -1,13 +1,26 @@
 .title{
   color: #0079c1;
-  font-size: 60px;
+  font-size: 40px;
   margin-bottom: 2px;
 }
+
+.title2{
+  color: #0079c1;
+  font-size: 25px;
+  margin-bottom: 2px;
+}
+
 
 .subtitle{
   color: black;
   margin: 0px;
   font-size: 25px;
+}
+
+.subtitle-2{
+  color: black;
+  margin: 0px;
+  font-size: 18px;
 }
 
 .info-group {
@@ -148,6 +161,7 @@
   transition: background-image 0.5s ease;
 	border: solid 1px #ccc;
 }
+
 .box_align_thumb {
 	display: table-cell;
 	vertical-align: middle;
@@ -155,65 +169,10 @@
 	width: calc(100% - 50px);
 	padding: 25px;
 }
+
 .list_thumb:hover .list_thumb_img {
     transform: scale(1.05);
     background-image: url('https://www.zooplus.es/magazine/wp-content/uploads/2018/11/gl%C3%BCcklich-hund-im-grass-1024x683.jpg');
-}
-
-.list_thumb_img_rescued {
-  // background-image: url('https://okdiario.com/img/2022/03/20/karin-hiselius-mmqhqwl40bm-unsplash-1-1-655x368.jpg');
-	width: 100%;
-	// height: 350px;
-	background-position: center center;
-	background-repeat: no-repeat;
-	background-size: cover;
-	// transition: transform 0.3s;
-  transition: background-image 0.5s ease;
-	border: solid 1px transparent;
-}
-.list_thumb:hover .list_thumb_img_rescued {
-  transform: scale(1.05);
-  // background-image: url('https://www.zooplus.es/magazine/wp-content/uploads/2018/11/gl%C3%BCcklich-hund-im-grass-1024x683.jpg');
-}
-
-.box_align_thumb_rescued {
-	display: table-cell;
-	vertical-align: middle;
-	// height: 300px;
-	width: calc(100% - 1px);
-	padding: 25px;
-}
-
-.list_thumb_description_rescued {
-	position: absolute;
-	left: 0;
-	top: 0;
-	width: 100%;
-	height: 100%;
-	z-index: 2;
-	display: none;
-  color: white;
-  font-size: 25px;
-  text-align:center;
-}
-
-.list_thumb:hover .list_thumb_description_rescued {
-	display: table;
-}
-
-.list_thumb_rescued {
-	width: 100%;
-	display: inline-block;
-	// margin: 20px;
-  // padding-top: 30px;
-  // padding-bottom: 30px;
-/*
-	margin-right: 40px;
-	margin-bottom: 40px;
-*/
-	position: relative;
-	vertical-align: top;
-
 }
 
 .hover_text {
@@ -232,25 +191,31 @@
   opacity: 0;
 }
 
-// .text-card-wtsp {
-//   color: white;
-//   font-size: 30px;
-//   text-align:center;
-//   transition: opacity 0.5s ease;
-// }
+.border-gradient {
+  position: relative;
+  padding: 10px;
+  border: none; /* Sin bordes tradicionales */
+  // background-color: white; /* Ajusta el color de fondo si es necesario */
 
+  /* Box shadow para simular el borde con gradiente */
+  box-shadow: inset 0 3px 3px -3px rgba(250, 217, 217, 1),  /* Parte superior del borde */
+              inset 0 -3px 3px -3px rgba(250, 217, 217, 1); /* Parte inferior del borde */
 
-// .carousel-image-customed {
-//   height: 250px;
-//   object-fit: cover;
-//   width: 100%;
-// }
-
-.title-container {
-  width: 750px;
-  text-align: center;
+  /* Añade gradiente lateral */
+  &::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    border-top: 2px solid transparent;
+    border-bottom: 2px solid transparent;
+    // background: linear-gradient(to right, rgba(250, 217, 217, 0), rgba(250, 217, 217, 1), rgba(250, 217, 217, 0));
+    pointer-events: none; /* Permite la interacción con el contenido */
+  }
 }
 
-.title-side-container {
-  width: 173.66px;
+.fondo-rosa-section {
+  padding-top: 5px;
 }

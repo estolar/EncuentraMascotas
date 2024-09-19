@@ -1,4 +1,5 @@
-<%= stylesheet_link_tag 'pet/showstyle', media: 'all', 'data-turbolinks-track': 'reload' %>
+<%= stylesheet_link_tag 'pet/rescuedstyle', media: 'all', 'data-turbolinks-track': 'reload' %>
+
 
 <div class="fondo-azul-section">
   <div class="container mt-5">
@@ -32,18 +33,23 @@
             <% @petlosts.each do |petlost| %>
               <div class="col-md-4">
                 <%# aqui va lo de la foto %>
-                <%= link_to petlost_path(petlost), class: 'list_thumb_rescued' do %>
+                  <div class= 'list_thumb'>
                       <div class="list_thumb_description" style="background: rgba(247, 198, 199,.75);">
-                        <div class="box_align_thumb_rescued">
+                        <div class="box_align_thumb">
                         <%# aqui va el cuerpo del hover %>
+                            <span class="mb-3" style="text-shadow: 1.5px 1.75px 4px black;">Pude volver a casa gracias a su ayuda</span><br>
+                            <span class="mb-3" style="text-shadow: 1.5px 1.75px 4px black;">¡Muchas gracias!</span><br>
+                            <%= image_tag 'happy_dog_rescued.png', alt: 'Happy dog', width: '100px', height: '100px', style:"color: white;", class:"mb-5" %> <br>
+                          <%= link_to petlost_path(petlost), class:"customed_path" do %>
                             <i class="fa-solid fa-paw  me-2"></i>
-                            Logró volver a casa luego de x días
-                            Conoce más sobre mi
+                            <span id="customed-span">Conoce más sobre mi </span>
+                            <i class="fa-solid fa-paw  me-2"></i>
+                          <% end %>
                         </div>
                       </div>
-                      <div class="list_thumb_img_rescued">
-                        <div class="box_align_thumb_rescued">
-                  <%# aqui va el cuerpo que se meustra inialmente %>
+                      <div class="list_thumb_img">
+                        <div class="box_align_thumb">
+                          <%# aqui va el cuerpo que se meustra inialmente %>
                                 <div class="card m-0 shadow-sm d-flex flex-column">
                                   <% if petlost.photos.any? %>
                                     <!-- Carrusel de fotos si hay más de una -->
@@ -97,7 +103,7 @@
                                 </div>
                           </div>
                       </div>
-                  <% end %>
+                    </div>
               </div>
             <% end %>
           <% else %>
