@@ -1,4 +1,4 @@
-<body style="background: linear-gradient(to bottom, #f7c6c7, #ffffff);">
+<div class="fondo-rosa-section">
   <div class="container mt-5">
     <!-- Botones de navegación superior -->
     <div class="d-flex justify-content-between mb-4">
@@ -10,7 +10,7 @@
       <div>
         <%= link_to new_petfound_path, class: 'btn btn-success text-white ms-2' do %>
           <i class="fa-solid fa-dog me-2"></i>
-          Perdi mi mascota
+          Encontré un Mascota
         <% end %>
       </div>
     </div>
@@ -66,7 +66,7 @@
                       <div class="carousel-inner">
                         <% petfound.photos.each_with_index do |photo, index| %>
                           <div class="carousel-item <%= 'active' if index == 0 %>">
-                            <%= cl_image_tag photo.key, class: 'd-block w-100', style: 'height: 200px; object-fit: cover;', alt: petfound.details %>
+                            <%= cl_image_tag photo.key, class: 'd-block w-100 pet-image', style: 'height: 200px; object-fit: cover;', alt: petfound.details %>
                           </div>
                         <% end %>
                       </div>
@@ -140,3 +140,4 @@
     </div>
   </div>
 </body>
+</div>
