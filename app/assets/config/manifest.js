@@ -9,3 +9,4 @@
 
 //= link pet/form.css
 //= link pet/showstyle.css
+//= link pet/rescuedstyle.css
