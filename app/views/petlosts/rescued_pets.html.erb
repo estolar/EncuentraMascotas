@@ -1,12 +1,21 @@
-<body style="background: linear-gradient(to bottom, #0079c2, #ffffff);">
+<%= stylesheet_link_tag 'pet/showstyle', media: 'all', 'data-turbolinks-track': 'reload' %>
+
+<div class="fondo-azul-section">
   <div class="container mt-5">
     <div class="d-flex justify-content-between mb-4">
-      <div>
+
+      <div class='title-side-container'>
         <%= link_to root_path, class: "btn btn-primary btn-lg text-white d-flex align-items-center justify-content-center" do %>
           <%= image_tag 'icons8-home.png', alt: 'Volver', width: 32, height: 32, class: 'me-2'  %> Volver
         <% end %>
       </div>
-      <div>
+
+      <div class="title-container">
+        <div class="title">Zona rescatados</div>
+        <div class="subtitle" >Patitas que pudieron volver a casa gracias a la comunidad EncuentaMascotas</div>
+      </div>
+
+      <div class='title-side-container'>
         <%= link_to loading_screen_petlosts_path, class: 'btn btn-primary text-white' do %>
           <i class="fa-solid fa-paw"></i>
           <i class="fa-solid fa-location-dot me-2"></i>
@@ -22,63 +31,73 @@
           <% if @petlosts.any? %>
             <% @petlosts.each do |petlost| %>
               <div class="col-md-4">
-                <div class="card mb-4 shadow-sm d-flex flex-column">
-                  <% if petlost.photos.any? %>
-                    <!-- Carrusel de fotos si hay más de una -->
-                    <div id="carouselPetlost<%= petlost.id %>" class="carousel slide" data-bs-ride="carousel">
-                      <div class="carousel-inner">
-                        <% petlost.photos.each_with_index do |photo, index| %>
-                          <div class="carousel-item <%= 'active' if index == 0 %>">
-                            <%= cl_image_tag photo.key, class: 'd-block w-100', style: 'height: 200px; object-fit: cover;', alt: petlost.name %>
-                          </div>
-                        <% end %>
+                <%# aqui va lo de la foto %>
+                <%= link_to petlost_path(petlost), class: 'list_thumb_rescued' do %>
+                      <div class="list_thumb_description" style="background: rgba(247, 198, 199,.75);">
+                        <div class="box_align_thumb_rescued">
+                        <%# aqui va el cuerpo del hover %>
+                            <i class="fa-solid fa-paw  me-2"></i>
+                            Logró volver a casa luego de x días
+                            Conoce más sobre mi
+                        </div>
                       </div>
-                      <!-- Controles del carrusel -->
-                      <button class="carousel-control-prev" type="button" data-bs-target="#carouselPetlost<%= petlost.id %>" data-bs-slide="prev">
-                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                        <span class="visually-hidden">Anterior</span>
-                      </button>
-                      <button class="carousel-control-next" type="button" data-bs-target="#carouselPetlost<%= petlost.id %>" data-bs-slide="next">
-                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                        <span class="visually-hidden">Siguiente</span>
-                      </button>
-                    </div>
-                  <% else %>
-                    <!-- Si no hay fotos, muestra una imagen predeterminada -->
-                    <%= image_tag 'default-image.png', class: 'card-img-top', style: 'height: 200px; object-fit: cover;', alt: 'No image available' %>
+                      <div class="list_thumb_img_rescued">
+                        <div class="box_align_thumb_rescued">
+                  <%# aqui va el cuerpo que se meustra inialmente %>
+                                <div class="card m-0 shadow-sm d-flex flex-column">
+                                  <% if petlost.photos.any? %>
+                                    <!-- Carrusel de fotos si hay más de una -->
+                                    <div id="carouselPetlost<%= petlost.id %>" class="carousel slide" data-bs-ride="carousel">
+                                      <div class="carousel-inner">
+                                        <% petlost.photos.each_with_index do |photo, index| %>
+                                          <div class="carousel-item <%= 'active' if index == 0 %>">
+                                            <%= cl_image_tag photo.key, class: 'd-block w-100', style: 'height: 200px; object-fit: cover;', alt: petlost.name %>
+                                          </div>
+                                        <% end %>
+                                      </div>
+                                      <!-- Controles del carrusel -->
+                                      <button class="carousel-control-prev" type="button" data-bs-target="#carouselPetlost<%= petlost.id %>" data-bs-slide="prev">
+                                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                        <span class="visually-hidden">Anterior</span>
+                                      </button>
+                                      <button class="carousel-control-next" type="button" data-bs-target="#carouselPetlost<%= petlost.id %>" data-bs-slide="next">
+                                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                        <span class="visually-hidden">Siguiente</span>
+                                      </button>
+                                    </div>
+                                  <% else %>
+                                    <!-- Si no hay fotos, muestra una imagen predeterminada -->
+                                    <%= image_tag 'default-image.png', class: 'card-img-top', style: 'height: 200px; object-fit: cover;', alt: 'No image available' %>
+                                  <% end %>
+
+                                  <div class="card-body d-flex flex-column">
+                                    <h5 class="card-title mb-2"><%= petlost.name %></h5>
+
+                                    <p class="card-text mb-1">
+                                      <span class="fw-bold" style="color: #00629D;">Raza:</span>
+                                      <span class="fw-normal text-dark"><%= petlost.breed %></span>
+                                    </p>
+
+                                    <p class="card-text mb-1">
+                                      <span class="fw-bold" style="color: #00629D;">Señas particulares:</span>
+                                      <span class="fw-normal text-dark"><%= petlost.signs %></span>
+                                    </p>
+
+                                    <p class="card-text mb-1">
+                                      <span class="fw-bold" style="color: #00629D;">Perdido el:</span>
+                                      <span class="fw-normal text-dark"><%= petlost.day_lost %></span>
+                                    </p>
+
+                                    <p class="card-text mb-1">
+                                      <span class="fw-bold" style="color: #00629D;">Dirección donde se perdió:</span>
+                                      <span class="fw-normal text-dark"><%= petlost.address %></span>
+                                    </p>
+
+                                  </div>
+                                </div>
+                          </div>
+                      </div>
                   <% end %>
-
-                  <div class="card-body d-flex flex-column">
-                    <h5 class="card-title mb-2"><%= petlost.name %></h5>
-
-                    <p class="card-text mb-1">
-                      <span class="fw-bold" style="color: #00629D;">Raza:</span>
-                      <span class="fw-normal text-dark"><%= petlost.breed %></span>
-                    </p>
-
-                    <p class="card-text mb-1">
-                      <span class="fw-bold" style="color: #00629D;">Señas particulares:</span>
-                      <span class="fw-normal text-dark"><%= petlost.signs %></span>
-                    </p>
-
-                    <p class="card-text mb-1">
-                      <span class="fw-bold" style="color: #00629D;">Perdido el:</span>
-                      <span class="fw-normal text-dark"><%= petlost.day_lost %></span>
-                    </p>
-
-                    <p class="card-text mb-1">
-                      <span class="fw-bold" style="color: #00629D;">Dirección donde se perdió:</span>
-                      <span class="fw-normal text-dark"><%= petlost.address %></span>
-                    </p>
-
-                    <div class="mt-auto">
-                      <%= link_to petlost_path(petlost), class: 'btn btn-success text-white mb-2' do %>
-                        <i class="fa-solid fa-paw  me-2"></i>
-                        Ver
-                      <% end %>
-                    </div>
-                  </div>
-                </div>
               </div>
             <% end %>
           <% else %>
@@ -93,4 +112,4 @@
       </div>
     </div>
   </div>
-</body>
+</div>
