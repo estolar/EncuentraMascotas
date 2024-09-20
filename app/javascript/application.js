@@ -26,22 +26,22 @@ document.addEventListener('turbo:load', function() {
     // var navbar = document.querySelector('.navbar');
 
   // Sticky navbar funcionalidad
-  var navbar = document.querySelector('.navbar-lewagon');
-  if (navbar) { // Asegurarnos de que el navbar existe
-    var lastScrollTop = 0; // Guardamos la posición del scroll anterior
+  // var navbar = document.querySelector('.navbar-lewagon');
+  // if (navbar) { // Asegurarnos de que el navbar existe
+  //   var lastScrollTop = 0; // Guardamos la posición del scroll anterior
 
-    window.addEventListener('scroll', function() {
-      var currentScroll = window.pageYOffset || document.documentElement.scrollTop;
+  //   window.addEventListener('scroll', function() {
+  //     var currentScroll = window.pageYOffset || document.documentElement.scrollTop;
 
-      if (currentScroll > 100) {
-        // Añadimos la clase 'scrolled' cuando el usuario se desplaza más de 100px
-        navbar.classList.add('scrolled');
-      } else {
-        // Removemos la clase 'scrolled' cuando volvemos a la parte superior
-        navbar.classList.remove('scrolled');
-      }
-    });
-  }
+  //     if (currentScroll > 100) {
+  //       // Añadimos la clase 'scrolled' cuando el usuario se desplaza más de 100px
+  //       navbar.classList.add('scrolled');
+  //     } else {
+  //       // Removemos la clase 'scrolled' cuando volvemos a la parte superior
+  //       navbar.classList.remove('scrolled');
+  //     }
+  //   });
+  // }
   // Funcionalidad de compartir
   const shareButtons = document.querySelectorAll('.share-button');
 
