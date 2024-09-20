@@ -9,7 +9,7 @@ body {
 
   .gato-sobre-mapa {
     position: absolute;
-    top: 65px;
+    top: 80px;
     left: 50%;
     transform: translateX(-520px);
     z-index: 1000;
@@ -19,7 +19,7 @@ body {
 
   .perro-sobre-mapa {
     position: absolute;
-    top: 86px;
+    top: 103px;
     left: 50%;
     transform: translateX(300px);
     z-index: 1000;
@@ -169,6 +169,7 @@ body {
   }
 </style>
 
+<div class="fondo-rosa-section">
 <% @petfounds = Petfound.all %> <!-- Consultar las mascotas encontradas -->
 
 <div class="container my-5">
@@ -325,4 +326,5 @@ body {
     });
   });
 </script>
+</div>
 </div>
