@@ -75,16 +75,22 @@
           <%= image_tag 'icons8-home.png', alt: 'Volver', width: 32, height: 32, class: 'me-2' %> Volver
         <% end %>
       </div>
-
+      <% status_pet = @petlost.finded  %>
       <!-- Columna central para el nombre del perro y la fecha -->
       <div class="col-6 text-center">
-        <div class="title">Hola! Soy <%= @petlost.name %></div>
-        <div class="subtitle">Me perdí el <%= @petlost.day_lost.strftime("%d/%m/%Y") %></div>
-          <% current_date = Date.today %>
-          <% @petlost.day_lost  %>
-          <% conteo_dias = (current_date - @petlost.day_lost).to_i %>
-          <% dia = conteo_dias > 1 ? "días" : "día" %>
-        <div class='subtitle' style="background: linear-gradient(to right, rgba(247, 198, 199, 0), rgba(247, 198, 199, 0.75), rgba(247, 198, 199, 0));">Llevo <%=conteo_dias%> <%=dia%> lejos de casa. Ayúdame a volver!</div>
+        <div class="title">¡Hola! Soy <%= @petlost.name %></div>
+        <% if status_pet == false %>
+            <div class="subtitle">Me perdí el <%= @petlost.day_lost.strftime("%d/%m/%Y") %></div>
+              <% current_date = Date.today %>
+              <% @petlost.day_lost %>
+              <% conteo_dias = (current_date - @petlost.day_lost).to_i %>
+              <% dia = conteo_dias > 1 ? "días" : "día" %>
+            <div class='subtitle' style="background: linear-gradient(to right, rgba(247, 198, 199, 0), rgba(247, 198, 199, 0.75), rgba(247, 198, 199, 0));">
+            Llevo <%=conteo_dias%> <%=dia%> lejos de casa. Ayúdame a volver!
+            </div>
+          <% else %>
+            <div class="subtitle">¡Logré volver a casa! Estoy muy  feliz. Gracias por su ayuda.</div>
+        <% end %>
       </div>
 
       <!-- Columna derecha para botones -->
@@ -128,8 +134,8 @@
 
                 <div class="container-details d-flex justify-content-end">
                   <span class="m-0 badge" style="background-color: #f7c6c7; color:#000000; line-height: 1.5"><strong>Estado:</strong></span>
-                  <% status_pet = @petlost.finded == false ? "Perdido" : "Encontrado!" %>
-                  <p class= "m-0 border border-start-0 px-3 align-content-center" style="border-radius:0.125rem; font-size:0.75em;"><%= status_pet %></p>
+                  <% text_status_pet = status_pet == false ? "Perdido" : "Encontrado!" %>
+                  <p class= "m-0 border border-start-0 px-3 align-content-center" style="border-radius:0.125rem; font-size:0.75em;"><%= text_status_pet %></p>
                 </div>
             </div>
             <!-- Tarjeta Datos del Perro -->
@@ -281,13 +287,20 @@
               <div class="box_align_thumb">
                 <span> Click para ir al WhatsApp </span>
                 <i class="fab fa-whatsapp me-3" style="font-size: 40px;"></i>
+                <% if status_pet==false %>
                 <p style="font-size: 30px;"><strong>Cualquier información es sumamente valiosa</strong></p>
+                <% end %>
               </div>
             </div>
             <div class="list_thumb_img">
               <div class="box_align_thumb hover_text">
+              <% if status_pet==false %>
                   <p class="m-0"><strong>¿Me viste?</strong></p>
                   <p class="m-0"> Por favor, comunícate al WhatsApp <i class="fab fa-whatsapp me-3" style="font-size: 40px;"></i>aquí!</p>
+              <% else %>
+                  <p class="m-0"><strong>¿Quieres saber más sobre mi rescate?</strong></p>
+                  <p class="m-0"> Escríbeme a este WhatsApp <i class="fab fa-whatsapp me-3" style="font-size: 40px;"></i></p>
+              <% end %>
                 </div>
             </div>
           <% end %>

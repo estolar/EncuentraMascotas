@@ -12,7 +12,7 @@
       </div>
 
       <div class="title-container">
-        <div class="title">Zona rescatados</div>
+        <div class="title"> Zona rescatados </div>
         <div class="subtitle" >Patitas que pudieron volver a casa gracias a la comunidad EncuentaMascotas</div>
       </div>
 
@@ -33,18 +33,19 @@
             <% @petlosts.each do |petlost| %>
               <div class="col-md-4">
                 <%# aqui va lo de la foto %>
-                  <div class= 'list_thumb'>
+                <%= link_to petlost_path(petlost), class:"customed_path list_thumb" do %>
+                  <%# <div class= 'list_thumb'> %>
                       <div class="list_thumb_description" style="background: rgba(247, 198, 199,.75);">
                         <div class="box_align_thumb">
                         <%# aqui va el cuerpo del hover %>
                             <span class="mb-3" style="text-shadow: 1.5px 1.75px 4px black;">Pude volver a casa gracias a su ayuda</span><br>
                             <span class="mb-3" style="text-shadow: 1.5px 1.75px 4px black;">¡Muchas gracias!</span><br>
                             <%= image_tag 'happy_dog_rescued.png', alt: 'Happy dog', width: '100px', height: '100px', style:"color: white;", class:"mb-5" %> <br>
-                          <%= link_to petlost_path(petlost), class:"customed_path" do %>
+
                             <i class="fa-solid fa-paw  me-2"></i>
                             <span id="customed-span">Conoce más sobre mi </span>
                             <i class="fa-solid fa-paw  me-2"></i>
-                          <% end %>
+
                         </div>
                       </div>
                       <div class="list_thumb_img">
@@ -103,7 +104,8 @@
                                 </div>
                           </div>
                       </div>
-                    </div>
+                    <%# </div> %>
+                    <% end %>
               </div>
             <% end %>
           <% else %>
