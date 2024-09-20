@@ -49,6 +49,12 @@
                 <%= date_field_tag :day_lost, params[:day_lost], class: 'form-control' %>
               </div>
 
+              <div class="form-group mb-2">
+                  <%= label_tag :type_pet, "Tipo de mascota" %>
+                  <%= text_field_tag :type_pet,params[:type_pet],class: 'form-control' %>
+              </div>
+
+
               <%= button_tag(type: 'submit', class: 'btn btn-success btn-block text-white') do %>
                 <i class="fa-solid fa-filter me-2"></i>
                 Filtrar
@@ -133,6 +139,11 @@
                     <p class="card-text mb-1">
                       <span class="fw-bold" style="color: #00629D;">Dirección donde se perdió:</span>
                       <span class="fw-normal text-dark"><%= petlost.address %></span>
+                    </p>
+
+                    <p class="card-text mb-1">
+                    <span class="fw-bold" style="color: #00629D;">Tipo:</span>
+                    <span class="fw-normal text-dark"><%= petlost.type_pet %></span>
                     </p>
 
                     <div class="mt-auto">
