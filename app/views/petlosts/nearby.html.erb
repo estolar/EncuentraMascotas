@@ -196,11 +196,11 @@ body {
       <!-- Leyenda del mapa -->
       <div class="map-legend">
         <div class="legend-item">
-          <div class="legend-icon" style="background-image: url('<%= asset_path("icon.png") %>');"></div>
+          <div class="legend-icon" style="background-image: url('<%= asset_path("lupa.png") %>');"></div>
           <h4>Mascota Perdida</h4>
         </div>
         <div class="legend-item">
-          <div class="legend-icon" style="background-image: url('<%= asset_path("heart.png") %>');"></div>
+          <div class="legend-icon" style="background-image: url('<%= asset_path("paw.png") %>');"></div>
           <h4>Mascota Encontrada</h4>
         </div>
         <div class="legend-item">
@@ -273,7 +273,7 @@ body {
 
       // Añadir marcadores para las mascotas perdidas
       <% @petlosts.each do |petlost| %>
-        createMarker('marker', '<%= asset_path("icon.png") %>', {
+        createMarker('marker', '<%= asset_path("lupa.png") %>', {
           name: "<%= j(petlost.name) %>",
           photos_attached: <%= petlost.photos.attached? %>,
           photos_url: "<%= petlost.photos.attached? && petlost.photos.first.present? ? url_for(petlost.photos.first) : asset_path("default-image.png") %>",
@@ -285,7 +285,7 @@ body {
 
       // Añadir marcadores para las mascotas encontradas
       <% @petfounds.each do |petfound| %>
-        createMarker('marker-found', '<%= asset_path("heart.png") %>', {
+        createMarker('marker-found', '<%= asset_path("paw.png") %>', {
           details: "<%= j(petfound.details) %>", // Usar 'details' en lugar de 'name'
           photos_attached: <%= petfound.photos.attached? %>,
           photos_url: "<%= petfound.photos.attached? && petfound.photos.first.present? ? url_for(petfound.photos.first) : asset_path("default-image.png") %>",
