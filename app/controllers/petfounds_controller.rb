@@ -20,6 +20,10 @@ class PetfoundsController < ApplicationController
       @petfounds = @petfounds.where(day_found: params[:day_found])
     end
 
+    if params[:type_pet].present?
+      @petfounds = @petfounds.where("LOWER(type_pet) LIKE ?", "%#{params[:type_pet].downcase}%")
+    end
+
     # Paginación
     @petfounds = @petfounds.page(params[:page]).per(6)
   end

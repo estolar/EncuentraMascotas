@@ -6,22 +6,20 @@
 <%= stylesheet_link_tag 'pet/showstyle', media: 'all', 'data-turbolinks-track': 'reload' %>
 
 <div class="fondo-rosa-section">
-
-
-     <!-- Carrusel de imágenes con 3 imágenes simultáneas -->
+  <!-- Carrusel de imágenes con 3 imágenes simultáneas -->
   <div class='mt-3'>
     <div id="carouselExample" class="carousel slide" data-bs-ride="carousel">
       <!-- Indicadores del carrusel -->
       <div class="carousel-indicators">
         <% total_photos = @petfound.photos.to_a + Array.new([6 - @petfound.photos.count, 0].max, 'default-image.png') %>
-        <% (total_photos.each_slice(3).to_a).each_with_index do |_, index| %>
-          <button type="button" data-bs-target="#carouselExample" data-bs-slide-to="<%= index %>" class="<%= 'active' if index == 0 %>" aria-current="<%= 'true' if index == 0 %>" aria-label="Slide <%= index + 1 %>"></button>
+        <% total_photos.each_slice(3).each_with_index do |_, index| %>
+          <button type="button" data-bs-target="#carouselExample" data-bs-slide-to="<%= index %>" class="<%= 'active' if index.zero? %>" aria-current="<%= 'true' if index.zero? %>" aria-label="Slide <%= index + 1 %>"></button>
         <% end %>
       </div>
 
       <div class="carousel-inner">
         <% total_photos.each_slice(3).with_index do |photos_group, index| %>
-          <div class="carousel-item <%= 'active' if index == 0 %>">
+          <div class="carousel-item <%= 'active' if index.zero? %>">
             <div class="row">
               <% photos_group.each do |photo| %>
                 <div class="col-md-4">
@@ -51,6 +49,7 @@
     </div>
   </div>
 
+  <!-- Estilos Únicos -->
   <style>
     .image-container {
       height: 250px; /* Establece la altura fija */
@@ -72,91 +71,86 @@
     }
   </style>
 
-
-
-<div class="fondo-rosa-section">
   <!-- Contenedor principal ampliado -->
   <div class="container-fluid p-3 rounded" style="max-width: 1300px; margin: 0 auto;">
-
-  <!-- Fila de navegación -->
-  <div class="row align-items-center mb-2">
-    <!-- Columna izquierda para 'Volver a la lista' con imagen -->
-    <div class="col text-start">
+    <!-- Fila de navegación -->
+    <div class="row align-items-center mb-2">
+      <!-- Columna izquierda para 'Volver a la lista' con imagen -->
+      <div class="col text-start">
         <%= link_to petfounds_path, class: "btn btn-success text-white align-items-center justify-content-center me-2" do %>
           <%= image_tag 'icons8-home.png', alt: 'Volver', width: 32, height: 32, class: 'me-2' %> Volver
         <% end %>
-    </div>
+      </div>
 
-    <!-- Columna central para el nombre del perro y la fecha -->
-    <div class="col-6 text-center">
-      <div class="title"> ¡Mascotita a la vista!</div>
-      <div class="title2 pb-1">Nos reportan: <%= @petfound.details %></div>
-          <% current_date = Date.today %>
-          <% conteo_dias = (current_date - @petfound.day_found).to_i %>
-          <% dia = conteo_dias > 1 ? "días" : "día" %>
-        <% if @petfound.facts=="Le estoy dando refugio" %>
-            <% detalles_avistamiento="Me están dando refugio desde el #{@petfound.day_found.strftime("%d/%m/%Y")}" %>
-            <% mensaje_avistamiento= "Ayúdame a difundir! Quiero volver pronto a casa."%>
-          <% elsif @petfound.facts=="Iba pasando por la zona y lo vi" %>
-            <% detalles_avistamiento="Estuve por #{@petfound.address} el #{@petfound.day_found.strftime("%d/%m/%Y")}" %>
-            <% mensaje_avistamiento= "Me vieron por última vez hace #{conteo_dias} #{dia}"%>
-          <% elsif @petfound.facts=="Otras circunstancias" %>
-              <% detalles_avistamiento="Me vieron en #{@petfound.address} el #{@petfound.day_found.strftime("%d/%m/%Y")}" %>
-              <% mensaje_avistamiento= "Último avistamiento hace #{conteo_dias} #{dia}"%>
-          <% end %>
-      <div class="border-gradient pb-2 pt-1">
-        <div class="subtitle"><%= detalles_avistamiento %></div>
-        <div class="subtitle-2"
-          style="background: linear-gradient(to right, rgba(247, 198, 199, 0), rgba(247, 198, 199, 0.75), rgba(247, 198, 199, 0));">
-          <%= mensaje_avistamiento %>
+      <!-- Columna central para el nombre del perro y la fecha -->
+      <div class="col-6 text-center">
+        <div class="title">¡Mascotita a la vista!</div>
+        <div class="title2 pb-1">Nos reportan: <%= @petfound.details %></div>
+        <% current_date = Date.today %>
+        <% conteo_dias = (current_date - @petfound.day_found).to_i %>
+        <% dia = conteo_dias > 1 ? "días" : "día" %>
+        <% if @petfound.facts == "Le estoy dando refugio" %>
+          <% detalles_avistamiento = "Me están dando refugio desde el #{@petfound.day_found.strftime("%d/%m/%Y")}" %>
+          <% mensaje_avistamiento = "Ayúdame a difundir! Quiero volver pronto a casa." %>
+        <% elsif @petfound.facts == "Iba pasando por la zona y lo vi" %>
+          <% detalles_avistamiento = "Estuve por #{@petfound.address} el #{@petfound.day_found.strftime("%d/%m/%Y")}" %>
+          <% mensaje_avistamiento = "Me vieron por última vez hace #{conteo_dias} #{dia}" %>
+        <% elsif @petfound.facts == "Otras circunstancias" %>
+          <% detalles_avistamiento = "Me vieron en #{@petfound.address} el #{@petfound.day_found.strftime("%d/%m/%Y")}" %>
+          <% mensaje_avistamiento = "Último avistamiento hace #{conteo_dias} #{dia}" %>
+        <% end %>
+        <div class="border-gradient pb-2 pt-1">
+          <div class="subtitle"><%= detalles_avistamiento %></div>
+          <div class="subtitle-2"
+            style="background: linear-gradient(to right, rgba(247, 198, 199, 0), rgba(247, 198, 199, 0.75), rgba(247, 198, 199, 0));">
+            <%= mensaje_avistamiento %>
+          </div>
         </div>
       </div>
-    </div>
 
-    <!-- Columna derecha para 'Editar' y 'Eliminar' con íconos -->
-    <div class="col text-end d-flex justify-content-end align-items-center">
-      <div class="btn-group me-2" role="group" aria-label="Acciones">
-        <% if policy(@petfound).edit? %>
-          <%= link_to edit_petfound_path(@petfound), class: "btn btn-primary btn-md text-white d-flex align-items-center" do %>
-            <i class="fa-solid fa-marker me-2"></i> Editar
+      <!-- Columna derecha para 'Editar' y 'Eliminar' con íconos -->
+      <div class="col text-end d-flex justify-content-end align-items-center">
+        <div class="btn-group me-2" role="group" aria-label="Acciones">
+          <% if policy(@petfound).edit? %>
+            <%= link_to edit_petfound_path(@petfound), class: "btn btn-primary btn-md text-white d-flex align-items-center" do %>
+              <i class="fa-solid fa-marker me-2"></i> Editar
+            <% end %>
           <% end %>
-        <% end %>
 
-      <% if policy(@petfound).destroy? %>
+          <% if policy(@petfound).destroy? %>
             <button type="button" class="btn btn-primary btn-md text-white d-flex align-items-center" id="confirmDeleteButton" data-bs-toggle="modal" data-bs-target="#confirmDeleteModal">
               <i class="fa-solid fa-dog me-2"></i>
-              <p class="m-0"> Eliminar </p>
+              <p class="m-0">Eliminar</p>
             </button>
-      <% end %>
-    </div>
-  </div>
-  </div>
-
-  <%# modal para eliminar %>
-
-  <div class="modal fade" id="confirmDeleteModalPetfound" tabindex="-1" aria-labelledby="confirmDeleteModalPetfound" aria-hidden="true">
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <!-- Encabezado del modal -->
-          <div class="modal-header">
-            <h5 class="modal-title" id="confirmModalLabel">Confirmación</h5>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
-          </div>
-          <!-- Cuerpo del modal -->
-          <div class="modal-body">
-            <p>¿Deseas eliminar este reporte?</p>
-          </div>
-          <!-- Pie del modal -->
-          <div class="modal-footer">
-            <!-- Asegúrate de que todos los botones tienen la misma clase de tamaño y estilo -->
-            <button type="button" class="btn border border-dark" data-bs-dismiss="modal">No</button>
-            <%= link_to "Sí", petfound_path(@petfound), class: "btn btn-primary btn-sm me-4 text-white", data: { turbo_method: :delete }, style: "font-size: 1rem;"%>
-          </div>
+          <% end %>
         </div>
       </div>
     </div>
+  </div>
 
-  <%# fin modal %>
+  <!-- Modal para eliminar -->
+  <div class="modal fade" id="confirmDeleteModalPetfound" tabindex="-1" aria-labelledby="confirmDeleteModalPetfound" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <!-- Encabezado del modal -->
+        <div class="modal-header">
+          <h5 class="modal-title" id="confirmModalLabel">Confirmación</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+        </div>
+        <!-- Cuerpo del modal -->
+        <div class="modal-body">
+          <p>¿Deseas eliminar este reporte?</p>
+        </div>
+        <!-- Pie del modal -->
+        <div class="modal-footer">
+          <!-- Asegúrate de que todos los botones tienen la misma clase de tamaño y estilo -->
+          <button type="button" class="btn border border-dark" data-bs-dismiss="modal">No</button>
+          <%= link_to "Sí", petfound_path(@petfound), class: "btn btn-primary btn-sm me-4 text-white", data: { turbo_method: :delete }, style: "font-size: 1rem;" %>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Fin modal -->
 
   <!-- Fila C: Datos del perro y la persona que lo encontró -->
   <div class="row">
@@ -164,107 +158,103 @@
     <div class="col-md-6 h-100">
       <!-- Tarjeta Datos del Perro -->
       <div class="mt-2 p-3 shadow rounded-lg bg-white w-100" style="border-radius: 20px; box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.3);">
+        <div class="row align-items-center container-general-datos">
+          <div class="d-flex my-3 justify-content-between">
+            <h6 class="m-0">Datos de la mascota</h6>
+          </div>
 
-          <div class="row align-items-center container-general-datos">
-
-            <div class="d-flex my-3 justify-content-between">
-              <h6 class="m-0">Datos de la mascota</h6>
-
+          <div class="col-10 text-start px-4 info-group">
+            <div class="info-item">
+              <i class="fas fa-map-marker-alt me-3"></i>
+              <div class="d-flex flex-column container-details">
+                <p class="m-0 text"><strong>Especie</strong></p>
+                <p class="m-0"><%= @petfound.type_pet %></p>
+              </div>
             </div>
-
-              <div class="col-10 text-start px-4 info-group">
-                <div class="info-item">
-                  <i class="fas fa-map-marker-alt me-3"></i>
-                  <div class="d-flex flex-column container-details">
-                    <p class="m-0 text"><strong>Especie</strong></p>
-                    <p class= "m-0"><%= @petfound.type_pet %></p>
-                  </div>
-                </div>
-                <div class="info-item">
-                <i class="fas fa-paw me-3"></i>
-                <div class="d-flex flex-column container-details">
-                  <p class="m-0 text"><strong>Raza</strong></p>
-                  <p class= "m-0"><%= @petfound.breed %></p>
-                </div>
+            <div class="info-item">
+              <i class="fas fa-paw me-3"></i>
+              <div class="d-flex flex-column container-details">
+                <p class="m-0 text"><strong>Raza</strong></p>
+                <p class="m-0"><%= @petfound.breed %></p>
               </div>
-              <div class="info-item">
-                <i class="fas fa-map-marker-alt me-3"></i>
-                <div class="d-flex flex-column container-details">
-                  <p class="m-0 text"><strong>Género</strong></p>
-                  <p class= "m-0"><%= @petfound.gender %></p>
-                </div>
+            </div>
+            <div class="info-item">
+              <i class="fas fa-map-marker-alt me-3"></i>
+              <div class="d-flex flex-column container-details">
+                <p class="m-0 text"><strong>Género</strong></p>
+                <p class="m-0"><%= @petfound.gender %></p>
               </div>
-              <div class="info-item">
-                <i class="fas fa-calendar-alt me-3"></i>
-                <div class="d-flex flex-column container-details">
-                  <p class="m-0 text"><strong>Encontrado el</strong></p>
-                  <p class= "m-0"><%= @petfound.day_found.strftime("%d/%m/%Y") %></p>
-                </div>
+            </div>
+            <div class="info-item">
+              <i class="fas fa-calendar-alt me-3"></i>
+              <div class="d-flex flex-column container-details">
+                <p class="m-0 text"><strong>Encontrado el</strong></p>
+                <p class="m-0"><%= @petfound.day_found.strftime("%d/%m/%Y") %></p>
               </div>
-              <div class="info-item">
-                <i class="fas fa-palette me-3"></i>
-                <%# <i class="fas fa-map-marker-alt me-3"></i> %>
-                <div class="d-flex flex-column container-details">
-                  <p class="m-0 text"><strong>Color</strong></p>
-                  <% if @petfound.color.present? %>
-                    <% colors_array = JSON.parse(@petfound.color).reject(&:blank?) %>
+            </div>
+            <div class="info-item">
+              <i class="fas fa-palette me-3"></i>
+              <div class="d-flex flex-column container-details">
+                <p class="m-0 text"><strong>Color</strong></p>
+                <% if @petfound.color.present? %>
+                  <% colors_array = JSON.parse(@petfound.color).reject(&:blank?) %>
                   <p class="mb-0"><%= colors_array.join(", ") %></p>
-                  <% end %>
-                </div>
+                <% end %>
               </div>
-              <div class="info-item">
-                <i class="fas fa-map-marker-alt me-3"></i>
-                <div class="d-flex flex-column container-details">
-                  <p class="m-0 text"><strong>Señas particulares</strong></p>
-                  <p class= "m-0"><%= @petfound.signs %></p>
-                </div>
+            </div>
+            <div class="info-item">
+              <i class="fas fa-map-marker-alt me-3"></i>
+              <div class="d-flex flex-column container-details">
+                <p class="m-0 text"><strong>Señas particulares</strong></p>
+                <p class="m-0"><%= @petfound.signs %></p>
               </div>
-              <div class="info-item">
-                <i class="fas fa-map-marker-alt me-3"></i>
-                <div class="d-flex flex-column container-details">
-                  <p class="m-0 text"><strong>Señas particulares</strong></p>
-                  <p class= "m-0"><%= @petfound.details %></p>
-                </div>
+            </div>
+            <div class="info-item">
+              <i class="fas fa-map-marker-alt me-3"></i>
+              <div class="d-flex flex-column container-details">
+                <p class="m-0 text"><strong>Detalles</strong></p>
+                <p class="m-0"><%= @petfound.details %></p>
               </div>
-              <div class="info-item">
-                <i class="fas fa-map-marker-alt me-3"></i>
-                <div class="d-flex flex-column container-details">
-                  <p class="m-0 text"><strong>Señas particulares</strong></p>
-                  <p class= "m-0"><%= @petfound.facts %></p>
-                </div>
+            </div>
+            <div class="info-item">
+              <i class="fas fa-map-marker-alt me-3"></i>
+              <div class="d-flex flex-column container-details">
+                <p class="m-0 text"><strong>Hechos</strong></p>
+                <p class="m-0"><%= @petfound.facts %></p>
               </div>
+            </div>
           </div>
           <div class="col-2 text-center">
-              <i class="fas fa-dog" style="font-size: 2.5rem; color: #0079c1;"></i>
+            <i class="fas fa-dog" style="font-size: 2.5rem; color: #0079c1;"></i>
           </div>
-      <h6 class="my-3">Datos de la persona que lo encontró</h6>
-      <!-- Tarjeta Datos de la Persona que lo encontró -->
-            <div class="col-10 text-start px-4 info-group">
 
-              <div class="info-item">
-                <i class="fas fa-map-marker-alt me-3"></i>
-                <div class="d-flex flex-column container-details">
-                  <p class="m-0 text"><strong>Nombre</strong></p>
-                  <p class= "m-0"><%= @petfound.user.name %></p>
-                </div>
-              </div>
-
-              <div class="info-item">
-                <i class="fas fa-map-marker-alt me-3"></i>
-                <div class="d-flex flex-column container-details">
-                  <p class="m-0 text"><strong>Correo</strong></p>
-                  <p class= "m-0"><%= @petfound.user.email %></p>
-                </div>
-              </div>
-
-              <div class="info-item">
-                <i class="fas fa-map-marker-alt me-3"></i>
-                <div class="d-flex flex-column container-details">
-                  <p class="m-0 text"><strong>Teléfono</strong></p>
-                  <p class= "m-0"><%= @petfound.user.phone_number %></p>
-                </div>
+          <h6 class="my-3">Datos de la persona que lo encontró</h6>
+          <!-- Tarjeta Datos de la Persona que lo encontró -->
+          <div class="col-10 text-start px-4 info-group">
+            <div class="info-item">
+              <i class="fas fa-map-marker-alt me-3"></i>
+              <div class="d-flex flex-column container-details">
+                <p class="m-0 text"><strong>Nombre</strong></p>
+                <p class="m-0"><%= @petfound.user.name %></p>
               </div>
             </div>
+
+            <div class="info-item">
+              <i class="fas fa-envelope me-3"></i>
+              <div class="d-flex flex-column container-details">
+                <p class="m-0 text"><strong>Correo</strong></p>
+                <p class="m-0"><%= @petfound.user.email %></p>
+              </div>
+            </div>
+
+            <div class="info-item">
+              <i class="fas fa-phone me-3"></i>
+              <div class="d-flex flex-column container-details">
+                <p class="m-0 text"><strong>Teléfono</strong></p>
+                <p class="m-0"><%= @petfound.user.phone_number %></p>
+              </div>
+            </div>
+          </div>
 
           <div class="col-2 text-center">
             <% if @petfound.user.photo.attached? %>
@@ -273,254 +263,73 @@
               <i class="fas fa-user-circle" style="font-size: 3rem; color: #0079c1;"></i>
             <% end %>
           </div>
-
         </div>
       </div>
-      </div>
+    </div>
 
-    <div class="col-md-6 align-content-center">
     <!-- Columna derecha: Mapa -->
+    <div class="col-md-6 align-content-center">
       <div class="p-1 shadow rounded-lg bg-white w-100" style="border-radius: 20px; box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.3);">
         <div id="map" style="height: 380px; width: 100%; border-radius: 20px;"></div>
       </div>
-        <div class="info-item-customed mt-2 p-3 shadow rounded-lg bg-white w-100" style="border-radius: 20px; box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.3);">
-          <i class="fas fa-map-marker-alt me-3"></i>
-          <div class="d-flex">
-            <p class="m-0 text me-3">Se perdió en</p>
-            <p class= "m-0"><%= @petfound.address.capitalize %></p>
-          </div>
+      <div class="info-item-customed mt-2 p-3 shadow rounded-lg bg-white w-100" style="border-radius: 20px; box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.3);">
+        <i class="fas fa-map-marker-alt me-3"></i>
+        <div class="d-flex">
+          <p class="m-0 text me-3">Se perdió en</p>
+          <p class="m-0"><%= @petfound.address.capitalize %></p>
         </div>
       </div>
     </div>
   </div>
 </div>
+
+<!-- Banner de WhatsApp para contactar -->
 <div>
   <% if @petfound.user && @petfound.user.phone_number.present? %>
     <%= link_to "https://wa.me/#{@petfound.user.phone_number}?text=Hola.%20Vengo%20de%20Encuentra%20Mascotas.%20Me%20puedes%20ayudar%20a%20encontrar%20a%20mi%20mascota:%20https://www.encuentramascotas.org/#{url_for(@petfound)}",
           class: "list_thumb",
           target: "_blank" do %>
-            <div class="list_thumb_description" style="background: rgba(247, 198, 199,.75);">
-              <div class="box_align_thumb">
-                <span> Click para ir al WhatsApp </span>
-                <i class="fab fa-whatsapp me-3" style="font-size: 40px;"></i>
-                <p style="font-size: 30px;"><strong>Cualquier información es sumamente valiosa</strong></p>
-              </div>
-            </div>
-            <div class="list_thumb_img">
-              <div class="box_align_thumb hover_text">
-                  <p class="m-0"><strong>¿Tienes pistas sobre mi familia?</strong></p>
-                  <p class="m-0"> Por favor, comunícate al WhatsApp <i class="fab fa-whatsapp me-3" style="font-size: 40px;"></i>aquí!</p>
-                </div>
-            </div>
-          <% end %>
+      <div class="list_thumb_description" style="background: rgba(247, 198, 199, .75);">
+        <div class="box_align_thumb">
+          <span>Click para ir al WhatsApp</span>
+          <i class="fab fa-whatsapp me-3" style="font-size: 40px;"></i>
+          <p style="font-size: 30px;"><strong>Cualquier información es sumamente valiosa</strong></p>
+        </div>
+      </div>
+      <div class="list_thumb_img">
+        <div class="box_align_thumb hover_text">
+          <p class="m-0"><strong>¿Tienes pistas sobre mi familia?</strong></p>
+          <p class="m-0">Por favor, comunícate al WhatsApp <i class="fab fa-whatsapp me-3" style="font-size: 40px;"></i>aquí!</p>
+        </div>
+      </div>
+    <% end %>
   <% end %>
 </div>
 
+<!-- Scripts para mapa -->
+<script>
+  document.addEventListener('turbo:load', function() {
+    var mapElement = document.getElementById('map');
+    if (mapElement) {
+      mapboxgl.accessToken = '<%= ENV['MAPBOX_API_KEY'] %>';
 
+      const map = new mapboxgl.Map({
+        container: 'map',
+        style: 'mapbox://styles/mapbox/streets-v11',
+        center: [<%= @petfound.longitude %>, <%= @petfound.latitude %>],
+        zoom: 13.5,
+      });
 
-  <style>
-    .image-container {
-      height: 250px; /* Establece la altura fija */
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      overflow: hidden; /* Asegura que las imágenes no se desborden */
+      const el = document.createElement('div');
+      el.className = 'marker';
+      el.style.backgroundImage = 'url(<%= asset_path("icon.png") %>)';
+      el.style.width = '46px';
+      el.style.height = '46px';
+      el.style.backgroundSize = '100%';
+
+      new mapboxgl.Marker(el)
+        .setLngLat([<%= @petfound.longitude %>, <%= @petfound.latitude %>])
+        .addTo(map);
     }
-
-    .carousel-image {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
-
-    /* Elimina el flexbox en .carousel-item para evitar la superposición */
-    .carousel-item {
-      /* Eliminamos el uso de display: flex para que el carrusel funcione correctamente */
-    }
-  </style>
-
-  <div class="container-fluid p-2 rounded" style="max-width: 1300px; margin: 0 auto;">
-    <!-- Fila de navegación -->
-    <div class="row align-items-center mb-5">
-      <div class="col text-start">
-        <%= link_to petfounds_path, class: "btn btn-primary text-white align-items-center justify-content-center me-2" do %>
-          <%= image_tag 'icons8-home.png', alt: 'Volver', width: 32, height: 32, class: 'me-2' %> Volver
-        <% end %>
-      </div>
-
-      <!-- Columna central para el nombre del perro y la fecha -->
-      <div class="col-6 text-center">
-        <div class="title">Hola! Soy <%= @petfound.details %></div>
-        <div class="subtitle">Encontrado el <%= @petfound.day_found.strftime("%d/%m/%Y") %></div>
-      </div>
-
-      <!-- Columna derecha para botones -->
-      <div class="col text-end d-flex justify-content-end align-items-center">
-        <div class="btn-group me-2" role="group" aria-label="Acciones">
-          <% if policy(@petfound).edit? %>
-            <%= link_to edit_petfound_path(@petfound), class: "btn btn-primary btn-md text-white d-flex align-items-center" do %>
-              <i class="fa-solid fa-marker me-2"></i>
-              <p class="m-0"> Editar </p>
-            <% end %>
-          <% end %>
-
-          <% if policy(@petfound).destroy? %>
-            <button type="button" class="btn btn-primary btn-md text-white d-flex align-items-center" id="confirmDeleteButton" data-bs-toggle="modal" data-bs-target="#confirmDeleteModal">
-              <i class="fa-solid fa-dog me-2"></i>
-              <p class="m-0"> Eliminar </p>
-            </button>
-          <% end %>
-        </div>
-      </div>
-    </div>
-
-    <!-- Fila de datos del dueño y del perro -->
-    <div class="row">
-      <!-- Columna izquierda: Datos del dueño y del perro -->
-      <div class="col-md-6 h-100">
-        <div class="mt-2 p-3 shadow rounded-lg bg-white w-100" style="border-radius: 20px; box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.3);">
-          <div class="row align-items-center container-general-datos">
-            <h6 class="m-0">Datos de la mascota</h6>
-            <!-- Información de la mascota -->
-            <div class="col-10 text-start px-4 info-group">
-              <div class="info-item">
-                <i class="fas fa-paw me-3"></i>
-                <div class="d-flex flex-column container-details">
-                  <p class="m-0 text"><strong>Raza</strong></p>
-                  <p class= "m-0"><%= @petfound.breed %></p>
-                </div>
-              </div>
-
-              <div class="info-item">
-                <i class="fas fa-palette me-3"></i>
-                <div class="d-flex flex-column container-details">
-                  <p class="m-0 text"><strong>Color</strong></p>
-                  <% if @petfound.color.present? %>
-                    <% colors_array = JSON.parse(@petfound.color).reject(&:blank?) %>
-                    <p class="mb-0"><%= colors_array.join(", ") %></p>
-                  <% end %>
-                </div>
-              </div>
-
-              <div class="info-item">
-                <i class="fas fa-map-marker-alt me-3"></i>
-                <div class="d-flex flex-column container-details">
-                  <p class="m-0 text"><strong>Señas particulares</strong></p>
-                  <p class= "m-0"><%= @petfound.signs %></p>
-                </div>
-              </div>
-
-              <div class="info-item">
-                <i class="fas fa-map-marker-alt me-3"></i>
-                <div class="d-flex flex-column container-details">
-                  <p class="m-0 text"><strong>Se encontró en</strong></p>
-                  <p class= "m-0"><%= @petfound.address %></p>
-                </div>
-              </div>
-            </div>
-
-            <!-- Información del dueño con imagen -->
-            <h6 class="my-3">Datos de la persona que lo encontró</h6>
-            <div class="col-10 text-start px-4 info-group">
-              <div class="info-item">
-                <i class="fas fa-user me-3"></i>
-                <div class="d-flex flex-column container-details">
-                  <p class="m-0 text"><strong>Nombre</strong></p>
-                  <p class= "m-0"><%= @petfound.user.name %></p>
-                </div>
-              </div>
-
-              <div class="info-item">
-                <i class="fas fa-envelope me-3"></i>
-                <div class="d-flex flex-column container-details">
-                  <p class="m-0 text"><strong>Correo</strong></p>
-                  <p class= "m-0"><%= @petfound.user.email %></p>
-                </div>
-              </div>
-
-              <div class="info-item">
-                <i class="fas fa-phone me-3"></i>
-                <div class="d-flex flex-column container-details">
-                  <p class="m-0 text"><strong>Teléfono</strong></p>
-                  <p class= "m-0"><%= @petfound.user.phone_number %></p>
-                </div>
-              </div>
-            </div>
-
-            <!-- Imagen del que encontró a la mascota -->
-            <div class="col-2 text-center">
-              <% if @petfound.user.photo.attached? %>
-                <%= image_tag @petfound.user.photo, class: "img-fluid rounded-circle", style: "width: 70px; height: 70px; object-fit: cover; box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.3);" %>
-              <% else %>
-                <i class="fas fa-user-circle" style="font-size: 3rem; color: #0079c1;"></i>
-              <% end %>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Columna derecha: Mapa -->
-      <div class="col-md-6 align-content-center">
-        <div class="p-1 shadow rounded-lg bg-white w-100" style="border-radius: 20px; box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.3);">
-          <div id="map" style="height: 340px; width: 100%; border-radius: 20px;"></div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Banner de WhatsApp para contactar -->
-    <div class="w-100 list_thumb_description" style="background: rgba(247, 198, 199, 0.75);">
-      <% if @petfound.user && @petfound.user.phone_number.present? %>
-        <%= link_to "https://wa.me/#{@petfound.user.phone_number}?text=Hola.%20Vengo%20de%20Encuentra%20Mascotas.%20Es%20tu%20mascota:%20https://www.encuentramascotas.org/#{url_for(@petfound)}",
-              class: "list_thumb d-block w-100 text-center",
-              target: "_blank" do %>
-            <div class="box_align_thumb text-center d-flex flex-column justify-content-center align-items-center" style="padding: 30px;">
-              <p style="font-size: 1.5rem; font-weight: bold;">Es tu mascota, contáctame por WhatsApp</p>
-              <i class="fab fa-whatsapp" style="font-size: 40px;"></i>
-              <span style="font-size: 1.2rem;">Comunícate al WhatsApp</span>
-              <p style="font-size: 1rem;">Cualquier información es sumamente valiosa!</p>
-            </div>
-        <% end %>
-      <% end %>
-    </div>
-  </div> <!-- Cierre del contenedor principal -->
-
-  <!-- Scripts para mapa -->
-  <script>
-    document.addEventListener('turbo:load', function() {
-      var mapElement = document.getElementById('map');
-      if (mapElement) {
-        mapboxgl.accessToken = '<%= ENV['MAPBOX_API_KEY'] %>';
-
-        const map = new mapboxgl.Map({
-          container: 'map',
-          style: 'mapbox://styles/mapbox/streets-v11',
-          center: [<%= @petfound.longitude %>, <%= @petfound.latitude %>],
-          zoom: 13.5,
-        });
-
-        const el = document.createElement('div');
-        el.className = 'marker';
-        el.style.backgroundImage = 'url(<%= asset_path("icon.png") %>)';
-        el.style.width = '46px';
-        el.style.height = '46px';
-        el.style.backgroundSize = '100%';
-
-        new mapboxgl.Marker(el)
-          .setLngLat([<%= @petfound.longitude %>, <%= @petfound.latitude %>])
-          .addTo(map);
-      }
-    });
-
-    const el = document.createElement('div');
-    el.className = 'marker';
-    el.style.backgroundImage = 'url(<%= asset_path("icon.png") %>)';
-    el.style.width = '46px';
-    el.style.height = '46px';
-    el.style.backgroundSize = '100%';
-
-    new mapboxgl.Marker(el)
-      .setLngLat([<%= @petfound.longitude %>, <%= @petfound.latitude %>])
-      .addTo(map);
   });
 </script>
-</div>
