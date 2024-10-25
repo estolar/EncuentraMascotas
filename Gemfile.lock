@@ -222,7 +222,7 @@ GEM
       ast (~> 2.4.1)
       racc
     pdf-core (0.10.0)
-    pg (1.5.8)
+    pg (1.5.9)
     popper_js (2.11.8)
     prawn (2.5.0)
       matrix (~> 0.4)
@@ -393,7 +393,7 @@ DEPENDENCIES
   jbuilder
   kaminari (~> 1.2.2)
   open-uri
-  pg (~> 1.1)
+  pg (~> 1.5)
   prawn (~> 2.4)
   puma (>= 5.0)
   pundit
